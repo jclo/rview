@@ -1,0 +1,61 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>RView - Animate</title>
+    <meta name="description" content="{{app:description}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="">
+    <meta name="theme-color" content="#2196f3">
+    <style>
+      /* - */
+    </style>
+  </head>
+
+  <body>
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated and unsupported</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to benefit of all the features of this web App.</p>
+    <![endif]-->
+
+    <!-- Warning message if Javascript isn't enabled -->
+    <noscript>
+      <p style="text-align:center;padding-top:3em;">
+        We are sorry, but this website doesn't work properly without JavaScript enabled!
+      </p>
+    </noscript>
+
+    <!-- Add your site or application content here -->
+    <div id="app"></div>
+
+    <!-- Add your scripts here -->
+    <script type="module">
+      import { h, Component, render } from '../lib/rview.mjs';
+
+      const App = Component({
+        init() {
+          this.state.top = 0;
+          this.state.left = '100px';
+          setTimeout(() => {
+            this.$animate({ top: '500px', left: '800px' }, 'swing', () => {
+              // callback executed when animation over.
+            });
+          }, 1000);
+        },
+
+        render(state) {
+          return `
+            <div>
+              <div class="rect" style="position: absolute; top: ${state.top}; left: ${state.left}; width: 100px; height: 100px; border: 1px solid red;"></div>
+            </div>`;
+        },
+      });
+
+      const app = render({
+        el: '#app',
+        children: { '<App />': App },
+        template: '<App />',
+      });
+    </script>
+  </body>
+</html>

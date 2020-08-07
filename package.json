@@ -1,0 +1,78 @@
+{
+  "name": "rview",
+  "version": "0.0.0-alpha.0",
+  "description": "A companion Reactive View library for building web applications",
+  "main": "_dist/lib/rview.js",
+  "unpkg": "_dist/lib/rview.mjs",
+  "module": "_dist/lib/rview.min.mjs",
+  "bin": {},
+  "scripts": {
+    "build": "gulp build",
+    "watch": "gulp watch",
+    "dev": "gulp rundev",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require esm ./test/main.js",
+    "display-coverage": "opener ./coverage/lcov-report/index.html",
+    "check-coverage": "nyc check-coverage --statements 0 --branches 0 --functions 0 --lines 0",
+    "report-coverage": "nyc report --reporter=text-lcov | coveralls",
+    "report": "nyc report",
+    "makedist": "gulp makedist",
+    "app": "gulp runapp",
+    "doc": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jclo/rview.git"
+  },
+  "keywords": [
+    "es6",
+    "DOM",
+    "MVC",
+    "View"
+  ],
+  "author": {
+    "name": "Mobilabs",
+    "email": "contact@mobilabs.fr",
+    "url": "http://www.mobilabs.fr"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jclo/rview/issues"
+  },
+  "homepage": "https://github.com/jclo/rview",
+  "dependencies": {
+    "@mobilabs/messenger": "0.0.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "coveralls": "^3.1.0",
+    "cross-env": "^7.0.2",
+    "del": "^5.1.0",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "esm": "^3.2.25",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-header": "^2.0.9",
+    "gulp-replace": "^1.0.0",
+    "gulp-uglify-es": "^2.0.0",
+    "husky": "^4.2.5",
+    "jsdom": "^16.3.0",
+    "kadoo": "0.0.0-beta.5",
+    "mocha": "^8.1.1",
+    "nyc": "^15.1.0",
+    "open": "^7.1.0",
+    "opener": "^1.5.1",
+    "xmldom": "^0.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": false,
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build && npm run makedist && npm run test && npm run check-coverage && npm run report"
+    }
+  }
+}

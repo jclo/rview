@@ -1,0 +1,53 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>RView - Clock</title>
+    <meta name="description" content="{{app:description}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="">
+    <meta name="theme-color" content="#2196f3">
+    <style>
+      /* - */
+    </style>
+  </head>
+
+  <body>
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated and unsupported</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to benefit of all the features of this web App.</p>
+    <![endif]-->
+
+    <!-- Warning message if Javascript isn't enabled -->
+    <noscript>
+      <p style="text-align:center;padding-top:3em;">
+        We are sorry, but this website doesn't work properly without JavaScript enabled!
+      </p>
+    </noscript>
+
+    <!-- Add your site or application content here -->
+    <div id="app"></div>
+
+    <!-- Add your scripts here -->
+    <script type="module">
+      import { h, Component, render } from '../lib/rview.mjs';
+
+      const Clock = Component({
+        render(state, props) {
+          let time = new Date().toLocaleTimeString();
+          return `
+            <div>
+              <span>${time}</span>
+            </div>
+          `;
+        },
+      });
+
+      const app = render({
+        el: '#app',
+        children: { '<Clock />': Clock },
+        template: '<Clock />',
+      });
+    </script>
+  </body>
+</html>
