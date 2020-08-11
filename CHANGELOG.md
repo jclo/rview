@@ -6,4 +6,5 @@
   * First build,
   * Updated the project dependencies,
   * Updated travis.yml,
+  * First release candidate,
   * ...,
