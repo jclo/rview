@@ -27,9 +27,9 @@ module.exports = function(RView) {
     it('Expects RView._setTestMode to be a function.', () => {
       expect(RView._setTestMode).to.be.a('function');
     });
-    // it('Expects RView._setTestMode() to return an object.', () => {
-    //   expect(RView._setTestMode()).to.be.an('object');
-    // });
+    it('Expects RView._setTestMode() to return an array with 4 items.', () => {
+      expect(RView._setTestMode()).to.be.an('array').that.has.lengthOf(4);
+    });
 
     it('Expects RView.noConflict to be a function.', () => {
       expect(RView.noConflict).to.be.a('function');

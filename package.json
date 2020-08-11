@@ -1,8 +1,9 @@
 {
-  "name": "rview",
-  "version": "0.0.0-alpha.0",
+  "name": "@mobilabs/rview",
+  "version": "0.0.0-beta.1",
   "description": "A companion Reactive View library for building web applications",
   "main": "_dist/lib/rview.js",
+  "minified": "_dist/lib/rview.min.js",
   "unpkg": "_dist/lib/rview.mjs",
   "module": "_dist/lib/rview.min.mjs",
   "bin": {},
@@ -40,7 +41,7 @@
   },
   "homepage": "https://github.com/jclo/rview",
   "dependencies": {
-    "@mobilabs/messenger": "0.0.4"
+    "@mobilabs/messenger": "0.0.5"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -59,7 +60,7 @@
     "gulp-uglify-es": "^2.0.0",
     "husky": "^4.2.5",
     "jsdom": "^16.3.0",
-    "kadoo": "0.0.0-beta.5",
+    "kadoo": "0.0.0-beta.6",
     "mocha": "^8.1.1",
     "nyc": "^15.1.0",
     "open": "^7.1.0",

@@ -21,6 +21,19 @@ Thus, `RView` is only intended to create web components, insert them into the DO
 You don't have to create a build environment for `RView`. You just need an `HTML` file with a script:
 
 ```html
+<script src='https://www.unpkg.com/@mobilabs/rview/_dist/lib/rview.min.js'></script>
+<script>
+  const { h } = RView;
+  const { Component } = RView;
+  const { render } = RView;
+
+  ...
+</script>
+```
+
+Or:
+
+```html
 <script type=module>
   import { h, Component, render } from 'https://www.unpkg.com/@mobilabs/rview?module';
 
@@ -36,8 +49,8 @@ Then, you can create your first component:
 
   const C = Component({
     render() {
-      return `<h1>Hi!</h1>`;
-    }
+      return '<h1>Hi!</h1>';
+    },
   });
 </script>
 ```
@@ -52,8 +65,8 @@ When your component is ready, you can insert it in the DOM:
 
   const C = Component({
     render() {
-      return `<h1>Hi!</h1>`;
-    }
+      return '<h1>Hi!</h1>';
+    },
   });
 
   render({
@@ -61,7 +74,7 @@ When your component is ready, you can insert it in the DOM:
     children: { '<C />': C },
     template: `
       <C />
-    `;
+    `,
   });
 </script>
 ```
@@ -78,9 +91,9 @@ And this is what you get in the DOM:
 
 ```html
 <div id="app">
-  <div id="i9t0img1">
-    <div id="ih4423b9">
-      <p>Hi!</p>
+  <div id="i67c63gj">
+    <div id="i354anrd">
+      <h1>Hi!</h1>
     </div>
   </div>
 </div>
@@ -238,7 +251,7 @@ const Clock = Component({
   },
 
   render(state, props) {
-    let time = new Date(this.state.time).toLocaleTimeString();
+    const time = new Date(this.state.time).toLocaleTimeString();
     return `
       <div>
         <span>${time}</span>
@@ -253,8 +266,8 @@ const app = render({
   template: '<Clock />',
 });
 
-// Gets the clock web component and then call the custom method
-// 'clock'
+// Gets the clock web component and then call the custom methods
+// 'start' and 'stop'
 const clock = app.$getChild('<Clock />');
 clock.start();
 
@@ -320,9 +333,9 @@ The method `$animate` updates `this.state.top` from `0` to `500px` and `this.sta
 And, `RView` takes care to update the style attributes `top` and `left` of the DOM element `rect` when the values of `state.top` and `state.left` change.
 
 
-### Components Exchanging Messages
+### Messages
 
-`RView` implements a mechanism that allows to components to communicate together. Look at the code:
+`RView` implements a mechanism that allows the components to communicate together. Look at the code:
 
 
 ```javascript
