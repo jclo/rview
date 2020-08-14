@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v0.0.0-beta.1
+ * RView v0.0.0
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -219,7 +219,7 @@
     };
 
     // Attaches a constant to View that provides the version of the lib.
-    RView.VERSION = '0.0.0-beta.1';
+    RView.VERSION = '0.0.0';
 
 
     // -- Export
