@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v0.0.0
+ * RView v0.0.1-beta.1
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -219,7 +219,7 @@
     };
 
     // Attaches a constant to View that provides the version of the lib.
-    RView.VERSION = '0.0.0';
+    RView.VERSION = '0.0.1-beta.1';
 
 
     // -- Export
@@ -2611,10 +2611,13 @@
      *  . _format                     formats the children object,
      *  . _formatTemplate             returns the template converted to an unique el,
      *  . _render                     renders the component and its children,
+     *  . _reRender                   renders again the passed-in component,
+     *  . _childRender                renders the children of the passed-in component,
      *
      *
      * Public Static Methods:
      *  . render                      renders the component and its children,
+     *  . reRender                    renders an existing component and its children,
      *
      *
      *
@@ -2803,6 +2806,47 @@
     }
     /* eslint-enable no-param-reassign */
 
+    /**
+     * Renders again the passed-in component.
+     *
+     * @function (arg1)
+     * @private
+     * @param {Object}          the component object,
+     * @returns {XMLString}     returns the XMLString representation,
+     * @since 0.0.0
+     */
+    function _reRender(co) {
+      let xml = co.render(co.state, co.props);
+      if (_.isLiteralObject(xml) && _.isString(xml.nodeName)) {
+        xml = Hyper.render(xml, {});
+      }
+      return _formatTemplate(xml, co.id)[0];
+    }
+
+    /**
+     * Renders the children of the passed-in component.
+     *
+     * @function (arg1, arg2)
+     * @private
+     * @param {Object}          the parent component object,
+     * @param {XMLString}       the parent component HTML representation,
+     * @returns {XMLString}     returns the XMLString representation,
+     * @since 0.0.0
+     */
+    /* eslint-disable no-param-reassign */
+    function _childRender(co, xml) {
+      if (co._cList) {
+        const childs = Object.keys(co._cList);
+        for (let i = 0; i < childs.length; i++) {
+          const child = co._cList[childs[i]];
+          xml = _childRender(child, xml.replace(child._tag, _reRender(child)));
+        }
+      }
+
+      return xml;
+    }
+    /* eslint-enable no-param-reassign */
+
 
     // -- Public Static Methods ------------------------------------------------
 
@@ -2820,6 +2864,23 @@
       render(co) {
         return _render(co);
       },
+
+      /**
+       * Renders an existing component and its children.
+       *
+       * Nota:
+       * This method differs from the previous one as it regenerates the XMLString
+       * of an existing component only (without creating the component).
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the component object,
+       * @returns {XMLString}   returns the XMLString representation,
+       * @since 0.0.0
+       */
+      reRender(co) {
+        return _childRender(co, _reRender(co));
+      },
     };
 
 
@@ -2829,7 +2890,7 @@
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 12, path: 'src/component/setstate.js', import: [6] */
+  /* index: 12, path: 'src/component/setstate.js', import: [6, 11] */
   (function() {
     /** ************************************************************************
      *
@@ -2864,6 +2925,7 @@
 
     // -- Local Modules
     const D = $__TREE.src.component.diffing;
+    const R = $__TREE.src.component.render;
 
 
     // -- Local Constants
@@ -2894,17 +2956,8 @@
         state[keys[i]] = params[keys[i]];
       }
 
-      // Get component template
-      let xml = component.render(component.state, component.props);
-      if (component._tdiv) {
-        xml = `<div id="${component.id}">${xml}</div>`;
-      } else if (component._ttag === 'div') {
-        xml = xml.replace(/^\s*<div/, `<div id="${component.id}"`);
-      } else if (component._ttag === 'header') {
-        xml = xml.replace(/^\s*<header/, `<header id="${component.id}"`);
-      } else {
-        throw new Error('_setState: gloups, this should never appear!');
-      }
+      // Rerender the component and its child:
+      const xml = R.reRender(component);
 
       // Parse all the children and see if they are differences and update only
       // the dom elements that need to be updated.

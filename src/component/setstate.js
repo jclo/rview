@@ -31,6 +31,7 @@
 
 // -- Local Modules
 import D from './diffing';
+import R from './render';
 
 
 // -- Local Constants
@@ -61,17 +62,8 @@ function _setState(component, params) {
     state[keys[i]] = params[keys[i]];
   }
 
-  // Get component template
-  let xml = component.render(component.state, component.props);
-  if (component._tdiv) {
-    xml = `<div id="${component.id}">${xml}</div>`;
-  } else if (component._ttag === 'div') {
-    xml = xml.replace(/^\s*<div/, `<div id="${component.id}"`);
-  } else if (component._ttag === 'header') {
-    xml = xml.replace(/^\s*<header/, `<header id="${component.id}"`);
-  } else {
-    throw new Error('_setState: gloups, this should never appear!');
-  }
+  // Rerender the component and its child:
+  const xml = R.reRender(component);
 
   // Parse all the children and see if they are differences and update only
   // the dom elements that need to be updated.
