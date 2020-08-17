@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v0.0.1-beta.1
+ * RView v0.0.1
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -237,7 +237,7 @@ const $__ES6GLOB = {};
     // Attaches constants to View that provide the vname and the version
     // of the lib.
     RView.NAME = 'RView';
-    RView.VERSION = '0.0.1-beta.1';
+    RView.VERSION = '0.0.1';
 
 
     // -- Export

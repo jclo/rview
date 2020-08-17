@@ -5,7 +5,7 @@
   * Improved $setState algorithm,
   * Improved diffing algorithm,
   * Removed @mobilabs/messenger and added a plugin mechanism,
-  * ...,
+  * Release.
 
 
 ### 0.0.0 (August 14, 2020)
