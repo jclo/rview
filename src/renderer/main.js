@@ -37,12 +37,13 @@
 
 
 // -- Vendor Modules
-import Messenger from '@mobilabs/messenger';
+// import Messenger from '@mobilabs/messenger';
 
 
 // -- Local Modules
 import V from '../component/main';
 import _ from '../lib/_';
+import P from '../plugin/main';
 
 
 // -- Local Constants
@@ -246,6 +247,7 @@ function _restore(view) {
  */
 function _componenterize(options, opt) {
   const { methods } = options || {}
+      , Messenger   = P.get('messenger')
       ;
 
   // Check if the node exists in the DOM. if not return null.
@@ -292,7 +294,7 @@ function _componenterize(options, opt) {
   // and return it.
   // The XML string of the initial node is saved because RView provides a
   // method RView.restore to returns the node to its initial state.
-  app._mess = Messenger();
+  app._mess = Messenger ? Messenger() : null;
   app._initialXMLNode = initialXMLNode;
   return app;
 }
@@ -307,7 +309,8 @@ function _componenterize(options, opt) {
  * @since 0.0.0
  */
 function _render(options) {
-  const opt = _filter(options)
+  const opt       = _filter(options)
+      , Messenger = P.get('messenger')
       ;
 
   if (!options.children && !options.template) {
@@ -335,7 +338,7 @@ function _render(options) {
   _attachTemplateDOM(opt);
 
   // Attach the messenger broker to the firstparent and all childs:
-  rootc._mess = Messenger();
+  rootc._mess = Messenger ? Messenger() : null;
   _attachMessenger(rootc, rootc._mess);
 
   // Now all the components are attached to the DOM, fire the DOM events

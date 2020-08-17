@@ -4,6 +4,7 @@
 
   * Improved $setState algorithm,
   * Improved diffing algorithm,
+  * Removed @mobilabs/messenger and added a plugin mechanism,
   * ...,
 
 

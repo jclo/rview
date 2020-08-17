@@ -26,6 +26,7 @@
  *  . render                      renders a View into the DOM,
  *  . restore                     restores the RView Component to its initial state,
  *  . remove                      removes the web component from the DOM,
+ *  . plugin                      attaches a plugin,
  *
  *
  *
@@ -49,6 +50,7 @@ import R from './renderer/main';
 import _ from './lib/_';
 import Hyperscript from './component/hyperscript';
 import Differ from './component/diffing';
+import P from './plugin/main';
 
 
 // -- Local Constants
@@ -167,9 +169,24 @@ const RView = {
   remove(rview) {
     return R.remove(rview);
   },
+
+  /**
+   * Attaches a plugin library.
+   *
+   * @method (arg1)
+   * @public
+   * @param {Object}        the pluginn library,
+   * @returns {Boolean}     returns true if it succeeds,
+   * @since 0.0.0
+   */
+  plugin(plug) {
+    return P.plugin(plug);
+  },
 };
 
-// Attaches a constant to View that provides the version of the lib.
+// Attaches constants to View that provide the vname and the version
+// of the lib.
+RView.NAME = '{{lib:name}}';
 RView.VERSION = '{{lib:version}}';
 
 

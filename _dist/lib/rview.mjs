@@ -41,12 +41,12 @@ const $__ES6GLOB = {};
    *
    * ************************************************************************ */
   /* eslint-disable */
-  let $__TREE = {"src":{"rview":{},"component":{"main":{},"hyperscript":{},"diffing":{},"generic":{},"$":{},"animate":{},"render":{},"setstate":{},"util":{}},"renderer":{"main":{}},"lib":{"_":{}}},"libin":{}};
+  let $__TREE = {"src":{"rview":{},"component":{"main":{},"hyperscript":{},"diffing":{},"generic":{},"$":{},"animate":{},"render":{},"setstate":{},"util":{}},"renderer":{"main":{}},"lib":{"_":{}},"plugin":{"main":{}}}};
   $__TREE.extend=function(o,m){var k=Object.keys(m);for(var i=0;i<k.length;i++){o[k[i]]=m[k[i]]}};
-  $__TREE_RUN_EMBED_LIB();
+  /* - */
   /* eslint-enable */
 
-  /* index: 1, path: 'src/rview.js', import: [2, 3, 4, 5, 6] */
+  /* index: 1, path: 'src/rview.js', import: [2, 3, 4, 5, 6, 7] */
   (function() {
     /** ************************************************************************
      *
@@ -76,6 +76,7 @@ const $__ES6GLOB = {};
      *  . render                      renders a View into the DOM,
      *  . restore                     restores the RView Component to its initial state,
      *  . remove                      removes the web component from the DOM,
+     *  . plugin                      attaches a plugin,
      *
      *
      *
@@ -99,6 +100,7 @@ const $__ES6GLOB = {};
     const { _ } = $__TREE.src.lib;
     const Hyperscript = $__TREE.src.component.hyperscript;
     const Differ = $__TREE.src.component.diffing;
+    const P = $__TREE.src.plugin.main;
 
 
     // -- Local Constants
@@ -217,9 +219,24 @@ const $__ES6GLOB = {};
       remove(rview) {
         return R.remove(rview);
       },
+
+      /**
+       * Attaches a plugin library.
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the pluginn library,
+       * @returns {Boolean}     returns true if it succeeds,
+       * @since 0.0.0
+       */
+      plugin(plug) {
+        return P.plugin(plug);
+      },
     };
 
-    // Attaches a constant to View that provides the version of the lib.
+    // Attaches constants to View that provide the vname and the version
+    // of the lib.
+    RView.NAME = 'RView';
     RView.VERSION = '0.0.1-beta.1';
 
 
@@ -229,7 +246,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 2, path: 'src/component/main.js', import: [4, 7, 8] */
+  /* index: 2, path: 'src/component/main.js', import: [4, 8, 9] */
   (function() {
     /** ************************************************************************
      *
@@ -330,7 +347,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 3, path: 'src/renderer/main.js', import: [9, 2, 4] */
+  /* index: 3, path: 'src/renderer/main.js', import: [2, 4, 7] */
   (function() {
     /** ************************************************************************
      *
@@ -371,12 +388,13 @@ const $__ES6GLOB = {};
 
 
     // -- Vendor Modules
-    const { Messenger } = $__TREE.libin;
+    // import Messenger from '@mobilabs/messenger';
 
 
     // -- Local Modules
     const V = $__TREE.src.component.main;
     const { _ } = $__TREE.src.lib;
+    const P = $__TREE.src.plugin.main;
 
 
     // -- Local Constants
@@ -580,6 +598,7 @@ const $__ES6GLOB = {};
      */
     function _componenterize(options, opt) {
       const { methods } = options || {}
+          , Messenger   = P.get('messenger')
           ;
 
       // Check if the node exists in the DOM. if not return null.
@@ -626,7 +645,7 @@ const $__ES6GLOB = {};
       // and return it.
       // The XML string of the initial node is saved because RView provides a
       // method RView.restore to returns the node to its initial state.
-      app._mess = Messenger();
+      app._mess = Messenger ? Messenger() : null;
       app._initialXMLNode = initialXMLNode;
       return app;
     }
@@ -641,7 +660,8 @@ const $__ES6GLOB = {};
      * @since 0.0.0
      */
     function _render(options) {
-      const opt = _filter(options)
+      const opt       = _filter(options)
+          , Messenger = P.get('messenger')
           ;
 
       if (!options.children && !options.template) {
@@ -669,7 +689,7 @@ const $__ES6GLOB = {};
       _attachTemplateDOM(opt);
 
       // Attach the messenger broker to the firstparent and all childs:
-      rootc._mess = Messenger();
+      rootc._mess = Messenger ? Messenger() : null;
       _attachMessenger(rootc, rootc._mess);
 
       // Now all the components are attached to the DOM, fire the DOM events
@@ -1443,7 +1463,118 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 7, path: 'src/component/generic.js', import: [4, 10, 11, 5, 12, 13] */
+  /* index: 7, path: 'src/plugin/main.js', import: [4] */
+  (function() {
+    /** ************************************************************************
+     *
+     * Manages the plugin.
+     *
+     * main.js is just a literal object that contains a set of functions. It
+     * can't be intantiated.
+     *
+     *
+     * Private Functions:
+     *  . none,
+     *
+     *
+     * Public Static Methods:
+     *  .
+     *
+     *
+     *
+     * @namespace    -
+     * @dependencies none
+     * @exports      -
+     * @author       -
+     * @since        0.0.0
+     * @version      -
+     * ********************************************************************** */
+    /* - */
+    /* eslint-disable one-var, semi-style, no-underscore-dangle */
+
+
+    // -- Vendor Modules
+    const { _ } = $__TREE.src.lib;
+
+
+    // -- Local Modules
+
+
+    // -- Local Constants
+
+
+    // -- Local Variables
+
+
+    // -- Private Functions ----------------------------------------------------
+
+    /**
+     * Attaches a valid plugin.
+     *
+     * @function (arg1, arg2)
+     * @private
+     * @param {Object}          the plugin db,
+     * @param {Function}        the plugin library,
+     * @returns {Boolean}       returns true if it succeeds,
+     * @since 0.0.0
+     */
+    function _plugin(db, plug) {
+      if (_.isLiteralObject(plug)
+        && plug.messenger && plug.messenger.NAME === 'Messenger') {
+        /* eslint-disable-next-line no-param-reassign */
+        db.messenger = plug.messenger;
+        return true;
+      }
+      return false;
+    }
+
+
+    // -- Public Static Methods ------------------------------------------------
+
+    const Plugin = {
+
+      /**
+       * The plugin db
+       */
+      _db: {
+        messenger: null,
+      },
+
+      /**
+       * Attaches a valid plugin.
+       *
+       * @method (arg1)
+       * @public
+       * @param {Object}        the plugin library,
+       * @returns {Boolean}     retuens true if it succeeds,
+       * @since 0.0.0
+       */
+      plugin(plug) {
+        return _plugin(this._db, plug);
+      },
+
+      /**
+       * Returns the requested plugin.
+       *
+       * @method (arg1)
+       * @public
+       * @param {String}        the plugin name,
+       * @returns {Function}    returns the requested plugin,
+       * @since 0.0.0
+       */
+      get(plugin) {
+        return _.isString(plugin) && this._db[plugin] ? this._db[plugin] : null;
+      },
+    };
+
+
+    // -- Export
+    $__TREE.extend($__TREE.src.plugin.main, Plugin);
+
+    /* eslint-enable one-var, semi-style, no-underscore-dangle */
+  }());
+
+  /* index: 8, path: 'src/component/generic.js', import: [4, 10, 11, 5, 12, 13] */
   (function() {
     /** ************************************************************************
      *
@@ -1725,7 +1856,12 @@ const $__ES6GLOB = {};
        * @since 0.0.0
        */
       $listen(event, listener) {
-        this._mess.subscribe(event, listener);
+        if (this._mess) {
+          this._mess.subscribe(event, listener);
+          return this;
+        }
+        /* eslint-disable-next-line no-console */
+        console.log('$listen: the plugin Messenger is not installed!');
         return this;
       },
 
@@ -1741,7 +1877,12 @@ const $__ES6GLOB = {};
        * @since 0.0.0
        */
       $emit(event, payload) {
-        this._mess.publish(event, payload);
+        if (this._mess) {
+          this._mess.publish(event, payload);
+          return this;
+        }
+        /* eslint-disable-next-line no-console */
+        console.log('$emit: the plugin Messenger is not installed!');
         return this;
       },
 
@@ -1802,7 +1943,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 8, path: 'src/component/$.js', import: [] */
+  /* index: 9, path: 'src/component/$.js', import: [] */
   (function() {
     /** ************************************************************************
      *
@@ -3136,510 +3277,6 @@ const $__ES6GLOB = {};
   }());
 
 
-  /* eslint-disable no-shadow */
-  function $__TREE_RUN_EMBED_LIB() {
-    /* index: 9, path: 'node_modules/@mobilabs/messenger/_dist/lib/messenger.js' */
-    /* export: Messenger, link: 'libin.messenger' */
-    /*! ****************************************************************************
-     * Messenger v0.0.5
-     *
-     * A tiny Javascript library to handle messages that carry a payload.
-     * (you can download it from npm or github repositories)
-     * Copyright (c) 2020 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
-     * Released under the MIT license. You may obtain a copy of the License
-     * at: http://www.opensource.org/licenses/mit-license.php).
-     * Built from ES6lib v1.0.0-beta.7.
-     * ************************************************************************** */
-    // ESLint declarations
-    /* - */
-    /* eslint strict: ["error", "function"] */
-    (function(root, factory) {
-      /* - */
-
-      /* istanbul ignore next */
-      if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define([''], factory);
-      } else if (typeof exports === 'object') {
-        // Node. Does not work with strict CommonJS, but
-        // only CommonJS-like environments that support module.exports,
-        // like Node.
-        /* eslint-disable-next-line no-param-reassign */
-        module.exports = factory(root);
-        /* eslint-disable-next-line no-param-reassign */
-        root.Messenger = factory(root);
-      } else {
-        // Browser globals.
-        /* eslint-disable-next-line no-param-reassign */
-        root.Messenger = factory(root);
-      }
-    }($__TREE.libin, (root) => {
-      /* - */
-
-      /** **************************************************************************
-       * _head provides the list of the constants that are defined at the global
-       * level of this module and are accessible to all. So, they are considered
-       * as reserved words for this library.
-       * ************************************************************************ */
-      /* eslint-disable one-var, no-unused-vars, semi-style */
-
-      let Messenger
-        , TM
-        ;
-
-      /* eslint-enable one-var, no-unused-vars, semi-style */
-
-      /** **************************************************************************
-       *
-       * Defines the Messenger library.
-       *
-       * messenger.js is built upon the Prototypal Instantiation pattern. It
-       * returns an object by calling its constructor. It doesn't use the new
-       * keyword.
-       *
-       * Private Functions:
-       *  . none,
-       *
-       *
-       * Constructor:
-       *  . Messenger                   creates and returns the Messenger object,
-       *
-       *
-       * Public Static Methods:
-       *  . noConflict                  returns a reference to this Messenger object,
-       *
-       *
-       * Public Methods:
-       *  . subscribe                   adds an event listener,
-       *  . subscribeOnce               adds an event listener that is fired once,
-       *  . unsubscribe                 removes an event listener,
-       *  . publish                     fires an event,
-       *
-       *
-       *
-       * @namespace    -
-       * @dependencies none
-       * @exports      -
-       * @author       -
-       * @since        0.0.0
-       * @version      -
-       * ************************************************************************ */
-      /* - */
-      /* eslint-disable one-var, semi-style, no-underscore-dangle */
-
-      (function() {
-        // START OF IIFE
-
-
-        // -- Module Path
-
-
-        // -- Local Modules
-
-
-        // -- Local Constants
-        // Saves the previous value of the library variable, so that it can be
-        // restored later on, if noConflict is used.
-        const previousMessenger = root.Messenger
-            ;
-
-
-        // -- Local Variables
-        let methods
-          ;
-
-
-        // -- Public ---------------------------------------------------------------
-
-        /**
-         * Returns the Messenger object.
-         * (Prototypal Instantiation Pattern)
-         *
-         * @constructor ()
-         * @public
-         * @param {}              -,
-         * @returns {Object}      returns the Messenger object,
-         * @since 0.0.0
-         */
-        Messenger = function() {
-          const obj = Object.create(methods);
-          // Initializes the message database to empty:
-          obj._db = {};
-          return obj;
-        };
-
-        // Attaches a constant to Messenger that provides the version of the lib.
-        Messenger.VERSION = '0.0.5';
-
-
-        // -- Public Static Methods ------------------------------------------------
-
-        /**
-         * Returns a reference to this Messenger object.
-         *
-         * Nota:
-         * Running Messenger in noConflict mode, returns the Messenger variable to its
-         * _ previous owner.
-         *
-         * @method ()
-         * @public
-         * @param {}              -,
-         * @returns {Object}      returns the Messenger object,
-         * @since 0.0.0
-         */
-        /* istanbul ignore next */
-        Messenger.noConflict = function() {
-          /* eslint-disable-next-line no-param-reassign */
-          root.Messenger = previousMessenger;
-          return this;
-        };
-
-
-        // -- Public Methods -------------------------------------------------------
-
-        methods = {
-
-          /**
-          * Adds an event listener.
-          *
-          * @method (arg1, arg2)
-          * @public
-          * @param {String}      the event,
-          * @param {Function}    the event handler,
-          * @returns {Object}    returns this,
-          * @since 0.0.0
-          */
-          subscribe(event, listener) {
-            TM.subscribe(this._db, event, listener);
-            return this;
-          },
-
-          /**
-           * Adds an event listener that is fired once.
-           *
-           * @method (arg1, arg2)
-           * @public
-           * @param {String}      the event,
-           * @param {Function}    the event handler,
-           * @returns {Object}    returns this,
-           * @since 0.0.0
-           */
-          subscribeOnce(event, listener) {
-            TM.subscribeOnce(this._db, event, listener);
-            return this;
-          },
-
-          /**
-           * Removes an event listener.
-           *
-           * @method (arg1, arg2)
-           * @public
-           * @param {String}      the event,
-           * @param {Function}    the event handler,
-           * @returns {Object}    returns this,
-           * @since 0.0.0
-           */
-          unsubscribe(event, listener) {
-            TM.unsubscribe(this._db, event, listener);
-            return this;
-          },
-
-          /**
-           * Fires an event.
-           *
-           * @method (arg1, arg2)
-           * @public
-           * @param {String}      the event,
-           * @param {Object}      the payload,
-           * @returns {Object}    returns this,
-           * @since 0.0.0
-           */
-          publish(event, payload) {
-            TM.publish(this._db, event, payload);
-            return this;
-          },
-        };
-
-        // END OF IIFE
-      }());
-      /* eslint-enable one-var, semi-style, no-underscore-dangle */
-
-      /** **************************************************************************
-       *
-       * Implements the Messenger methods.
-       *
-       * messenger.js is just a literal object that contains a set of functions. It
-       * can't be intantiated.
-       *
-       * Private Functions:
-       *  . _schema                     returns the event db schema,
-       *  . _add                        adds a new event into the db,
-       *  . _addEvents                  adds the events to the db,
-       *  . _publish                    fires an event,
-       *  . _unsubscribe                removes an event listener,
-       *  . _subscribeOnce              adds an event listener that is fired once,
-       *  . _subscribe                  adds an event listener,
-       *
-       *
-       * Private Static Methods:
-       *  . none,
-       *
-       *
-       * Public Static Methods:
-       *  . subscribe                   adds an event listener,
-       *  . subscribeOnce               adds an event listener that is fired once,
-       *  . unsubscribe                 removes an event listener,
-       *  . publish                     fires an event,
-       *
-       *
-       *
-       * @namespace    -
-       * @dependencies none
-       * @exports      -
-       * @author       -
-       * @since        0.0.0
-       * @version      -
-       * ************************************************************************ */
-      /* eslint-disable one-var, semi-style, no-underscore-dangle */
-
-      (function() {
-        // START OF IIFE
-
-
-        // -- Module Path
-
-
-        // -- Local Modules
-
-
-        // -- Local Constants
-
-
-        // -- Local Variables
-
-
-        // -- Private Functions ----------------------------------------------------
-
-        /**
-         * Returns the event db schema.
-         *
-         * @function ()
-         * @private
-         * @returns {Object}      returns the schema,
-         * @since 0.0.0
-         */
-        function _schema() {
-          return {
-            listeners: [],
-            listenersOnce: [],
-          };
-        }
-
-        /**
-         * Adds a new event into the db.
-         *
-         * @function (arg1, arg2)
-         * @private
-         * @param {Object}        the event db,
-         * @param {String}        the event,
-         * @returns {}            -,
-         * @since 0.0.0
-         */
-        function _add(db, e) {
-          if (!Object.prototype.hasOwnProperty.call(db, e)) {
-            /* eslint-disable-next-line no-param-reassign */
-            db[e] = _schema();
-          }
-        }
-
-        /**
-         * Adds the events to the db.
-         *
-         * @function (arg1, arg2)
-         * @private
-         * @param {Object}        the event db,
-         * @param {String/Array}  the event,
-         * @returns {}            -,
-         * @since 0.0.0
-         */
-        function _addEvents(db, e) {
-          if (typeof e === 'string') {
-            _add(db, e);
-          }
-        }
-
-        /**
-         * Fires an event.
-         *
-         * @function (arg1, arg2, arg3)
-         * @private
-         * @param {Object}        the event db,
-         * @param {String}        the event,
-         * @param {Object}        the payload,
-         * @returns {}            -,
-         * @since 0.0.0
-         */
-        function _publish(db, event, payload) {
-          if (typeof event === 'string' && Object.prototype.hasOwnProperty.call(db, event)) {
-            // Fires all the 'classic' listeners:
-            for (let i = 0; i < db[event].listeners.length; i++) {
-              db[event].listeners[i](payload);
-            }
-            // Fires all the listeners for once:
-            for (let i = 0; i < db[event].listenersOnce.length; i++) {
-              db[event].listenersOnce[i](payload);
-            }
-            // Remove all the event listeners for listener once:
-            db[event].listenersOnce.splice(0, db[event].listenersOnce.length);
-          }
-        }
-
-        /**
-         * Removes an event listener.
-         *
-         * @function (arg1, arg2, arg3)
-         * @private
-         * @param {Object}        the event db,
-         * @param {String}        the event,
-         * @param {Function}      the listener,
-         * @returns {}            -,
-         * @since 0.0.0
-         */
-        function _unsubscribe(db, event, listener) {
-          let index;
-
-          if (typeof event === 'string'
-              && typeof listener === 'function'
-              && Object.prototype.hasOwnProperty.call(db, event)) {
-            index = db[event].listeners.indexOf(listener);
-            if (index >= 0) {
-              db[event].listeners.splice(index, 1);
-            }
-            index = db[event].listenersOnce.indexOf(listener);
-            if (index >= 0) {
-              db[event].listenersOnce.splice(index, 1);
-            }
-          }
-        }
-
-        /**
-         * Adds an event listener that is fired once.
-         *
-         * @function (arg1, arg2, arg3, arg4)
-         * @private
-         * @param {Object}        the event db,
-         * @param {String}        the event,
-         * @param {Function}      the listener,
-         * @param {Boolean}       listens for any events if true, registered otherwise,
-         * @returns {}            -,
-         * @since 0.0.0
-         */
-        function _subscribeOnce(db, event, listener) {
-          _addEvents(db, event);
-          if (typeof event === 'string'
-              && typeof listener === 'function'
-              && Object.prototype.hasOwnProperty.call(db, event)) {
-            db[event].listenersOnce.push(listener);
-          }
-        }
-
-        /**
-         * Adds an event listener.
-         *
-         * @function (arg1, arg2, arg3, arg4)
-         * @private
-         * @param {Object}        the event db,
-         * @param {String}        the event,
-         * @param {Function}      the listener,
-         * @param {Boolean}       listens for any events if true, registered otherwise,
-         * @returns {}            -,
-         * @since 0.0.0
-         */
-        function _subscribe(db, event, listener) {
-          _addEvents(db, event);
-          if (typeof event === 'string'
-              && typeof listener === 'function'
-              && Object.prototype.hasOwnProperty.call(db, event)) {
-            db[event].listeners.push(listener);
-          }
-        }
-
-
-        // -- Public Static Methods ------------------------------------------------
-
-        TM = {
-
-          /**
-           * Adds an event listener.
-           *
-           * @method (arg1, arg2, arg3)
-           * @public
-           * @param {Object}      the event db,
-           * @param {String}      the event,
-           * @param {Function}    the event handler,
-           * @returns {}          -,
-           * @since 0.0.0
-           */
-          subscribe(db, event, listener) {
-            _subscribe(db, event, listener);
-          },
-
-          /**
-           * Adds an event listener that is fired once.
-           *
-           * @method (arg1, arg2, arg3)
-           * @public
-           * @param {Object}      the event db,
-           * @param {String}      the event,
-           * @param {Function}    the event handler,
-           * @returns {}          -,
-           * @since 0.0.0
-           */
-          subscribeOnce(db, event, listener) {
-            _subscribeOnce(db, event, listener);
-          },
-
-          /**
-           * Removes an event listener.
-           *
-           * @method (arg1, arg2, arg3)
-           * @public
-           * @param {Object}      the event db,
-           * @param {String}      the event,
-           * @param {Function}    the event handler,
-           * @returns {}          -,
-           * @since 0.0.0
-           */
-          unsubscribe(db, event, listener) {
-            _unsubscribe(db, event, listener);
-          },
-
-          /**
-           * Fires an event.
-           *
-           * @method (arg1, arg2, arg3)
-           * @public
-           * @param {Object}      the event db,
-           * @param {String}      the event,
-           * @param {Object}      the payload,
-           * @returns {}          -,
-           * @since 0.0.0
-           */
-          publish(db, event, payload) {
-            _publish(db, event, payload);
-          },
-        };
-
-        // END OF IIFE
-      }());
-      /* eslint-enable one-var, semi-style, no-underscore-dangle */
-
-      // Returns the library name:
-      return Messenger;
-    }));
-  }
-  /* eslint-enable no-shadow */
-
   // Returns the library name:
   return $__TREE.src.rview;
 }));
@@ -3648,3 +3285,5 @@ const $__ES6GLOB = {};
 export const { h } = $__ES6GLOB.RView;
 export const { Component } = $__ES6GLOB.RView;
 export const { render } = $__ES6GLOB.RView;
+export const { plugin } = $__ES6GLOB.RView;
+export const { RView } = $__ES6GLOB;

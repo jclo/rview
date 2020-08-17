@@ -80,7 +80,9 @@ function does6lib() {
   let exportM = '\n// -- Export\n';
   exportM += `export const { h } = ${ES6GLOB}.${libname};\n`;
   exportM += `export const { Component } = ${ES6GLOB}.${libname};\n`;
-  exportM += `export const { render } = ${ES6GLOB}.${libname};`;
+  exportM += `export const { render } = ${ES6GLOB}.${libname};\n`;
+  exportM += `export const { plugin } = ${ES6GLOB}.${libname};\n`;
+  exportM += `export const { RView } = ${ES6GLOB};`;
 
   return src(`${destination}/${'generic'}.js`)
     .pipe(replace('{{lib:es6:define}}', `const ${ES6GLOB} = {};`))

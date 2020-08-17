@@ -30,7 +30,12 @@
 
     <!-- Add your scripts here -->
     <script type="module">
-      import { h, Component, render } from '../lib/rview.mjs';
+      import Messenger from 'https://www.unpkg.com/@mobilabs/messenger?module';
+      import { h, Component, render, plugin } from '../lib/rview.mjs';
+
+      // plugin the library Messenger that provides messaging support
+      // to RView.
+      console.log(plugin({ messenger: Messenger }));
 
       const Hello = Component({
         init() {
@@ -73,7 +78,7 @@
           <Hi />
         `,
       });
-      // console.log(app);
+      console.log(app);
     </script>
   </body>
 </html>
