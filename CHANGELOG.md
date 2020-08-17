@@ -1,8 +1,9 @@
 ### HEAD
 
-### 0.0.1 (August 15, 2020)
+### 0.0.1 (August 17, 2020)
 
   * Improved $setState algorithm,
+  * Improved diffing algorithm,
   * ...,
 
 

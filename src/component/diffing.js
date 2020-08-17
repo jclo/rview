@@ -91,7 +91,7 @@ function _getNodeType(node) {
  * @since 0.0.0
  */
 function _getNodeContent(node) {
-  if (node.children && node.children.length > 0) return null;
+  if (node.childNodes && node.childNodes.length > 0) return null;
   return node.textContent;
 }
 
@@ -145,8 +145,8 @@ function _updateAttributes(node, elem) {
  */
 function _diff(source, target) {
   // Get arrays of children nodes
-  const sourceNodes = Array.prototype.slice.call(source.children);
-  const domNodes = Array.prototype.slice.call(target.children);
+  const sourceNodes = Array.prototype.slice.call(source.childNodes);
+  const domNodes = Array.prototype.slice.call(target.childNodes);
 
   // If there are extra elements in DOM, remove them
   let count = domNodes.length - sourceNodes.length;
@@ -182,12 +182,14 @@ function _diff(source, target) {
     }
 
     // If the attributes are different update them:
-    if (node.hasAttributes() || domNodes[index].hasAttributes()) {
+    const type = _getNodeType(node);
+    if (type !== 'text' && type !== 'comment'
+      && (node.hasAttributes() || domNodes[index].hasAttributes())) {
       _updateAttributes(node, domNodes[index]);
     }
 
     // If the target element should be empty, wipe it
-    if (domNodes[index].children.length > 0 && node.children.length < 1) {
+    if (domNodes[index].childNodes.length > 0 && node.childNodes.length < 1) {
       // console.log('empty target element');
       domNodes[index].innerHTML = '';
       return;
@@ -195,15 +197,17 @@ function _diff(source, target) {
 
     // If element is empty and shouldn't be, build it up.
     // This uses a document fragment to minimize reflows
-    if (domNodes[index].children.length < 1 && node.children.length > 0) {
+    if (domNodes[index].childNodes.length < 1 && node.childNodes.length > 0) {
       const fragment = document.createDocumentFragment();
       _diff(node, fragment);
       // console.log('append fragment');
       domNodes[index].appendChild(fragment);
+      return;
     }
 
     // If there are existing child elements that need to be modified, diff them
-    if (node.children.length > 0) {
+    if (node.childNodes.length > 0) {
+      // console.log(node);
       _diff(node, domNodes[index], true);
     }
   });
