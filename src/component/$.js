@@ -6,7 +6,6 @@
  * factory pattern. Thus, $(sel) returns the selected node and the methods
  * listed below.
  *
- *
  * Private Functions:
  *  . none,
  *

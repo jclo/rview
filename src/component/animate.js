@@ -5,7 +5,6 @@
  * animate.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
  *
- *
  * Private Functions:
  *  . _swing                      defines the default easing method,
  *  . _isEasingFunction           checks if the argument is an Easing function,

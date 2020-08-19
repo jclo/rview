@@ -5,7 +5,6 @@
  * render.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
  *
- *
  * Private Functions:
  *  . _format                     formats the children object,
  *  . _formatTemplate             returns the template converted to an unique el,

@@ -229,7 +229,7 @@ render({
 Here we created a clock that is incremented every second. You should easily understand how it works as it doesn't introduce new concepts.
 
 
-### A Start Stop Clock
+### A Start/Stop Clock
 
 Now, we are going to create a `clock` that we can `drive` from outside:
 
@@ -397,10 +397,13 @@ Simple isn't it!
 Static Methods                  | Description
 ```
 ```
+whoami()                        | returns the library name and version,
+h(tag, attribute, value)        | converts an hyperscript format to an XML string,
 Component(options)              | returns the child component constructor,
 render({...})                   | renders the components in the DOM and returns the root component object,
 restore(app),                   | restores the DOM to its initial state,
 remove(app)                     | removes the RView app from the DOM and delete it (use with care),
+plugin({name, ref})             | attaches a plugin,
 ```
 
 ### Component Methods
@@ -420,7 +423,7 @@ $animate()                      | updates state properties from an initial value
 $getChild(tag/id/name)          | returns the matching child object,
 $getChildren()                  | returns the list of the first level children,
 $getIdAndName()                 | returns the component's Id and name,
-$hyperscript(h)                 | returns an XML string of the hyperscript template,
+$hyperscript(args)              | converts an hyperscript format to an XML string,
 $setState()                     | updates a state value and updates the DOM accordingly,
 $listen(event, handler)         | listens a message,
 $emit(event, payload)           | sends a message,

@@ -1,6 +1,6 @@
 // ESLint declarations:
-/* global describe, it */
-/* eslint one-var: 0, no-unused-vars: 0, semi-style: 0, no-underscore-dangle: 0 */
+/* global describe */
+/* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0 */
 
 
 // -- Vendor Modules
@@ -10,9 +10,11 @@ const { JSDOM }         = require('jsdom')
 
 
 // -- Local Modules
-const RView = require('../src/rview').default
-    , test_ = require('./int/lib/_')
-    , testview = require('./int/rview')
+const // RView = require('../index')
+    RView     = require('../src/rview').default
+    // , pack     = require('../package.json')
+    , testlib = require('./int/lib')
+    , test_   = require('./int/lib/_')
 
     // , testrender1 = require('./int/renderer/render_1')
     //
@@ -36,6 +38,7 @@ const RView = require('../src/rview').default
 
 
 // -- Local Constants
+// const libname = 'RView';
 
 
 // -- Local Variables
@@ -70,10 +73,20 @@ global.navigator = { userAgent: 'node.js' };
 global.XMLSerializer = XMLSerializer;
 global.DOMParser = dom.window.DOMParser;
 
-describe('Test RView Library:', () => {
-  test_(RView);
-  testview(RView);
+// Nota:
+// If you choose 'RView = require('../index')', 'display-coverage' will
+// show the coverage of all the library in one file.
+//
+// If you want to display the coverage file by file, you must choose
+// 'RView = require('../src/prototypal').default'. But, in this case,
+// the build isn't done, so you should pass '{{lib:name}}' as libname and
+// '{{lib:version}}' as the library version.
 
+describe('Test RView:', () => {
+  testlib(RView, '{{lib:name}}', '{{lib:version}}');
+  // testlib(RView, libname, pack.version);
+
+  // test_(RView);
 
   //
   // // test View.render
@@ -99,4 +112,6 @@ describe('Test RView Library:', () => {
   // hhello(RView, 'stress5');
   // mhello(RView, 'stress6');
   // anim(RView, 'stress7');
+
+
 });

@@ -11,7 +11,6 @@
  * diffing.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
  *
- *
  * Private Functions:
  *  . _stringToHTML               converts an XML String to an HTML object,
  *  . _getNodeType                returns the tag name,

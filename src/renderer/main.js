@@ -5,7 +5,6 @@
  * main.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
  *
- *
  * Private Functions:
  *  . _fireEvents                 fires the DOM events,
  *  . _attachMessenger            attaches the messenger object to all childs,

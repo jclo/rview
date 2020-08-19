@@ -5,7 +5,6 @@
  * hyperscript.js is just a literal object that contains a set of functions.
  * It can't be intantiated.
  *
- *
  * Private Functions:
  *  . _reshuffle                  rebuilds the component tags,
  *  . _stringify                  returns the attribute value converted to a string,

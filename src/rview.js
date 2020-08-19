@@ -7,20 +7,20 @@
  * a method 'noconflict' to return the View variable to a previous owner if
  * any.
  *
- * view.js is just a literal object that contains a set of functions. It
+ * rview.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
- *
  *
  * Private Functions:
  *  . none,
  *
  *
  * Private Static Methods:
- *  . _setTestMode                returns the internal objects for testing purpose,
+ *  . _setTestMode                returns internal objects for testing purpose,
  *
  *
  * Public Static Methods:
- *  . noConflict                  returns a reference to this View object,
+ *  . noConflict                  returns a reference to this RView object,
+ *  . whoami                      returns the library name and version,
  *  . h                           converts the passed-in arguments to an object,
  *  . Component                   returns the extended View component,
  *  . render                      renders a View into the DOM,
@@ -62,17 +62,25 @@ const previousRView = root.RView;
 // -- Local Variables
 
 
+// -- Main -----------------------------------------------------------------
+
 const RView = {
+
+  // Useful to retrieve the library name and version when it is
+  // embedded in another library as an object:
+  _library: { name: '{{lib:name}}', version: '{{lib:version}}' },
+
 
   // -- Private Static Methods ---------------------------------------------
 
   /**
    * Returns the internal objects for testing purpose.
+   * (must not be deleted)
    *
    * @method ()
    * @private
    * @param {}              -,
-   * @returns {Array}       returns internal objects,
+   * @returns {Object}      returns a list of internal objects,
    * @since 0.0.0
    */
   _setTestMode() {
@@ -83,23 +91,37 @@ const RView = {
   // -- Public Static Methods ----------------------------------------------
 
   /**
-   * Returns a reference to this View object.
+   * Returns a reference to this RView object.
+   * (must not be deleted)
    *
    * Nota:
-   * Running View in noConflic mode, returns the View variable to
+   * Running RView in noConflict mode, returns the RView variable to
    * its previous owner.
    *
    * @method ()
    * @public
    * @param {}              -,
-   * @returns {Object}      returns the View object,
+   * @returns {Object}      returns the RView object,
    * @since 0.0.0
    */
-  /* istanbul ignore next */
   noConflict() {
     /* eslint-disable-next-line no-param-reassign */
     root.RView = previousRView;
     return this;
+  },
+
+  /**
+   * Returns the library name and version.
+   * (must not be deleted)
+   *
+   * @method ()
+   * @public
+   * @param {}              -,
+   * @returns {Object}      returns the library name and version,
+   * @since 0.0.0
+   */
+  whoami() {
+    return this._library;
   },
 
   /**
@@ -184,8 +206,7 @@ const RView = {
   },
 };
 
-// Attaches constants to View that provide the vname and the version
-// of the lib.
+// Attaches constants to RView that provide name and version of the lib.
 RView.NAME = '{{lib:name}}';
 RView.VERSION = '{{lib:version}}';
 

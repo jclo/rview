@@ -5,7 +5,6 @@
  * main.js is just a literal object that contains a set of functions. It
  * can't be intantiated.
  *
- *
  * Private Functions:
  *  . none,
  *

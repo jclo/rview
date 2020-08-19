@@ -7,7 +7,6 @@
  * returns an object by calling its constructor. It doesn't use the new
  * keyword.
  *
- *
  * Private Functions:
  *  . none,
  *
