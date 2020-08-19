@@ -3,7 +3,7 @@
 ### 0.0.2 (August 19, 2020)
 
   * Updated the README,
-  * ...,
+  * Release.
 
 
 ### 0.0.1 (August 17, 2020)
