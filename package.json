@@ -1,6 +1,6 @@
 {
   "name": "@mobilabs/rview",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "A companion Reactive View library for building web applications",
   "main": "_dist/lib/rview.js",
   "minified": "_dist/lib/rview.min.js",
@@ -13,7 +13,7 @@
     "dev": "gulp rundev",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require esm ./test/main.js",
     "display-coverage": "opener ./coverage/lcov-report/index.html",
-    "check-coverage": "nyc check-coverage --statements 0 --branches 0 --functions 0 --lines 0",
+    "check-coverage": "nyc check-coverage --statements 5 --branches 0 --functions 10 --lines 5",
     "report-coverage": "nyc report --reporter=text-lcov | coveralls",
     "report": "nyc report",
     "makedist": "gulp makedist",
@@ -42,6 +42,7 @@
   "homepage": "https://github.com/jclo/rview",
   "dependencies": {},
   "devDependencies": {
+    "@mobilabs/es6kadoo": "1.0.2",
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
@@ -58,10 +59,10 @@
     "gulp-uglify-es": "^2.0.0",
     "husky": "^4.2.5",
     "jsdom": "^16.4.0",
-    "kadoo": "0.0.0-beta.7",
-    "mocha": "^8.1.1",
+    "kadoo": "^1.0.0",
+    "mocha": "^8.1.2",
     "nyc": "^15.1.0",
-    "open": "^7.1.0",
+    "open": "^7.2.0",
     "opener": "^1.5.1",
     "xmldom": "^0.3.0"
   },

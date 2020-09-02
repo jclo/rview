@@ -12,6 +12,10 @@ const { expect } = require('chai')
 
 
 // -- Local Constants
+// Number of properties added by your library.
+const OWNPROPS = 6
+    , TESTMODE = 4
+    ;
 
 
 // -- Local Variables
@@ -25,11 +29,14 @@ module.exports = function(RView, libname, version) {
         expect(RView).to.be.an('object');
       });
 
-      it('Expects RView to own 12 properties.', () => {
-        expect(Object.keys(RView)).to.be.an('array').that.has.lengthOf(12);
+      it(`Expects RView to own ${6 + OWNPROPS} properties.`, () => {
+        expect(Object.keys(RView)).to.be.an('array').that.has.lengthOf(6 + OWNPROPS);
       });
     });
 
+
+    // -- This section must not be modified --
+    // NAME, VERSION, _library, _setTestMode, noConflict, whoami
     describe('Check the owned generic properties:', () => {
       it(`Expects RView to own the property "NAME" whose value is "${libname}".`, () => {
         expect(RView).to.own.property('NAME').that.is.equal(libname);
@@ -57,17 +64,17 @@ module.exports = function(RView, libname, version) {
 
       describe('Test the owned generic properties:', () => {
         it('Expects the property "_library" to own two properties.', () => {
-          expect(Object.keys(RView.whoami())).to.be.an('array').that.has.lengthOf(2);
+          expect(Object.keys(RView._library)).to.be.an('array').that.has.lengthOf(2);
         });
         it(`Expects the property "_library" to own the property "name" whose value is "${libname}".`, () => {
-          expect(RView.whoami()).to.own.property('name').that.is.equal(libname);
+          expect(RView._library).to.own.property('name').that.is.equal(libname);
         });
         it(`Expects the property "_library" to own the property "version" whose value is "${version}".`, () => {
-          expect(RView.whoami()).to.own.property('version').that.is.equal(version);
+          expect(RView._library).to.own.property('version').that.is.equal(version);
         });
 
-        it('Expects the property "_setTestMode" to return an array with 4 items.', () => {
-          expect(RView._setTestMode()).to.be.an('array').that.has.lengthOf(4);
+        it(`Expects the property "_setTestMode" to return an array with ${TESTMODE} item(s).`, () => {
+          expect(RView._setTestMode()).to.be.an('array').that.has.lengthOf(TESTMODE);
         });
 
         it('Expects the property "noConflict" to return an object.', () => {
@@ -89,6 +96,10 @@ module.exports = function(RView, libname, version) {
       });
     });
 
+
+    // -- This section must be adapted --
+    // Replace here 'getString' and 'getArray' by the inherited properties
+    // added by your library.
     describe('Check the owned specific properties:', () => {
       it('Expects RView to own the property "h" that is a function.', () => {
         expect(RView).to.own.property('h').that.is.a('function');
@@ -114,8 +125,11 @@ module.exports = function(RView, libname, version) {
         expect(RView).to.own.property('plugin').that.is.a('function');
       });
 
+
       describe('Test the owned specific properties:', () => {
-        //
+        it('Expects the property ... to be done!".', () => {
+          expect(true).to.be.equal(true);
+        });
       });
     });
   });

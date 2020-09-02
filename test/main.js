@@ -10,22 +10,11 @@ const { JSDOM }         = require('jsdom')
 
 
 // -- Local Modules
-const // RView = require('../index')
-    RView     = require('../src/rview').default
-    // , pack     = require('../package.json')
+const RView   = require('../src/rview').default
+    // RView  = require('../index.js')
+    // , pack = require('../package.json')
     , testlib = require('./int/lib')
     , test_   = require('./int/lib/_')
-
-    // , testrender1 = require('./int/renderer/render_1')
-    //
-    // , testcomp = require('./int/component/props')
-    // , test$ = require('./int/component/props$')
-    // , testcomp1 = require('./int/component/webcomp')
-    // , testhyper = require('./int/component/hyperscript')
-    // , testdiff = require('./int/component/diffing')
-    // , testcrender = require('./int/component/rendering')
-    //
-    // , testrender2 = require('./int/renderer/render_2')
 
     // , hello = require('./stress/hello')
     // , clock = require('./stress/clock')
@@ -83,26 +72,10 @@ global.DOMParser = dom.window.DOMParser;
 // '{{lib:version}}' as the library version.
 
 describe('Test RView:', () => {
-  testlib(RView, '{{lib:name}}', '{{lib:version}}');
-  // testlib(RView, libname, pack.version);
+  // testlib(RView, libname, pack.version, 'without new');
+  testlib(RView, '{{lib:name}}', '{{lib:version}}', 'without new');
 
-  // test_(RView);
-
-  //
-  // // test View.render
-  // testrender1(View);
-  //
-  // // test view.Component
-  // testcomp(View);
-  // test$(View);
-  // testcomp1(View);
-  // testhyper(View);
-  // testdiff(View);
-  // testcrender(View);
-  //
-  // // test View.render/restore/remove/replace
-  // testrender2(View);
-  //
+  test_(RView);
 
   // Stress tests
   // hello(RView, 'stress1');
@@ -112,6 +85,4 @@ describe('Test RView:', () => {
   // hhello(RView, 'stress5');
   // mhello(RView, 'stress6');
   // anim(RView, 'stress7');
-
-
 });

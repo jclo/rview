@@ -38,7 +38,7 @@
  * @version      -
  * ********************************************************************** */
 /* global root */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* eslint-disable no-underscore-dangle */
 
 
 // -- Vendor Modules
@@ -95,7 +95,7 @@ const RView = {
    * (must not be deleted)
    *
    * Nota:
-   * Running RView in noConflict mode, returns the RView variable to
+   * Running RView in no conflict mode, returns the RView variable to
    * its previous owner.
    *
    * @method ()
@@ -214,4 +214,4 @@ RView.VERSION = '{{lib:version}}';
 // -- Export
 export default RView;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* eslint-enable no-underscore-dangle */
