@@ -1,10 +1,10 @@
 ### HEAD
 
-### 1.1.0 (September 18, 2020)
+### 1.0.1 (September 18, 2020)
 
   * Added the method makeid to retrieve an unique pattern id,
   * Improved the diffing algorithm,
-  * ...,
+  * Release.
 
 
 ### 1.0.0 (September 2, 2020)
