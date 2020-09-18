@@ -19,6 +19,7 @@
  *  . isLiteralObject             is a given variable a literal object?
  *  . isFunction                  is a given variable a function?
  *  . isArray                     is a given value an array?
+ *  . _makeid                     returns a unique string pattern,
  *
  *
  *
@@ -193,6 +194,28 @@ const _ = {
    */
   isArray(obj) {
     return Object.prototype.toString.call(obj) === '[object Array]';
+  },
+
+  /**
+   * Returns a unique string pattern with a predefined length.
+   *
+   * @method ([arg1])
+   * @public
+   * @param {Number}      the length of the string. Default is 16 chars,
+   * @returns {String}    returns a random string from the charset defined in c,
+   * @since 0.0.0
+   */
+  makeid(l) {
+    const ll = this.isNumber(l) ? l : 16
+        , cm = 'ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghijklmnopqrstuvwxyz'
+        , c  = `0123456789${cm}`
+        ;
+
+    let id = cm.charAt(Math.floor(Math.random() * cm.length));
+    for (let i = 0; i < (ll - 1); i++) {
+      id += c.charAt(Math.floor(Math.random() * c.length));
+    }
+    return id;
   },
 };
 

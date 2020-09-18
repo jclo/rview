@@ -27,6 +27,7 @@
  *  . restore                     restores the RView Component to its initial state,
  *  . remove                      removes the web component from the DOM,
  *  . plugin                      attaches a plugin,
+ *  . makeid                      returns a new component id,
  *
  *
  *
@@ -51,6 +52,7 @@ import _ from './lib/_';
 import Hyperscript from './component/hyperscript';
 import Differ from './component/diffing';
 import P from './plugin/main';
+import Config from './component/config';
 
 
 // -- Local Constants
@@ -203,6 +205,19 @@ const RView = {
    */
   plugin(plug) {
     return P.plugin(plug);
+  },
+
+  /**
+   * Returns a new component id.
+   *
+   * @method ([arg1])
+   * @public
+   * @param {}            -,
+   * @returns {String}    returns a random string,
+   * @since 0.0.0
+   */
+  makeid() {
+    return _.makeid(Config.idLength);
   },
 };
 

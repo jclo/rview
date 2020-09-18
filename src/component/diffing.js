@@ -40,6 +40,7 @@
 
 
 // -- Local Modules
+import C from './config';
 
 
 // -- Local Constants
@@ -159,6 +160,18 @@ function _diff(source, target) {
 
   // Diff each item in the templateNodes
   sourceNodes.forEach((node, index) => {
+    if (_getNodeType(node) === 'div'
+        && node.hasAttribute('id') && node.getAttribute('id').length === C.idLength
+        && domNodes[index]) {
+      // if the attribute is a RView child component we don't explore it.
+      // Diffing only checks the difference between the component and the
+      // DOM for the given component excluding the childs components. The goal
+      // is to not interfere with a child component own updating mechanism.
+      // If it doesn't exist in the DOM, it is an anchor for an external
+      // component, so we add it to the DOM.
+      return;
+    }
+
     // If the element doesn't exist in the DOM, create it:
     if (!domNodes[index]) {
       // console.log('add a node!');

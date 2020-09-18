@@ -116,5 +116,14 @@ module.exports = function(RView) {
         expect(_.isArray([1, 2, 3])).to.be.true;
       });
     });
+
+    describe('Test the method _.makeid():', () => {
+      it('Expects _.makeid() to return a string with 16 chars.', () => {
+        expect(_.makeid()).to.be.a('string').that.has.lengthOf(16);
+      });
+      it('Expects _.makeid(8) to return a string with 8 chars.', () => {
+        expect(_.makeid(8)).to.be.a('string').that.has.lengthOf(8);
+      });
+    });
   });
 };

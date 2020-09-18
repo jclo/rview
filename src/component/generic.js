@@ -73,6 +73,7 @@ import R from './render';
 import H from './hyperscript';
 import S from './setstate';
 import Util from './util';
+import C from './config';
 
 
 // -- Local Constants
@@ -120,7 +121,8 @@ const methods = {
 
     // init public:
     // Creates an unique id for this component:
-    this.id = `i${Math.random().toString(36).substr(2, 7)}`;
+    // this.id = `i${Math.random().toString(36).substr(2, 7)}`;
+    this.id = _.makeid(C.idLength);
     this.children = null;
 
     const [state, props] = args;

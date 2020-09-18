@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v1.0.0
+ * RView v1.0.1
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -40,12 +40,12 @@
    *
    * ************************************************************************ */
   /* eslint-disable */
-  let $__TREE = {"src":{"rview":{},"component":{"main":{},"hyperscript":{},"diffing":{},"generic":{},"$":{},"animate":{},"render":{},"setstate":{},"util":{}},"renderer":{"main":{}},"lib":{"_":{}},"plugin":{"main":{}}}};
+  let $__TREE = {"src":{"rview":{},"component":{"main":{},"hyperscript":{},"diffing":{},"config":{},"generic":{},"$":{},"animate":{},"render":{},"setstate":{},"util":{}},"renderer":{"main":{}},"lib":{"_":{}},"plugin":{"main":{}}}};
   $__TREE.extend=function(o,m){var k=Object.keys(m);for(var i=0;i<k.length;i++){o[k[i]]=m[k[i]]}};
   /* - */
   /* eslint-enable */
 
-  /* index: 1, path: 'src/rview.js', import: [2, 3, 4, 5, 6, 7] */
+  /* index: 1, path: 'src/rview.js', import: [2, 3, 4, 5, 6, 7, 8] */
   (function() {
     /** ************************************************************************
      *
@@ -76,6 +76,7 @@
      *  . restore                     restores the RView Component to its initial state,
      *  . remove                      removes the web component from the DOM,
      *  . plugin                      attaches a plugin,
+     *  . makeid                      returns a new component id,
      *
      *
      *
@@ -100,6 +101,7 @@
     const Hyperscript = $__TREE.src.component.hyperscript;
     const Differ = $__TREE.src.component.diffing;
     const P = $__TREE.src.plugin.main;
+    const Config = $__TREE.src.component.config;
 
 
     // -- Local Constants
@@ -117,7 +119,7 @@
 
       // Useful to retrieve the library name and version when it is
       // embedded in another library as an object:
-      _library: { name: 'RView', version: '1.0.0' },
+      _library: { name: 'RView', version: '1.0.1' },
 
 
       // -- Private Static Methods ---------------------------------------------
@@ -253,11 +255,24 @@
       plugin(plug) {
         return P.plugin(plug);
       },
+
+      /**
+       * Returns a new component id.
+       *
+       * @method ([arg1])
+       * @public
+       * @param {}            -,
+       * @returns {String}    returns a random string,
+       * @since 0.0.0
+       */
+      makeid() {
+        return _.makeid(Config.idLength);
+      },
     };
 
     // Attaches constants to RView that provide name and version of the lib.
     RView.NAME = 'RView';
-    RView.VERSION = '1.0.0';
+    RView.VERSION = '1.0.1';
 
 
     // -- Export
@@ -266,7 +281,7 @@
     /* eslint-enable no-underscore-dangle */
   }());
 
-  /* index: 2, path: 'src/component/main.js', import: [4, 8, 9] */
+  /* index: 2, path: 'src/component/main.js', import: [4, 9, 10] */
   (function() {
     /** ************************************************************************
      *
@@ -794,6 +809,7 @@
      *  . isLiteralObject             is a given variable a literal object?
      *  . isFunction                  is a given variable a function?
      *  . isArray                     is a given value an array?
+     *  . _makeid                     returns a unique string pattern,
      *
      *
      *
@@ -968,6 +984,28 @@
        */
       isArray(obj) {
         return Object.prototype.toString.call(obj) === '[object Array]';
+      },
+
+      /**
+       * Returns a unique string pattern with a predefined length.
+       *
+       * @method ([arg1])
+       * @public
+       * @param {Number}      the length of the string. Default is 16 chars,
+       * @returns {String}    returns a random string from the charset defined in c,
+       * @since 0.0.0
+       */
+      makeid(l) {
+        const ll = this.isNumber(l) ? l : 16
+            , cm = 'ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghijklmnopqrstuvwxyz'
+            , c  = `0123456789${cm}`
+            ;
+
+        let id = cm.charAt(Math.floor(Math.random() * cm.length));
+        for (let i = 0; i < (ll - 1); i++) {
+          id += c.charAt(Math.floor(Math.random() * c.length));
+        }
+        return id;
       },
     };
 
@@ -1219,7 +1257,7 @@
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 6, path: 'src/component/diffing.js', import: [] */
+  /* index: 6, path: 'src/component/diffing.js', import: [8] */
   (function() {
     /** ************************************************************************
      *
@@ -1263,6 +1301,7 @@
 
 
     // -- Local Modules
+    const C = $__TREE.src.component.config;
 
 
     // -- Local Constants
@@ -1382,6 +1421,18 @@
 
       // Diff each item in the templateNodes
       sourceNodes.forEach((node, index) => {
+        if (_getNodeType(node) === 'div'
+            && node.hasAttribute('id') && node.getAttribute('id').length === C.idLength
+            && domNodes[index]) {
+          // if the attribute is a RView child component we don't explore it.
+          // Diffing only checks the difference between the component and the
+          // DOM for the given component excluding the childs components. The goal
+          // is to not interfere with a child component own updating mechanism.
+          // If it doesn't exist in the DOM, it is an anchor for an external
+          // component, so we add it to the DOM.
+          return;
+        }
+
         // If the element doesn't exist in the DOM, create it:
         if (!domNodes[index]) {
           // console.log('add a node!');
@@ -1589,7 +1640,63 @@
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 8, path: 'src/component/generic.js', import: [4, 10, 11, 5, 12, 13] */
+  /* index: 8, path: 'src/component/config.js', import: [] */
+  (function() {
+    /** ************************************************************************
+     *
+     * A set of configuration parameters.
+     *
+     * config.js is just a literal object that contains a set of functions. It
+     * can't be intantiated.
+     *
+     * Private Functions:
+     *  . none
+     *
+     *
+     * Public Static Methods:
+     *  . none,
+     *
+     *
+     *
+     * @namespace    -
+     * @dependencies none
+     * @exports      -
+     * @author       -
+     * @since        0.0.0
+     * @version      -
+     * ********************************************************************** */
+    /* - */
+    /* eslint-disable one-var, semi-style, no-underscore-dangle */
+
+
+    // -- Vendor Modules
+
+
+    // -- Local Modules
+
+
+    // -- Local Constants
+
+
+    // -- Local Variables
+
+
+    // -- Public ---------------------------------------------------------------
+
+    const Config = {
+
+      // the length of the component id:
+      idLength: 8,
+    };
+
+
+    // -- Export
+    $__TREE.extend($__TREE.src.component.config, Config);
+
+    /* eslint-enable one-var, semi-style, no-underscore-dangle */
+  }());
+
+  /* index: 9, path: 'src/component/generic.js', import: [4, 11, 12, 5, 13, 14, 8] */
   (function() {
     /** ************************************************************************
      *
@@ -1666,6 +1773,7 @@
     const H = $__TREE.src.component.hyperscript;
     const S = $__TREE.src.component.setstate;
     const Util = $__TREE.src.component.util;
+    const C = $__TREE.src.component.config;
 
 
     // -- Local Constants
@@ -1713,7 +1821,8 @@
 
         // init public:
         // Creates an unique id for this component:
-        this.id = `i${Math.random().toString(36).substr(2, 7)}`;
+        // this.id = `i${Math.random().toString(36).substr(2, 7)}`;
+        this.id = _.makeid(C.idLength);
         this.children = null;
 
         const [state, props] = args;
@@ -1957,7 +2066,7 @@
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 9, path: 'src/component/$.js', import: [] */
+  /* index: 10, path: 'src/component/$.js', import: [] */
   (function() {
     /** ************************************************************************
      *
@@ -2420,7 +2529,7 @@
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 10, path: 'src/component/animate.js', import: [4] */
+  /* index: 11, path: 'src/component/animate.js', import: [4] */
   (function() {
     /** ************************************************************************
      *
@@ -2755,7 +2864,7 @@
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 11, path: 'src/component/render.js', import: [4, 5] */
+  /* index: 12, path: 'src/component/render.js', import: [4, 5] */
   (function() {
     /** ************************************************************************
      *
@@ -3047,7 +3156,7 @@
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 12, path: 'src/component/setstate.js', import: [6, 11] */
+  /* index: 13, path: 'src/component/setstate.js', import: [6, 12] */
   (function() {
     /** ************************************************************************
      *
@@ -3147,7 +3256,7 @@
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 13, path: 'src/component/util.js', import: [4] */
+  /* index: 14, path: 'src/component/util.js', import: [4] */
   (function() {
     /** ************************************************************************
      *
