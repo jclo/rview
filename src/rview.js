@@ -199,7 +199,7 @@ const RView = {
    *
    * @method (arg1)
    * @public
-   * @param {Object}        the pluginn library,
+   * @param {Object}        the plugin library,
    * @returns {Boolean}     returns true if it succeeds,
    * @since 0.0.0
    */

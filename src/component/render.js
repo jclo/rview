@@ -9,6 +9,8 @@
  *  . _format                     formats the children object,
  *  . _formatTemplate             returns the template converted to an unique el,
  *  . _render                     renders the component and its children,
+ *  . _prepend                    adds the child tag to the component as first child,
+ *  . _append                     adds the child tag to the component as last child,
  *  . _reRender                   renders again the passed-in component,
  *  . _childRender                renders the children of the passed-in component,
  *
@@ -205,6 +207,44 @@ function _render(co) {
 /* eslint-enable no-param-reassign */
 
 /**
+ * Adds the child tag to the component as the first child.
+ *
+ * @function (arg1, arg2)
+ * @private
+ * @param {XMString}        the component XMLString,
+ * @param {HTML}            the child tag,
+ * @returns {XMLString}     returns the XMLString including the child tag,
+ * @since 0.0.0
+ */
+/* eslint-disable no-param-reassign */
+function _prepend(xml, tag) {
+  xml = xml.trim();
+  const head = xml.slice(0, xml.indexOf('>') + 1);
+  const trail = xml.slice(xml.indexOf('>') + 1);
+  return `${head}${tag}${trail}`;
+}
+/* eslint-enable no-param-reassign */
+
+/**
+ * Adds the child tag to the component as the last child.
+ *
+ * @function (arg1, arg2)
+ * @private
+ * @param {XMString}        the component XMLString,
+ * @param {HTML}            the child tag,
+ * @returns {XMLString}     returns the XMLString including the child tag,
+ * @since 0.0.0
+ */
+/* eslint-disable no-param-reassign */
+function _append(xml, tag) {
+  xml = xml.trim();
+  const head = xml.slice(0, xml.lastIndexOf('</'));
+  const trail = xml.slice(xml.lastIndexOf('</'));
+  return `${head}${tag}${trail}`;
+}
+/* eslint-enable no-param-reassign */
+
+/**
  * Renders again the passed-in component.
  *
  * @function (arg1)
@@ -218,7 +258,23 @@ function _reRender(co) {
   if (_.isLiteralObject(xml) && _.isString(xml.nodeName)) {
     xml = Hyper.render(xml, {});
   }
-  return _formatTemplate(xml, co.id)[0];
+  [xml] = _formatTemplate(xml, co.id);
+
+  if (_.isArray(co._prepend)) {
+    for (let i = 0; i < co._prepend.length; i++) {
+      xml = _prepend(xml, co._prepend[i]);
+    }
+    return xml;
+  }
+
+  if (_.isArray(co._append)) {
+    for (let i = 0; i < co._append.length; i++) {
+      xml = _append(xml, co._append[i]);
+    }
+    return xml;
+  }
+
+  return xml;
 }
 
 /**

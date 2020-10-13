@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>RView - Counter</title>
+    <meta name="description" content="{{app:description}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="">
+    <meta name="theme-color" content="#2196f3">
+    <style>
+      /* - */
+    </style>
+  </head>
+
+  <body>
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated and unsupported</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to benefit of all the features of this web App.</p>
+    <![endif]-->
+
+    <!-- Warning message if Javascript isn't enabled -->
+    <noscript>
+      <p style="text-align:center;padding-top:3em;">
+        We are sorry, but this website doesn't work properly without JavaScript enabled!
+      </p>
+    </noscript>
+
+    <!-- Add your site or application content here -->
+    <div id="app"></div>
+
+    <!-- Add your scripts here -->
+    <script type="module">
+      import Messenger from 'https://www.unpkg.com/@mobilabs/messenger?module';
+      import { h, Component, render, plugin } from '../lib/rview.mjs';
+
+      // Add a messenger to RView:
+      plugin({ messenger: Messenger });
+
+      const AAA = Component({
+        render() {
+          return `
+            <h1>Aaa</h1>
+          `;
+        },
+      });
+
+      const BBB = Component({
+        events() {
+          let count = 0;
+          setInterval(() => {
+            this.$setState({ c: count });
+            count += 1;
+          }, 1000);
+        },
+
+        render(state) {
+          return `
+            <p>${state.c}</p>
+          `;
+        },
+      });
+
+      const CCC = Component({
+        render(state, props) {
+          this.children = { '<BBB />': { fn: BBB, state: { c: 0 }, props: {} }};
+          return `
+            s: ${state.s}, p: ${props.p}
+            <h2>Counter:</h2>
+            <BBB />
+          `;
+        },
+      });
+
+      const app = render({
+        el: '#app',
+        children: { '<AAA />': AAA },
+        template: '<AAA />',
+      });
+
+      // Sometimes, it could be required to add a component after the app
+      // has been rendered to the DOM. The method '$append' allows that.
+
+      // Here the component 'CCC' is appended to the component 'AAA'. This
+      // last component has a child component 'BBB' that is appended too.
+      const aaa = app.$getChild('<AAA />');
+      aaa.$append('<CCC />', CCC, { state: { s: 1 }, props: { p: 2 } });
+    </script>
+  </body>
+</html>

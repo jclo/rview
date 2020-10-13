@@ -36,6 +36,7 @@
  * Public Methods:
  *  . $                           returns an object to manipulate the comp. in the DOM,
  *  . $animate                    animates the component,
+ *  . $append                     appends a component as the last child,
  *  . $getChild                   returns a component object,
  *  . $getChildren                returns the list of the children,
  *  . $getIdAndName               returns the component's Id and name,
@@ -69,6 +70,7 @@
 // -- Local Modules
 import _ from '../lib/_';
 import A from './animate';
+import AD from './add';
 import R from './render';
 import H from './hyperscript';
 import S from './setstate';
@@ -179,6 +181,21 @@ const methods = {
    */
   $animate(...args) {
     A.animate(this, ...args);
+    return this;
+  },
+
+  /**
+   * Appends a component as the last child to the selected component.
+   * (must not be overwritten)
+   *
+   * @method (...args)
+   * @public
+   * @param {...args}       tag, component, [state], [props]
+   * @returns {Object}      returns this,
+   * @since 0.0.0
+   */
+  $append(...args) {
+    AD.append(this, ...args);
     return this;
   },
 

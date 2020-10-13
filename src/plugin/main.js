@@ -78,7 +78,7 @@ const Plugin = {
    * @method (arg1)
    * @public
    * @param {Object}        the plugin library,
-   * @returns {Boolean}     retuens true if it succeeds,
+   * @returns {Boolean}     returns true if it succeeds,
    * @since 0.0.0
    */
   plugin(plug) {

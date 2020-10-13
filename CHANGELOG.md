@@ -1,5 +1,12 @@
 ### HEAD
 
+### 1.0.2 (October 13, 2020)
+
+  * Updated the project dependencies,
+  * Added the method $append,
+  * ...,
+
+
 ### 1.0.1 (September 18, 2020)
 
   * Added the method makeid to retrieve an unique pattern id,
