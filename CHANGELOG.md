@@ -4,7 +4,7 @@
 
   * Updated the project dependencies,
   * Added the method $append,
-  * ...,
+  * Release.
 
 
 ### 1.0.1 (September 18, 2020)
