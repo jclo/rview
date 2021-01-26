@@ -1,6 +1,6 @@
 {
   "name": "@mobilabs/rview",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A companion Reactive View library for building web applications",
   "main": "_dist/lib/rview.js",
   "minified": "_dist/lib/rview.min.js",
@@ -44,10 +44,10 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
-    "cross-env": "^7.0.2",
+    "cross-env": "^7.0.3",
     "del": "^6.0.0",
-    "eslint": "^7.11.0",
-    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "esm": "^3.2.25",
     "gulp": "^4.0.2",
@@ -56,15 +56,15 @@
     "gulp-header": "^2.0.9",
     "gulp-replace": "^1.0.0",
     "gulp-uglify-es": "^2.0.0",
-    "husky": "^4.3.0",
+    "husky": "^4.3.8",
     "jsdom": "^16.4.0",
-    "kadoo": "^1.0.1",
-    "mocha": "^8.1.3",
+    "kadoo": "^1.0.3",
+    "mocha": "^8.2.1",
     "nyc": "^15.1.0",
-    "open": "^7.3.0",
+    "open": "^7.3.1",
     "opener": "^1.5.2",
-    "xmldom": "^0.3.0",
-    "@mobilabs/es6kadoo": "^1.0.5"
+    "xmldom": "^0.4.0",
+    "@mobilabs/es6kadoo": "^1.0.7"
   },
   "publishConfig": {
     "access": "public"

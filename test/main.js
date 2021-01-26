@@ -10,9 +10,8 @@ const { JSDOM }         = require('jsdom')
 
 
 // -- Local Modules
-const RView   = require('../src/rview').default
-    // RView  = require('../index.js')
-    // , pack = require('../package.json')
+const RView   = require('../index.js')
+    , pack    = require('../package.json')
     , testlib = require('./int/lib')
     , test_   = require('./int/lib/_')
 
@@ -27,7 +26,7 @@ const RView   = require('../src/rview').default
 
 
 // -- Local Constants
-// const libname = 'RView';
+const libname = 'RView';
 
 
 // -- Local Variables
@@ -57,6 +56,7 @@ const HTML = `
 
 const dom = new JSDOM(HTML);
 global.window = dom.window;
+global.root = dom.window;
 global.document = dom.window.document;
 global.navigator = { userAgent: 'node.js' };
 global.XMLSerializer = XMLSerializer;
@@ -71,9 +71,11 @@ global.DOMParser = dom.window.DOMParser;
 // the build isn't done, so you should pass '{{lib:name}}' as libname and
 // '{{lib:version}}' as the library version.
 
+// const RView = require('../src/rview').default;
+
 describe('Test RView:', () => {
-  // testlib(RView, libname, pack.version, 'without new');
-  testlib(RView, '{{lib:name}}', '{{lib:version}}', 'without new');
+  testlib(RView, libname, pack.version, 'without new');
+  // testlib(RView, '{{lib:name}}', '{{lib:version}}', 'without new');
 
   test_(RView);
 
