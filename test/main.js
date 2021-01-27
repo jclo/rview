@@ -71,12 +71,11 @@ global.DOMParser = dom.window.DOMParser;
 // the build isn't done, so you should pass '{{lib:name}}' as libname and
 // '{{lib:version}}' as the library version.
 
-// const RView = require('../src/rview').default;
-
 describe('Test RView:', () => {
-  testlib(RView, libname, pack.version, 'without new');
+  // const RView = require('../src/rview').default;
   // testlib(RView, '{{lib:name}}', '{{lib:version}}', 'without new');
 
+  testlib(RView, libname, pack.version, 'without new');
   test_(RView);
 
   // Stress tests
