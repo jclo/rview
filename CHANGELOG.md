@@ -1,5 +1,11 @@
 ### HEAD
 
+### 1.0.4 (February 18, 2021)
+
+  * Added the $removeChild method,
+  * ...,
+
+
 ### 1.0.3 (January 26, 2021)
 
   * Updated the project dependencies,

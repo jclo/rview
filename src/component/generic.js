@@ -38,6 +38,7 @@
  *  . $animate                    animates the component,
  *  . $append                     appends a component as the last child,
  *  . $getChild                   returns a component object,
+ *  . $removeChild                removes a child,
  *  . $getChildren                returns the list of the children,
  *  . $getIdAndName               returns the component's Id and name,
  *  . $hyperscript                returns an XML string of the hyperscript template,
@@ -223,6 +224,20 @@ const methods = {
    */
   $getChild(ident) {
     return Util.getChild(this, ident);
+  },
+
+  /**
+   * Remove a component's child.
+   * (must not be overwritten)
+   *
+   * @method (arg1)
+   * @public
+   * @param {String}        the component identity (could be tag, id or name),
+   * @returns {Boolean}     returns true or false,
+   * @since 0.0.0
+   */
+  $removeChild(ident) {
+    return Util.removeChild(this, ident);
   },
 
   /**

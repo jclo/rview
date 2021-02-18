@@ -422,6 +422,7 @@ Generic Methods                 |
 $(sel)                          | returns an object to access to the comp. in the DOM,
 $animate()                      | updates state properties from an initial value to a final value,
 $getChild(tag/id/name)          | returns the matching child object,
+$removeChild(tag/id/name)       | removes the matching child object,
 $getChildren()                  | returns the list of the first level children,
 $getIdAndName()                 | returns the component's Id and name,
 $hyperscript(args)              | converts an hyperscript format to an XML string,
