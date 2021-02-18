@@ -3,7 +3,7 @@
 ### 1.0.4 (February 18, 2021)
 
   * Added the $removeChild method,
-  * ...,
+  * Release.
 
 
 ### 1.0.3 (January 26, 2021)
