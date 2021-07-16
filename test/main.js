@@ -10,8 +10,7 @@ const { JSDOM }         = require('jsdom')
 
 
 // -- Local Modules
-const RView   = require('../index.js')
-    , pack    = require('../package.json')
+const pack    = require('../package.json')
     , testlib = require('./int/lib')
     , test_   = require('./int/lib/_')
 
@@ -54,6 +53,9 @@ const HTML = `
   </html>
 `;
 
+// This define root for Node.js:
+global.root = {};
+
 const dom = new JSDOM(HTML);
 global.window = dom.window;
 global.root = dom.window;
@@ -63,21 +65,24 @@ global.XMLSerializer = XMLSerializer;
 global.DOMParser = dom.window.DOMParser;
 
 // Nota:
-// If you choose 'RView = require('../index')', 'display-coverage' will
-// show the coverage of all the library in one file.
+// If you want that 'display-coverage' shows the coverage files by files,
+// you should set 'RView' and 'testlib' like this:
+//  . const RView = require('../src/<file>').default;
+//  . testlib(RView, '{{lib:name}}', '{{lib:version}}', 'without new');
 //
-// If you want to display the coverage file by file, you must choose
-// 'RView = require('../src/prototypal').default'. But, in this case,
-// the build isn't done, so you should pass '{{lib:name}}' as libname and
-// '{{lib:version}}' as the library version.
+// But, if you want that 'display-coverage' shows the coverage in one file,
+// you should set 'RView' and 'testlib' like this:
+//  . const RView = require('../index');
+//  . testlib(RView, libname, pack.version, 'without new');
+
+const RView = require('../src/rview').default;
+// const RView = require('../index');
 
 describe('Test RView:', () => {
-  // const RView = require('../src/rview').default;
-  // testlib(RView, '{{lib:name}}', '{{lib:version}}', 'without new');
+  testlib(RView, '{{lib:name}}', '{{lib:version}}', 'without new');
+  // testlib(RView, libname, pack.version, 'without new');
 
-  testlib(RView, libname, pack.version, 'without new');
   test_(RView);
-
   // Stress tests
   // hello(RView, 'stress1');
   // clock(RView, 'stress2');
