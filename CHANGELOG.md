@@ -3,7 +3,7 @@
 ### 1.0.6 (July 16, 2021)
 
   * Updated the project from the boilerplate @mobilabs/es6kadoo v1.0.8,
-  * ...,
+  * Release.
 
 
 ### 1.0.5 (July 16, 2021)
