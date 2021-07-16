@@ -1,11 +1,11 @@
 ###
 
-### 1.0.5 (March 9, 2021)
+### 1.0.5 (July 16, 2021)
 
   * Added the _render method to increase the robustness of $removeChild,
   * Fixed an issue to prevent $append to fire twice the component method events for childs,
   * Add The method $listenOnce,
-  * ...,
+  * Release.
 
 
 ### 1.0.4 (February 18, 2021)
