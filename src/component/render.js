@@ -159,7 +159,7 @@ function _render(co) {
     ;
 
   // Render the component and check if it is an hyperscript:
-  xml = co.render(co.state, co.props);
+  xml = co._render(co.state, co.props);
   if (_.isLiteralObject(xml) && _.isString(xml.nodeName)) {
     // This is an hyperscript object. We need to convert it to a serialized
     // node:
@@ -254,7 +254,7 @@ function _append(xml, tag) {
  * @since 0.0.0
  */
 function _reRender(co) {
-  let xml = co.render(co.state, co.props);
+  let xml = co._render(co.state, co.props);
   if (_.isLiteralObject(xml) && _.isString(xml.nodeName)) {
     xml = Hyper.render(xml, {});
   }

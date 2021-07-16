@@ -32,52 +32,66 @@
     <script type="module">
       import { h, Component, render } from '../lib/rview.mjs';
 
-      const C1 = Component({
+      const Menu = Component({
         render() {
           return `
-            <div>
-              <h3>Hello World</h3>
+            <div class="menu pure-menu pure-menu-horizontal">
+              <a class="pure-menu-heading" href="#">whoYou</a>
+              <ul class="pure-menu-list">
+                <li class="pure-menu-item">
+                  <a class="pure-menu-link" href="#home">Home</a>
+                </li>
+                <li class="pure-menu-item">
+                  <a class="pure-menu-link" href="#logout">Logout</a>
+                </li>
+              </ul>
             </div>
           `;
         },
       });
 
-      const C2 = Component({
+      const Header = Component({
         render() {
-          // this.children = { '<C1 />': C1 };
+          this.children = { '<Menu />': Menu };
+          return `
+            <header class=''>
+              <Menu />
+            </header>
+          `;
+        },
+      });
+
+      const Contents = Component({
+        render() {
           return `
             <div>
-              <h2>Hello World</h2>
+              <!-- 'Add the contents of the App here!' -->
             </div>
           `;
         },
       });
 
-      const C3 = Component({
-        render() {
-          this.children = { '<C2 />': C2 };
-          return `
-            <h1>Hello World</h1>
-            <C2 />
-          `;
-        },
-      });
-
-      const C4 = Component({
+      const Footer = Component({
         render() {
           return `
-            <div>
-              <p>Hello World</p>
-            </div>
+            <footer>
+              <!-- This is the footer section -->
+            </footer>
           `;
         },
       });
 
       const App = Component({
         render() {
-          this.children = { '<C3 />': C3 };
+          this.children = { '<Header />': Header, '<Contents />': Contents, '<Footer />': Footer };
           return `
-            <C3 />
+            <div>
+              <Header />
+              <div class='content container'>
+                <Contents />
+              </div>
+              <Footer />
+            </div>
           `;
         },
       });
@@ -87,28 +101,12 @@
         children: { '<App />': App },
         template: '<App />',
       });
-      console.log(app.$getChild('<C1 />'));
 
-      // Append a child
-      setTimeout(() => {
-        const c2 = app.$getChild('<C2 />');
-        c2.$append('<C1 />', C1, {});
-        c2.$append('<C4 />', C4, {});
-        console.log('I have just been added!');
-      }, 1000);
-
-      // Remove the child
-      setTimeout(() => {
-        app.$removeChild('<C1 />');
-        console.log('I have just been removed!');
-      }, 2000);
-
-      // Reappend child
-      setTimeout(() => {
-        const c2 = app.$getChild('<C2 />');
-        c2.$append('<C1 />', C1);
-        console.log('I have just been readded!');
-      }, 3000);
+      console.log(app.$getChild('<App />'));
+      console.log(app.$getChild('<Header />'));
+      console.log(app.$getChild('<Contents />'));
+      console.log(app.$getChild('<Menu />'));
+      console.log(app.$getChild('<Footer />'));
 
     </script>
   </body>

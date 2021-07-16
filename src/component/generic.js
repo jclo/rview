@@ -23,6 +23,7 @@
  * Private Methods:
  *  . _init                       executes the private init when the comp. is created,
  *  . _renderer                   renders the component an its children, return XML,
+ *  . _render                     returns data returned by the public method render,
  *
  *
  * Public Variables:
@@ -150,6 +151,34 @@ const methods = {
    */
   _renderer() {
     return R.render(this);
+  },
+
+  /**
+   * Returns data returned by the public method render.
+   * (must not be overwritten)
+   *
+   * @method ([arg1], [arg2])
+   * @public
+   * @param {Object}        the state properties,
+   * @param {Object}        the optional properties,
+   * @returns {XMLString}   returns the component's XMLString,
+   * @since 0.0.0
+   */
+  _render(...args) {
+    /*
+    xml = xml.replace(/<!--(.*?)-->/g, '')    // remove comments
+      .replace(/\n\s+</g, '\n<')              // remove leading spaces before a tag,
+      .replace(/\n<\/div>/g, '</div>')        // remove unwanted `\n`,
+      .replace(/\n<\/ul>/g, '</ul>')          // -
+      .replace(/\n<\/li>/g, '</li>')          // -
+      .replace(/\n<\/a>/g, '</a>')            // -
+    ;
+    */
+    const xml = this.render(...args);
+    if (_.isString(xml)) {
+      return xml.trim();
+    }
+    return xml;
   },
 
 
@@ -383,7 +412,7 @@ const methods = {
    * @method ()
    * @public
    * @param {}              -,
-   * @returns {Object}      returns this,
+   * @returns {String}      returns XMLString,
    * @since 0.0.0
    */
   render() {

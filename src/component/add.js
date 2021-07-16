@@ -6,7 +6,7 @@
  * can't be intantiated.
  *
  * Private Functions:
- *  . _fireEvents                 executes the component method events,
+ *  . _fireEvents                 executes the child component method events,
  *  . _attachMess                 attaches the messenger to the child component,
  *  . _attachChild                attaches a child to the passed-in component,
  *  . _insert                     inserts a child component,
@@ -45,7 +45,7 @@ import R from './render';
 // -- Private Functions ----------------------------------------------------
 
 /**
- * Executes the component method events.
+ * Executes the child component method events.
  *
  * @function (arg1)
  * @private
@@ -53,15 +53,13 @@ import R from './render';
  * @returns {}              -,
  * @since 0.0.0
  */
-function _fireEvents(co) {
-  co.events();
-
+function _fireChildEvents(co) {
   // Processes recursively cList to fire child events.
   if (co._cList) {
     const keys = Object.keys(co._cList);
     for (let i = 0; i < keys.length; i++) {
       co._cList[keys[i]].events();
-      _fireEvents(co._cList[keys[i]]);
+      _fireChildEvents(co._cList[keys[i]]);
     }
   }
 }
@@ -139,7 +137,9 @@ function _attachChild(co, prepend, tag, child, state, props) {
  * @since 0.0.0
  */
 function _insert(co, prepend, ...args) {
-  const [tag, child, opts] = args;
+  const [tag, child, options] = args
+      , opts = options || {}
+      ;
 
   // Links the child to the parent component.
   _attachChild(co, prepend, tag, child, opts.state, opts.props);
@@ -157,9 +157,10 @@ function _insert(co, prepend, ...args) {
   // child component to the DOM.
   co.$setState({});
 
-  // And finally, we have to run the 'events' methods to attach the DOM
-  // events to this child component.
-  _fireEvents(c);
+  // And finally, we have to run the 'events' method to attach the DOM
+  // events to this child component and its own childs if any.
+  c.events();
+  _fireChildEvents(c);
 }
 
 

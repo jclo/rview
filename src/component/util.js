@@ -108,8 +108,8 @@ function _search(co, ident) {
       || ident === co._cList[key].name) {
       return { parent: co, child: co._cList[key] };
     }
-    const child = _search(co._cList[key], ident);
-    if (child) return child;
+    const res = _search(co._cList[key], ident);
+    if (res.child) return res;
   }
   return { parent: co, child: null };
 }
@@ -148,6 +148,12 @@ function _remove(co, ident) {
   // 4. Remove all traces from parent:
   delete r.parent._cList[stag];
   delete r.parent.children[tag];
+  if (r.parent._append) {
+    r.parent._append = r.parent._append.filter((item) => item !== tag);
+  }
+  if (r.parent._prepend) {
+    r.parent._prepend = r.parent._prepend.filter((item) => item !== tag);
+  }
 
   return true;
 }

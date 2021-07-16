@@ -428,6 +428,7 @@ $getIdAndName()                 | returns the component's Id and name,
 $hyperscript(args)              | converts an hyperscript format to an XML string,
 $setState()                     | updates a state value and updates the DOM accordingly,
 $listen(event, handler)         | listens a message,
+$listenOnce(event, handler)     | listens a message once,
 $emit(event, payload)           | sends a message,
 ```
 
@@ -493,7 +494,7 @@ $().remove()                    | removes the element from the DOM (to handle wi
 [npm-url]: https://www.npmjs.com/package/@mobilabs/rview
 [release-url]: https://github.com/jclo/rview/tags
 [commit-url]: https://github.com/jclo/rview/commits/master
-[travis-url]: https://travis-ci.org/jclo/rview
+[travis-url]: https://travis-ci.com/jclo/rview
 [coveralls-url]: https://coveralls.io/github/jclo/rview?branch=master
 [dependencies-url]: https://david-dm.org/jclo/rview
 [devdependencies-url]: https://david-dm.org/jclo/rview?type=dev
