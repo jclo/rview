@@ -389,12 +389,20 @@ function $(selector) {
    *
    * @method (arg1)
    * @public
-   * @param {String}        the event name,
+   * @param {String/Object} the event name or the event object,
    * @returns {Boolean}     returns false if preventDefault was activated
    * @since 0.0.0           otherwise true,
    */
   const trigger = function(event) {
-    return this[0].dispatchEvent(new Event(event));
+    if (typeof event === 'string') {
+      const e = new MouseEvent(event, {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+      });
+      return this[0].dispatchEvent(e);
+    }
+    return this[0].dispatchEvent(event);
   };
 
   /**

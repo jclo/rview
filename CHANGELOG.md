@@ -1,5 +1,11 @@
 ###
 
+### 1.0.7 (August 19, 2021)
+
+  * Added more flexibility to the $.trigger method,
+  * ...,
+
+
 ### 1.0.6 (July 16, 2021)
 
   * Updated the project from the boilerplate @mobilabs/es6kadoo v1.0.8,

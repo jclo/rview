@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v1.0.6
+ * RView v1.0.7
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -120,7 +120,7 @@ const $__ES6GLOB = {};
 
       // Useful to retrieve the library name and version when it is
       // embedded in another library as an object:
-      _library: { name: 'RView', version: '1.0.6' },
+      _library: { name: 'RView', version: '1.0.7' },
 
 
       // -- Private Static Methods ---------------------------------------------
@@ -273,7 +273,7 @@ const $__ES6GLOB = {};
 
     // Attaches constants to RView that provide name and version of the lib.
     RView.NAME = 'RView';
-    RView.VERSION = '1.0.6';
+    RView.VERSION = '1.0.7';
 
 
     // -- Export
@@ -2521,12 +2521,20 @@ const $__ES6GLOB = {};
        *
        * @method (arg1)
        * @public
-       * @param {String}        the event name,
+       * @param {String/Object} the event name or the event object,
        * @returns {Boolean}     returns false if preventDefault was activated
        * @since 0.0.0           otherwise true,
        */
       const trigger = function(event) {
-        return this[0].dispatchEvent(new Event(event));
+        if (typeof event === 'string') {
+          const e = new MouseEvent(event, {
+            view: window,
+            bubbles: true,
+            cancelable: true,
+          });
+          return this[0].dispatchEvent(e);
+        }
+        return this[0].dispatchEvent(event);
       };
 
       /**
