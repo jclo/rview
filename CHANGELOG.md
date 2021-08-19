@@ -3,7 +3,7 @@
 ### 1.0.7 (August 19, 2021)
 
   * Added more flexibility to the $.trigger method,
-  * ...,
+  * Release.
 
 
 ### 1.0.6 (July 16, 2021)
