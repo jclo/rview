@@ -14,8 +14,8 @@
  *
  *
  * Public Static Methods:
- *  . animate                     performs a custom animation on a set of CSS
- *                                properties,
+ *  . animate                     performs the animation,
+ *  . abortAnimation              aborts a running animation,
  *
  *
  *
@@ -253,6 +253,8 @@ function _run(component, properties, easing, duration, delay, callback) {
       if (callback) callback();
     }
   }, delay);
+
+  return timer;
 }
 
 /**
@@ -277,7 +279,7 @@ function _animate(component, properties, ...args) {
 
   // Is the argument properties an object?
   if (!_.isLiteralObject(properties)) {
-    return;
+    return [null, null];
   }
 
   // Extract the optional arguments:
@@ -299,7 +301,8 @@ function _animate(component, properties, ...args) {
   const callback = argu.callback ? argu.callback : null;
 
   // Run the animation:
-  _run(component, properties, easing, duration, delay, callback);
+  const timer = _run(component, properties, easing, duration, delay, callback);
+  return [timer, callback];
 }
 
 
@@ -320,7 +323,23 @@ const Anim = {
    * @since 0.0.0
    */
   animate(component, properties, ...args) {
-    _animate(component, properties, ...args);
+    return _animate(component, properties, ...args);
+  },
+
+  /**
+   * Aborts a running animation.
+   *
+   * @method (arg1, [arg2])
+   * @public
+   * @param {Object}        the animation timer,
+   * @param {Function}      the function to call at completion,
+   * @returns {Object}      returns this,
+   * @since 0.0.0
+   */
+  abortAnimation(timer, callback) {
+    if (timer) clearInterval(timer);
+    if (callback) callback();
+    return this;
   },
 };
 

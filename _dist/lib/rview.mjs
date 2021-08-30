@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v1.0.7
+ * RView v1.0.8
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -120,7 +120,7 @@ const $__ES6GLOB = {};
 
       // Useful to retrieve the library name and version when it is
       // embedded in another library as an object:
-      _library: { name: 'RView', version: '1.0.7' },
+      _library: { name: 'RView', version: '1.0.8' },
 
 
       // -- Private Static Methods ---------------------------------------------
@@ -273,7 +273,7 @@ const $__ES6GLOB = {};
 
     // Attaches constants to RView that provide name and version of the lib.
     RView.NAME = 'RView';
-    RView.VERSION = '1.0.7';
+    RView.VERSION = '1.0.8';
 
 
     // -- Export
@@ -1738,6 +1738,7 @@ const $__ES6GLOB = {};
      * Public Methods:
      *  . $                           returns an object to manipulate the comp. in the DOM,
      *  . $animate                    animates the component,
+     *  . $abortAnimation             aborts the running animation,
      *  . $append                     appends a component as the last child,
      *  . $getChild                   returns a component object,
      *  . $removeChild                removes a child,
@@ -1911,7 +1912,22 @@ const $__ES6GLOB = {};
        * @since 0.0.0
        */
       $animate(...args) {
-        A.animate(this, ...args);
+        [this._anim_timer, this._anim_callback] = A.animate(this, ...args);
+        return this;
+      },
+
+      /**
+       * Aborts the running animation.
+       * (must not be overwritten)
+       *
+       * @method ()
+       * @public
+       * @param {}              -,
+       * @returns {Object}      returns this,
+       * @since 0.0.0
+       */
+      $abortAnimation() {
+        A.abortAnimation(this._anim_timer, this._anim_callback);
         return this;
       },
 
@@ -2617,8 +2633,8 @@ const $__ES6GLOB = {};
      *
      *
      * Public Static Methods:
-     *  . animate                     performs a custom animation on a set of CSS
-     *                                properties,
+     *  . animate                     performs the animation,
+     *  . abortAnimation              aborts a running animation,
      *
      *
      *
@@ -2856,6 +2872,8 @@ const $__ES6GLOB = {};
           if (callback) callback();
         }
       }, delay);
+
+      return timer;
     }
 
     /**
@@ -2880,7 +2898,7 @@ const $__ES6GLOB = {};
 
       // Is the argument properties an object?
       if (!_.isLiteralObject(properties)) {
-        return;
+        return [null, null];
       }
 
       // Extract the optional arguments:
@@ -2902,7 +2920,8 @@ const $__ES6GLOB = {};
       const callback = argu.callback ? argu.callback : null;
 
       // Run the animation:
-      _run(component, properties, easing, duration, delay, callback);
+      const timer = _run(component, properties, easing, duration, delay, callback);
+      return [timer, callback];
     }
 
 
@@ -2923,7 +2942,23 @@ const $__ES6GLOB = {};
        * @since 0.0.0
        */
       animate(component, properties, ...args) {
-        _animate(component, properties, ...args);
+        return _animate(component, properties, ...args);
+      },
+
+      /**
+       * Aborts a running animation.
+       *
+       * @method (arg1, [arg2])
+       * @public
+       * @param {Object}        the animation timer,
+       * @param {Function}      the function to call at completion,
+       * @returns {Object}      returns this,
+       * @since 0.0.0
+       */
+      abortAnimation(timer, callback) {
+        if (timer) clearInterval(timer);
+        if (callback) callback();
+        return this;
       },
     };
 

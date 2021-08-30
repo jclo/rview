@@ -37,6 +37,7 @@
  * Public Methods:
  *  . $                           returns an object to manipulate the comp. in the DOM,
  *  . $animate                    animates the component,
+ *  . $abortAnimation             aborts the running animation,
  *  . $append                     appends a component as the last child,
  *  . $getChild                   returns a component object,
  *  . $removeChild                removes a child,
@@ -210,7 +211,22 @@ const methods = {
    * @since 0.0.0
    */
   $animate(...args) {
-    A.animate(this, ...args);
+    [this._anim_timer, this._anim_callback] = A.animate(this, ...args);
+    return this;
+  },
+
+  /**
+   * Aborts the running animation.
+   * (must not be overwritten)
+   *
+   * @method ()
+   * @public
+   * @param {}              -,
+   * @returns {Object}      returns this,
+   * @since 0.0.0
+   */
+  $abortAnimation() {
+    A.abortAnimation(this._anim_timer, this._anim_callback);
     return this;
   },
 
