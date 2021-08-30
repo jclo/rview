@@ -3,7 +3,7 @@
 ### 1.0.8 (August 30, 2021)
 
   * Added the $abortAnimation method to stop a running animation,
-  * ...,
+  * Release.
 
 
 ### 1.0.7 (August 19, 2021)
