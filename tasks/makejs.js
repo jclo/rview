@@ -102,7 +102,8 @@ function delgeneric(done) {
 
 // -- Gulp Public Task(s)
 module.exports = series(
-  clean, dogenericlib,
+  clean,
+  dogenericlib,
   parallel(doumdlib, domodule),
   delgeneric,
 );

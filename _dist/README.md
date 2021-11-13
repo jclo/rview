@@ -4,10 +4,10 @@
 [![GitHub last commit][commit-image]][commit-url]
 [![Travis CI][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
-[![Dependencies status][dependencies-image]][dependencies-url]
-[![Dev Dependencies status][devdependencies-image]][devdependencies-url]
 [![npm bundle size][npm-bundle-size-image]][npm-bundle-size-url]
 [![License][license-image]](LICENSE.md)
+<!-- [![Dependencies status][dependencies-image]][dependencies-url]
+[![Dev Dependencies status][devdependencies-image]][devdependencies-url] -->
 
 `RView` is a companion View library for building web applications. On the opposite of React, VueJS and Angular, View focuses on the viewing operations only. Besides, `RView` has a very fast learning curve as it doesn't introduce any new directives, pseudo-code, build, etc.
 
@@ -415,8 +415,10 @@ Methods                         | Description
 ```
 Empty Methods                   |
 init()                          | executed before rendering the component in the DOM,
-events()                        | executed after rendering the component in the DOM,
+events()                        | executed after rendering the component in the DOM (to be phased out),
+listen()                        | executed after rendering the component in the DOM,
 render()                        | returns the HTML template,
+postRender()                    | executed after rendering the component in the DOM (listen alias),
                                 |
 Generic Methods                 |
 $(sel)                          | returns an object to access to the comp. in the DOM,
@@ -481,20 +483,20 @@ $().remove()                    | removes the element from the DOM (to handle wi
 
 <!--- URls -->
 
-[npm-image]: https://img.shields.io/npm/v/@mobilabs/rview.svg?style=flat-square
-[release-image]: https://img.shields.io/github/release/jclo/rview.svg?include_prereleases&style=flat-square
-[commit-image]: https://img.shields.io/github/last-commit/jclo/rview.svg?style=flat-square
-[travis-image]: https://img.shields.io/travis/jclo/rview.svg?style=flat-square
-[coveralls-image]: https://img.shields.io/coveralls/jclo/rview/master.svg?style=flat-square
+[npm-image]: https://img.shields.io/npm/v/@mobilabs/rview.svg?logo=npm&logoColor=fff&label=NPM+package
+[release-image]: https://img.shields.io/github/release/jclo/rview.svg?include_prereleases
+[commit-image]: https://img.shields.io/github/last-commit/jclo/rview.svg?logo=github
+[travis-image]: https://img.shields.io/travis/com/jclo/rview.svg?logo=travis-ci&logoColor=fff
+[coveralls-image]: https://img.shields.io/coveralls/jclo/rview/master.svg?&logo=coveralls
 [dependencies-image]: https://david-dm.org/jclo/rview/status.svg?theme=shields.io
 [devdependencies-image]: https://david-dm.org/jclo/rview/dev-status.svg?theme=shields.io
-[npm-bundle-size-image]: https://img.shields.io/bundlephobia/minzip/@mobilabs/rview.svg?style=flat-square
-[license-image]: https://img.shields.io/npm/l/@mobilabs/rview.svg?style=flat-square
+[npm-bundle-size-image]: https://img.shields.io/bundlephobia/minzip/@mobilabs/rview.svg
+[license-image]: https://img.shields.io/npm/l/@mobilabs/rview.svg
 
 [npm-url]: https://www.npmjs.com/package/@mobilabs/rview
 [release-url]: https://github.com/jclo/rview/tags
 [commit-url]: https://github.com/jclo/rview/commits/master
-[travis-url]: https://travis-ci.com/jclo/rview
+[travis-url]: https://app.travis-ci.com/jclo/rview?branch=main
 [coveralls-url]: https://coveralls.io/github/jclo/rview?branch=master
 [dependencies-url]: https://david-dm.org/jclo/rview
 [devdependencies-url]: https://david-dm.org/jclo/rview?type=dev
