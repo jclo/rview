@@ -1,5 +1,12 @@
 ###
 
+### 1.0.10 (January 26, 2022)
+
+  * Updated the project dependencies,
+  * Updated the copyright,
+  * ...,
+
+
 ### 1.0.9 (November 13, 2021)
 
   * Updated the project dependencies,
