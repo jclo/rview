@@ -4,7 +4,7 @@
 
   * Updated the project dependencies,
   * Updated the copyright,
-  * ...,
+  * Release.
 
 
 ### 1.0.9 (November 13, 2021)
