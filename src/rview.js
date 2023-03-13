@@ -28,6 +28,7 @@
  *  . remove                      removes the web component from the DOM,
  *  . plugin                      attaches a plugin,
  *  . makeid                      returns a new component id,
+ *  . extends                     returns a new component inheriting from a parent,
  *
  *
  *
@@ -47,6 +48,7 @@
 
 // -- Local Modules
 import C from './component/main';
+import CE from './component/extends';
 import R from './renderer/main';
 import _ from './lib/_';
 import Hyperscript from './component/hyperscript';
@@ -218,6 +220,20 @@ const RView = {
    */
   makeid() {
     return _.makeid(Config.idLength);
+  },
+
+  /**
+   * Returns a new component inheriting from a parent.
+   *
+   * @method (arg1, arg2)
+   * @public
+   * @param {Function}    the parent component,
+   * @param {Object}      the new or overwriting methods,
+   * @returns {Function}  returns the new component,
+   * @since 0.0.0
+   */
+  extends(parent, methods) {
+    return CE.extends(parent, methods);
   },
 };
 

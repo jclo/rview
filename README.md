@@ -405,6 +405,7 @@ restore(app),                   | restores the DOM to its initial state,
 remove(app)                     | removes the RView app from the DOM and delete it (use with care),
 plugin({name, ref})             | attaches a plugin,
 makeid                          | returns an unique string pattern,
+extends                         | returns a component inheriting from a parent,
 ```
 
 ### Component Methods

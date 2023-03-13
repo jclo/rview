@@ -1,5 +1,11 @@
 ###
 
+### 1.1.0 (March 13, 2023)
+
+  * Added the static method extends allowing inheritance,
+  * ...,
+
+
 ### 1.0.10 (January 26, 2022)
 
   * Updated the project dependencies,

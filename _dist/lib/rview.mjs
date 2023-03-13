@@ -1,9 +1,9 @@
 /*! ****************************************************************************
- * RView v1.0.10
+ * RView v1.1.0
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
- * Copyright (c) 2022 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
+ * Copyright (c) 2023 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
  * Released under the MIT license. You may obtain a copy of the License
  * at: http://www.opensource.org/licenses/mit-license.php).
  * Built from ES6Kadoo v1.0.10.
@@ -41,12 +41,12 @@ const $__ES6GLOB = {};
    *
    * ************************************************************************ */
   /* eslint-disable */
-  let $__TREE = {"src":{"rview":{},"component":{"main":{},"hyperscript":{},"diffing":{},"config":{},"generic":{},"$":{},"animate":{},"add":{},"render":{},"setstate":{},"util":{}},"renderer":{"main":{}},"lib":{"_":{}},"plugin":{"main":{}}}};
+  let $__TREE = {"src":{"rview":{},"component":{"main":{},"extends":{},"hyperscript":{},"diffing":{},"config":{},"generic":{},"$":{},"animate":{},"add":{},"render":{},"setstate":{},"util":{}},"renderer":{"main":{}},"lib":{"_":{}},"plugin":{"main":{}}}};
   $__TREE.extend=function(o,m){var k=Object.keys(m);for(var i=0;i<k.length;i++){o[k[i]]=m[k[i]]}};
   /* - */
   /* eslint-enable */
 
-  /* index: 1, path: 'src/rview.js', import: [2, 3, 4, 5, 6, 7, 8] */
+  /* index: 1, path: 'src/rview.js', import: [2, 3, 4, 5, 6, 7, 8, 9] */
   (function() {
     /** ************************************************************************
      *
@@ -78,6 +78,7 @@ const $__ES6GLOB = {};
      *  . remove                      removes the web component from the DOM,
      *  . plugin                      attaches a plugin,
      *  . makeid                      returns a new component id,
+     *  . extends                     returns a new component inheriting from a parent,
      *
      *
      *
@@ -97,6 +98,7 @@ const $__ES6GLOB = {};
 
     // -- Local Modules
     const C = $__TREE.src.component.main;
+    const CE = $__TREE.src.component.extends;
     const R = $__TREE.src.renderer.main;
     const { _ } = $__TREE.src.lib;
     const Hyperscript = $__TREE.src.component.hyperscript;
@@ -120,7 +122,7 @@ const $__ES6GLOB = {};
 
       // Useful to retrieve the library name and version when it is
       // embedded in another library as an object:
-      _library: { name: 'RView', version: '1.0.10' },
+      _library: { name: 'RView', version: '1.1.0' },
 
 
       // -- Private Static Methods ---------------------------------------------
@@ -269,11 +271,25 @@ const $__ES6GLOB = {};
       makeid() {
         return _.makeid(Config.idLength);
       },
+
+      /**
+       * Returns a new component inheriting from a parent.
+       *
+       * @method (arg1, arg2)
+       * @public
+       * @param {Function}    the parent component,
+       * @param {Object}      the new or overwriting methods,
+       * @returns {Function}  returns the new component,
+       * @since 0.0.0
+       */
+      extends(parent, methods) {
+        return CE.extends(parent, methods);
+      },
     };
 
     // Attaches constants to RView that provide name and version of the lib.
     RView.NAME = 'RView';
-    RView.VERSION = '1.0.10';
+    RView.VERSION = '1.1.0';
 
 
     // -- Export
@@ -282,7 +298,7 @@ const $__ES6GLOB = {};
     /* eslint-enable no-underscore-dangle */
   }());
 
-  /* index: 2, path: 'src/component/main.js', import: [4, 9, 10] */
+  /* index: 2, path: 'src/component/main.js', import: [5, 10, 11] */
   (function() {
     /** ************************************************************************
      *
@@ -383,7 +399,125 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 3, path: 'src/renderer/main.js', import: [2, 4, 7] */
+  /* index: 3, path: 'src/component/extends.js', import: [] */
+  (function() {
+    /** ************************************************************************
+     *
+     * A feature to create inheritance.
+     *
+     * extends.js is just a literal object that contains a set of functions. It
+     * can't be intantiated.
+     *
+     * Private Functions:
+     *  . _extends                     returns a Component inheriting from a parent,
+     *
+     *
+     * Public Static Methods:
+     *  . extends                     returns a Component inheriting from a parent,
+     *
+     *
+     *
+     * @namespace    -
+     * @dependencies none
+     * @exports      -
+     * @author       -
+     * @since        0.0.0
+     * @version      -
+     * ********************************************************************** */
+    /* - */
+    /* eslint-disable one-var, semi-style, no-underscore-dangle */
+
+
+    // -- Vendor Modules
+
+
+    // -- Local Modules
+
+
+    // -- Local Constants
+
+
+    // -- Local Variables
+
+
+    // -- Private Functions ----------------------------------------------------
+
+    /**
+     * Returns a new component inheriting from a parent.
+     *
+     * @function (arg1, arg2)
+     * @private
+     * @param {Function}      the parent component,
+     * @param {Object}        the new or overwriting methods,
+     * @returns {Function}    returns the new component,
+     * @since 0.0.0
+     */
+    /* eslint-disable prefer-rest-params */
+    function _extends(parent, methods) {
+      if (typeof parent !== 'function' || typeof parent.prototype.$hyperscript !== 'function') {
+        return {
+          erro_code: 'WrongComponent',
+          message: 'the first argument is NOT a RView component!',
+        };
+      }
+
+      if (Object.prototype.toString.call(methods) !== '[object Object]') {
+        return {
+          error_code: 'WrongValue',
+          message: 'the second argument is NOT a literal object!',
+        };
+      }
+
+      const Component = function() {
+        let argu;
+        const Child = function() {
+          if (this instanceof Child) {
+            return this._init(...argu);
+          }
+          argu = arguments;
+          return new Child();
+        };
+
+        Child.prototype = Object.create(parent.prototype);
+        Child.prototype.constructor = Child;
+        Object.keys(methods).forEach((m) => {
+          Child.prototype[m] = methods[m];
+        });
+        return Child;
+      };
+
+      return Component();
+    }
+    /* eslint-enable prefer-rest-params */
+
+
+    // -- Public Static Methods ------------------------------------------------
+
+    const Ex = {
+
+      /**
+       * Returns a new component inheriting from a parent.
+       *
+       * @method (arg1, arg2)
+       * @public
+       * @param {Function}      the parent component,
+       * @param {Object}        the new or overwriting methods,
+       * @returns {Function}    returns the new component,
+       * @since 0.0.0
+       */
+      extends(parent, methods) {
+        return _extends(parent, methods);
+      },
+    };
+
+
+    // -- Export
+    $__TREE.extend($__TREE.src.component.extends, Ex);
+
+    /* eslint-enable one-var, semi-style, no-underscore-dangle */
+  }());
+
+  /* index: 4, path: 'src/renderer/main.js', import: [2, 5, 8] */
   (function() {
     /** ************************************************************************
      *
@@ -787,7 +921,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 4, path: 'src/lib/_.js', import: [] */
+  /* index: 5, path: 'src/lib/_.js', import: [] */
   (function() {
     /** ************************************************************************
      *
@@ -1017,7 +1151,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 5, path: 'src/component/hyperscript.js', import: [4] */
+  /* index: 6, path: 'src/component/hyperscript.js', import: [5] */
   (function() {
     /** ************************************************************************
      *
@@ -1258,7 +1392,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 6, path: 'src/component/diffing.js', import: [8] */
+  /* index: 7, path: 'src/component/diffing.js', import: [9] */
   (function() {
     /** ************************************************************************
      *
@@ -1531,7 +1665,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 7, path: 'src/plugin/main.js', import: [4] */
+  /* index: 8, path: 'src/plugin/main.js', import: [5] */
   (function() {
     /** ************************************************************************
      *
@@ -1641,7 +1775,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 8, path: 'src/component/config.js', import: [] */
+  /* index: 9, path: 'src/component/config.js', import: [] */
   (function() {
     /** ************************************************************************
      *
@@ -1697,7 +1831,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 9, path: 'src/component/generic.js', import: [4, 11, 12, 13, 5, 14, 15, 8] */
+  /* index: 10, path: 'src/component/generic.js', import: [5, 12, 13, 14, 6, 15, 16, 9] */
   (function() {
     /** ************************************************************************
      *
@@ -2144,7 +2278,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 10, path: 'src/component/$.js', import: [] */
+  /* index: 11, path: 'src/component/$.js', import: [] */
   (function() {
     /** ************************************************************************
      *
@@ -2615,7 +2749,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 11, path: 'src/component/animate.js', import: [4] */
+  /* index: 12, path: 'src/component/animate.js', import: [5] */
   (function() {
     /** ************************************************************************
      *
@@ -2969,7 +3103,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 12, path: 'src/component/add.js', import: [13] */
+  /* index: 13, path: 'src/component/add.js', import: [14] */
   (function() {
     /** ************************************************************************
      *
@@ -3179,7 +3313,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 13, path: 'src/component/render.js', import: [4, 5] */
+  /* index: 14, path: 'src/component/render.js', import: [5, 6] */
   (function() {
     /** ************************************************************************
      *
@@ -3527,7 +3661,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 14, path: 'src/component/setstate.js', import: [6, 13] */
+  /* index: 15, path: 'src/component/setstate.js', import: [7, 14] */
   (function() {
     /** ************************************************************************
      *
@@ -3627,7 +3761,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 15, path: 'src/component/util.js', import: [4] */
+  /* index: 16, path: 'src/component/util.js', import: [5] */
   (function() {
     /** ************************************************************************
      *

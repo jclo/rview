@@ -13,7 +13,7 @@ const { expect } = require('chai')
 
 // -- Local Constants
 // Number of properties added by your library.
-const OWNPROPS = 7
+const OWNPROPS = 8
     , TESTMODE = 4
     ;
 
@@ -127,6 +127,10 @@ module.exports = function(RView, libname, version) {
 
       it('Expects RView to own the property "makeid" that is a function.', () => {
         expect(RView).to.own.property('makeid').that.is.a('function');
+      });
+
+      it('Expects RView to own the property "extends" that is a function.', () => {
+        expect(RView).to.own.property('extends').that.is.a('function');
       });
 
       describe('Test the owned specific properties:', () => {
