@@ -1,10 +1,11 @@
 ###
 
-### 1.1.0 (March 13, 2023)
+### 1.1.0 (November 3, 2023)
 
   * Updated the project with @mobilabs/es6kadoo v1.1 (no Gulp),
   * Added the component methods listen and postRender executed after rendering in DOM,
   * Added the component methods onChange called after a component update,
+  * Added web documentation,
   * ...,
 
 

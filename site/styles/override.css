@@ -1,0 +1,36 @@
+/*
+ * -- SPECIFIC STYLES --
+ *
+ */
+.frontpage-section-right-img img {
+  padding: 5rem 2rem;
+  max-width: 80%
+}
+
+/**
+ * Flag Icons subset
+ * (https://github.com/lipis/flag-icons)
+ */
+.fi-fr {
+  background-image: url('../img/flags-icons/4x3/fr.svg');
+}
+.fi-gb {
+  background-image: url('../img/flags-icons/4x3/gb.svg');
+}
+.fi-de {
+  background-image: url('../img/flags-icons/4x3/de.svg');
+}
+.fi-it {
+  background-image: url('../img/flags-icons/4x3/it.svg');
+}
+
+
+
+/*
+ * -- COLOR THEME --
+ *
+ */
+
+
+
+ /* oOo */

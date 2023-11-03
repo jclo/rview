@@ -6,5 +6,10 @@ _old_*
 coverage
 node_modules
 
-examples
+/examples
 test/stress
+
+site/*
+!site/styles
+!site/webpages
+!site/config.js

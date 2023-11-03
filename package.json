@@ -46,7 +46,10 @@
 
     "others": " --- OTHERS ---",
     "prepare": "husky install",
-    "doc": ""
+    "doc:create": "",
+    "doc:build": "kasar build",
+    "doc:watch": "kasar watch",
+    "doc:run": "kasar serve --port $1"
   },
   "repository": {
     "type": "git",
@@ -70,6 +73,7 @@
   "homepage": "https://github.com/jclo/rview",
   "dependencies": {},
   "devDependencies": {
+    "@mobilabs/kasar": "^2.3.1",
     "chai": "^4.3.7",
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",

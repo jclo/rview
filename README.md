@@ -420,6 +420,7 @@ events()                        | executed after rendering the component in the 
 listen()                        | executed after rendering the component in the DOM,
 render()                        | returns the HTML template,
 postRender()                    | executed after rendering the component in the DOM,
+onChange                        | called after the component is updated in the DOM,
                                 |
 Generic Methods                 |
 $(sel)                          | returns an object to access to the comp. in the DOM,
