@@ -419,7 +419,7 @@ init()                          | executed before rendering the component in the
 events()                        | executed after rendering the component in the DOM (to be phased out),
 listen()                        | executed after rendering the component in the DOM,
 render()                        | returns the HTML template,
-postRender()                    | executed after rendering the component in the DOM (listen alias),
+postRender()                    | executed after rendering the component in the DOM,
                                 |
 Generic Methods                 |
 $(sel)                          | returns an object to access to the comp. in the DOM,

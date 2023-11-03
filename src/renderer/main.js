@@ -68,6 +68,8 @@ function _fireEvents(co) {
     const keys = Object.keys(co._cList);
     for (let i = 0; i < keys.length; i++) {
       co._cList[keys[i]].events();
+      co._cList[keys[i]].listen();
+      co._cList[keys[i]].postRender();
       _fireEvents(co._cList[keys[i]]);
     }
   }
