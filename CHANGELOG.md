@@ -2,6 +2,12 @@
 
 ### 1.1.0 (March 13, 2023)
 
+  * Updated the project with @mobilabs/es6kadoo v1.1 (no Gulp),
+  * ...,
+
+
+### 1.1.0 (March 13, 2023)
+
   * Added the static method extends allowing the inheritance,
   * Release.
 

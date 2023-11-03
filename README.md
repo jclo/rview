@@ -424,6 +424,7 @@ postRender()                    | executed after rendering the component in the 
 Generic Methods                 |
 $(sel)                          | returns an object to access to the comp. in the DOM,
 $animate()                      | updates state properties from an initial value to a final value,
+$append()                       | appends a component as the last child,
 $getChild(tag/id/name)          | returns the matching child object,
 $removeChild(tag/id/name)       | removes the matching child object,
 $getChildren()                  | returns the list of the first level children,
