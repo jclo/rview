@@ -294,6 +294,7 @@ function _childRender(co, xml) {
     for (let i = 0; i < childs.length; i++) {
       const child = co._cList[childs[i]];
       xml = _childRender(child, xml.replace(child._tag, _reRender(child)));
+      child.onChange();
     }
   }
 

@@ -54,6 +54,7 @@
  *  . events                      processes the DOM events,
  *  . listen                      listens the DOM events,
  *  . postRender                  executes operations after component added to DOM,
+ *  . onChange                    executes operations after component updated in DOM,
  *  . render                      returns the component XML string,
  *
  *
@@ -458,6 +459,25 @@ const methods = {
    * @since 0.0.0
    */
   postRender() {
+    return this;
+  },
+
+  /**
+   * Executes operations after component updated in DOM.
+   * (could be overwritten)
+   *
+   * Nota:
+   * This method is called after the component, already
+   * in the DOM, is updated through a $setState. It must be used
+   * to perform a post-rendering process after each update.
+   *
+   * @method ()
+   * @public
+   * @param {}              -,
+   * @returns {Object}      returns this,
+   * @since 0.0.0
+   */
+  onChange() {
     return this;
   },
 
