@@ -2,7 +2,6 @@
 __trash
 _old_*
 
-.nyc_output
 coverage
 node_modules
 

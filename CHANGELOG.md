@@ -1,5 +1,11 @@
 ###
 
+### 1.2.1 (January 25, 2024)
+
+  * Updated the project with @mobilabs/es6kadoo v2.1 (Github Actions),
+  * ...,
+
+
 ### 1.2.0 (November 3, 2023)
 
   * Updated the project with @mobilabs/es6kadoo v1.1 (no Gulp),

@@ -11,9 +11,8 @@
     "general": " --- GENERAL ---",
 
     "build:js": " --- JAVASCRIPT --- ",
-    "build:js:dev": "node tasks/build.js.dev.js $1",
-    "build:js:prod": "node tasks/build.js.prod.js $1",
-
+    "build:js:dev": "node scripts/build.js.dev.js $1",
+    "build:js:prod": "node scripts/build.js.prod.js $1",
     "build:css": " --- CSS --- ",
 
     "build:generic": " --- BUILD (GENERIC) --- ",
@@ -22,16 +21,15 @@
     "build:dev": "npm run build:js:dev",
 
     "build:production": " --- BUILD (PRODUCTION) --- ",
-    "build:skeleton:prod": "node tasks/build.skeleton.prod.js $1",
+    "build:skeleton:prod": "node scripts/build.skeleton.prod.js $1",
     "prebuild:prod": "npm run build:dev && npm run build:skeleton:prod",
     "build:prod": "npm run build:js:prod",
 
     "testing": " --- TESTING --- ",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcov mocha --require esm ./test/main.js",
+    "test": "cross-env NODE_ENV=test c8 --reporter=lcov mocha --require esm ./test/main.js",
     "display:coverage": "open -a safari ./coverage/lcov-report/index.html",
-    "check:coverage": "nyc check-coverage --statements 5 --branches 1 --functions 5 --lines 5",
-    "report:coverage": "nyc report --reporter=text-lcov | coveralls",
-    "report": "nyc report",
+    "check:coverage": "c8 check-coverage --statements 50 --branches 90 --functions 10 --lines 50",
+    "report": "c8 report",
 
     "serving": " --- SERVING --- ",
     "server:dev": "http-server --port 8080",
@@ -74,23 +72,29 @@
   "dependencies": {},
   "devDependencies": {
     "@mobilabs/kasar": "^2.3.1",
-    "chai": "^4.3.7",
-    "coveralls": "^3.1.1",
+    "c8": "^9.0.0",
+    "chai": "4.3.10",
     "cross-env": "^7.0.3",
-    "eslint": "^8.41.0",
+    "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-import": "^2.29.1",
     "esm": "^3.2.25",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
-    "jsdom": "^22.1.0",
-    "kadoo": "^1.0.7",
+    "jsdom": "23.1.0",
+    "kadoo": "^1.2.0",
     "mocha": "^8.4.0",
-    "nodemon": "^2.0.22",
-    "nyc": "^15.1.0",
-    "terser": "^5.17.4",
+    "nodemon": "^3.0.2",
+    "terser": "^5.26.0",
     "xmldom": "^0.6.0",
-    "@mobilabs/es6kadoo": "1.1.1"
+    "@mobilabs/es6kadoo": "2.1.0"
+  },
+  "c8": {
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [],
+    "all": false
   },
   "publishConfig": {
     "access": "public"
