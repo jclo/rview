@@ -3,7 +3,7 @@
 ### 1.2.2 (March 26, 2024)
 
   * Extended listen and postRender methods to $append,
-  * ...,
+  * Release.
 
 
 ### 1.2.1 (January 25, 2024)
