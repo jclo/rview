@@ -1,3 +1,16 @@
+/** ************************************************************************
+ *
+ * Configuration file.
+ *
+ *
+ *
+ * @namespace    -
+ * @dependencies none
+ * @exports      -
+ * @author       -
+ * @since        0.0.0
+ * @version      -
+ * ********************************************************************** */
 /* eslint one-var: 0, semi-style: 0 */
 
 
@@ -22,6 +35,7 @@ const libname = 'RView'
 
 module.exports = {
   ES6GLOB: '$__ES6GLOB',
+  root: '.',
   dist: './_dist',
   libdir: './lib',
   libname,
@@ -50,7 +64,7 @@ module.exports = {
       ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
       ' * Released under the MIT license. You may obtain a copy of the License',
       ' * at: http://www.opensource.org/licenses/mit-license.php).',
-      ' * Built from ES6Kadoo v2.1.0.',
+      ' * Built from ES6Kadoo v2.2.1.',
       ' * ************************************************************************** */',
       ''].join('\n');
   },

@@ -1,5 +1,11 @@
 ###
 
+### 1.3.x (March 26, 2024)
+
+  * Updated the project with @mobilabs/es6kadoo v2.2.1 (updated dependencies),
+  * ...,
+
+
 ### 1.2.2 (March 26, 2024)
 
   * Extended listen and postRender methods to $append,
