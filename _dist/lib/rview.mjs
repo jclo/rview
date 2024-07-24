@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v1.3.x
+ * RView v1.3.0
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -123,7 +123,7 @@ const $__ES6GLOB = {};
 
       // Useful to retrieve the library name and version when it is
       // embedded in another library as an object:
-      _library: { name: 'RView', version: '1.3.x' },
+      _library: { name: 'RView', version: '1.3.0' },
 
 
       // -- Private Static Methods ---------------------------------------------
@@ -290,7 +290,7 @@ const $__ES6GLOB = {};
 
     // Attaches constants to RView that provide name and version of the lib.
     RView.NAME = 'RView';
-    RView.VERSION = '1.3.x';
+    RView.VERSION = '1.3.0';
 
 
     // -- Export
