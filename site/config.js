@@ -17,7 +17,7 @@ const FR          = 'fr'
     , IT          = 'it'
     , { base }    = themeconfig
     , { version } = require('../package.json')
-    , basepath    = '/rview/'
+    , basepath    = '/'
     ;
 
 
@@ -118,6 +118,16 @@ module.exports = {
       },
       `${base}/site/webpages/${EN}/reference.md`,
     ],
+    fr: [
+      //
+    ],
+
+    de: [
+      //
+    ],
+    it: [
+      //
+    ],
   },
 
   // Adds the documentation:
@@ -130,7 +140,7 @@ module.exports = {
     en: {
       top: {
         left: [
-          { text: 'Home', link: `${basepath}${EN}` },
+          // { text: 'Home', link: `${basepath}${EN}` },
         ],
         right: [
           {
@@ -166,6 +176,57 @@ module.exports = {
           ],
         },
         { text: '', link: '#switchtheme', lang: EN, icon: '<span id="switchthemesidemenu" class="theme-color-icons theme-icon" title="Switch between dark and light mode.">' },
+      ],
+    },
+
+    fr: {
+      top: {
+        left: [
+          //
+        ],
+        right: [
+          //
+        ],
+      },
+      bottom: [
+        //
+      ],
+      mobile: [
+        //
+      ],
+    },
+
+    de: {
+      top: {
+        left: [
+          //
+        ],
+        right: [
+          //
+        ],
+      },
+      bottom: [
+        //
+      ],
+      mobile: [
+        //
+      ],
+    },
+
+    it: {
+      top: {
+        left: [
+          //
+        ],
+        right: [
+          //
+        ],
+      },
+      bottom: [
+        //
+      ],
+      mobile: [
+        //
       ],
     },
   },

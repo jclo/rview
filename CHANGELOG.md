@@ -1,5 +1,11 @@
 ###
 
+### 1.3.x (September 3, 2024)
+
+  * Updated @mobilabs/kasar package,
+  * ...,
+
+
 ### 1.3.0 (July 24, 2024)
 
   * Updated the project with @mobilabs/es6kadoo v2.2.1 (updated dependencies),
