@@ -58,9 +58,9 @@ function _fireChildEvents(co) {
   if (co._cList) {
     const keys = Object.keys(co._cList);
     for (let i = 0; i < keys.length; i++) {
-      co._cList[keys[i]].events();
-      co._cList[keys[i]].listen();
-      co._cList[keys[i]].postRender();
+      co._cList[keys[i]]._intEvents();
+      co._cList[keys[i]]._intListen();
+      co._cList[keys[i]]._intPostRender();
       _fireChildEvents(co._cList[keys[i]]);
     }
   }
@@ -161,9 +161,9 @@ function _insert(co, prepend, ...args) {
 
   // And finally, we have to run the 'events' method to attach the DOM
   // events to this child component and its own childs if any.
-  c.events();
-  c.listen();
-  c.postRender();
+  c._intEvents();
+  c._intListen();
+  c._intPostRender();
   _fireChildEvents(c);
 }
 

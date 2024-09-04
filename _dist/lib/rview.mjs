@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v1.3.0
+ * RView v2.0.0-beta.1
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -42,9 +42,9 @@ const $__ES6GLOB = {};
    *
    * ************************************************************************ */
   /* eslint-disable */
-  let $__TREE = {"src":{"rview":{},"component":{"main":{},"extends":{},"hyperscript":{},"diffing":{},"config":{},"generic":{},"$":{},"animate":{},"add":{},"render":{},"setstate":{},"util":{}},"renderer":{"main":{}},"lib":{"_":{}},"plugin":{"main":{}}}};
+  let $__TREE = {"src":{"rview":{},"component":{"main":{},"extends":{},"hyperscript":{},"diffing":{},"config":{},"generic":{},"$":{},"animate":{},"add":{},"render":{},"setstate":{},"util":{}},"renderer":{"main":{}},"lib":{"_":{}},"plugin":{"main":{}}},"libin":{}};
   $__TREE.extend=function(o,m){var k=Object.keys(m);for(var i=0;i<k.length;i++){o[k[i]]=m[k[i]]}};
-  /* - */
+  $__TREE_RUN_EMBED_LIB();
   /* eslint-enable */
 
   /* index: 1, path: 'src/rview.js', import: [2, 3, 4, 5, 6, 7, 8, 9] */
@@ -123,7 +123,7 @@ const $__ES6GLOB = {};
 
       // Useful to retrieve the library name and version when it is
       // embedded in another library as an object:
-      _library: { name: 'RView', version: '1.3.0' },
+      _library: { name: 'RView', version: '2.0.0-beta.1' },
 
 
       // -- Private Static Methods ---------------------------------------------
@@ -290,7 +290,7 @@ const $__ES6GLOB = {};
 
     // Attaches constants to RView that provide name and version of the lib.
     RView.NAME = 'RView';
-    RView.VERSION = '1.3.0';
+    RView.VERSION = '2.0.0-beta.1';
 
 
     // -- Export
@@ -589,9 +589,9 @@ const $__ES6GLOB = {};
       if (co._cList) {
         const keys = Object.keys(co._cList);
         for (let i = 0; i < keys.length; i++) {
-          co._cList[keys[i]].events();
-          co._cList[keys[i]].listen();
-          co._cList[keys[i]].postRender();
+          co._cList[keys[i]]._intEvents();
+          co._cList[keys[i]]._intListen();
+          co._cList[keys[i]]._intPostRender();
           _fireEvents(co._cList[keys[i]]);
         }
       }
@@ -788,12 +788,12 @@ const $__ES6GLOB = {};
       // node in the DOM.
       // Extend the components methods with the passed-in methods, if any.
       const Comp = V.Component(_.extend(methods, {
-        init() {
+        $init() {
           this.state.class = classList || '';
           this.state.style = style || '';
           this.state.inside = '';
         },
-        render(state) {
+        $render(state) {
           return `
             <div class="${state.class}" style="${state.style}">${state.inside}</div>
           `;
@@ -850,7 +850,7 @@ const $__ES6GLOB = {};
 
       // Ok. Create the root component and attach it to the DOM:
       const RootComp = V.Component({
-        render() {
+        $render() {
           this.name = 'firstparent';
           this.children = opt.children;
           return opt.template;
@@ -1311,7 +1311,7 @@ const $__ES6GLOB = {};
         // hyperscript object.
         case 'function':
           obj = nodeName();
-          if (obj.render) {
+          if (obj._intRender) {
             // We do not process subcomponents otherwise they are merged with
             // the current node and we can't access them independently. Thus,
             // we create a tag ('<Cxx />') instead and this Component is processed
@@ -1822,6 +1822,10 @@ const $__ES6GLOB = {};
     // -- Public ---------------------------------------------------------------
 
     const Config = {
+      // Default Logger settings.
+      logger: {
+        level: 'warn',
+      },
 
       // the length of the component id:
       idLength: 8,
@@ -1834,7 +1838,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 10, path: 'src/component/generic.js', import: [5, 12, 13, 14, 6, 15, 16, 9] */
+  /* index: 10, path: 'src/component/generic.js', import: [12, 5, 13, 14, 15, 6, 16, 17, 9] */
   (function() {
     /** ************************************************************************
      *
@@ -1859,6 +1863,12 @@ const $__ES6GLOB = {};
      *  . _mess                       the messenger object,
      *
      * Private Methods:
+     *  . _intInit                    checks if it needs to use $init or init method,
+     *  . _intEvents                  applies the deprecated events method,
+     *  . _intListen                  checks if it needs to use $listenDOM or listen method,
+     *  . _intPostRender              checks if it needs to use $postRender or postRender method,
+     *  . _intOnChange                checks if it needs to use $onChange or onChange method,
+     *  . _intRender                  checks if it needs to use $render or render method,
      *  . _init                       executes the private init when the comp. is created,
      *  . _renderer                   renders the component an its children, return XML,
      *  . _render                     returns data returned by the public method render,
@@ -1888,12 +1898,12 @@ const $__ES6GLOB = {};
      *
      *
      * Empty Public Methods:
-     *  . init                        executes the public initializations,
-     *  . events                      processes the DOM events,
-     *  . listen                      listens the DOM events,
-     *  . postRender                  executes operations after component added to DOM,
-     *  . onChange                    executes operations after component updated in DOM,
-     *  . render                      returns the component XML string,
+     *  . $init                       executes the public initializations,
+     *  . events                      processes the DOM events (to be phased out),
+     *  . $listenDOM                  listens the DOM events,
+     *  . $postRender                 executes operations after component added to DOM,
+     *  . $onChange                   executes operations after component updated in DOM,
+     *  . $render                     returns the component XML string,
      *
      *
      *
@@ -1909,6 +1919,7 @@ const $__ES6GLOB = {};
 
 
     // -- Vendor Modules
+    const { KZlog } = $__TREE.libin;
 
 
     // -- Local Modules
@@ -1923,6 +1934,9 @@ const $__ES6GLOB = {};
 
 
     // -- Local Constants
+    const { level } = C.logger
+        , log       = KZlog('RView', level, false)
+        ;
 
 
     // -- Local Variables
@@ -1951,6 +1965,112 @@ const $__ES6GLOB = {};
       // -- Private Methods ----------------------------------------------------
 
       /**
+       * Checks if it needs to use $init or the deprecated init method.
+       *
+       * @method ()
+       * @private
+       * @param {}              -,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      _intInit() {
+        if (!/^init\(\)[^{]+\{\s*\}/m.test(this.init.toString())
+        ) {
+          log.warn('init method is deprecated, use $init instead!');
+          this.init();
+          return;
+        }
+        this.$init();
+      },
+
+      /**
+       * Applies the deprecated events method.
+       *
+       * @method ()
+       * @private
+       * @param {}              -,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      _intEvents() {
+        if (!/^events\(\)[^{]+\{\s*\}/m.test(this.events.toString())) {
+          log.warn('events method is deprecated, use $listenDOM or $postRender instead!');
+          this.events();
+        }
+      },
+
+      /**
+       * Checks if it needs to use $listenDOM or the deprecated listen method.
+       *
+       * @method ()
+       * @private
+       * @param {}              -,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      _intListen() {
+        if (!/^listen\(\)[^{]+\{\s*\}/m.test(this.listen.toString())) {
+          log.warn('listen method is deprecated, use $listenDOM instead!');
+          this.listen();
+          return;
+        }
+        this.$listenDOM();
+      },
+
+      /**
+       * Checks if it needs to use $postRender or the deprecated postRender method.
+       *
+       * @method ()
+       * @private
+       * @param {}              -,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      _intPostRender() {
+        if (!/^postRender\(\)[^{]+\{\s*\}/m.test(this.postRender.toString())) {
+          log.warn('postRender method is deprecated, use $postRender instead!');
+          this.postRender();
+          return;
+        }
+        this.$postRender();
+      },
+
+      /**
+       * Checks if it needs to use $onChange or the deprecated onChange method.
+       *
+       * @method ()
+       * @private
+       * @param {}              -,
+       * @returns {}            -,
+       * @since 0.0.0
+       */
+      _intOnChange() {
+        if (!/^onChange\(\)[^{]+\{\s*\}/m.test(this.onChange.toString())) {
+          log.warn('onChange method is deprecated, use $onChange instead!');
+          this.onChange();
+          return;
+        }
+        this.$onChange();
+      },
+
+      /**
+       * Checks if it needs to use $onChange or the deprecated onChange method.
+       *
+       * @method (...args)
+       * @private
+       * @param {...}           the arguments,
+       * @returns {XMLString}   returns the rendered data,
+       * @since 0.0.0
+       */
+      _intRender(...args) {
+        if (!/^render\((.*)\)[^{]+\{\s*\}/m.test(this.render.toString())) {
+          log.warn('render method is deprecated, use $render instead!');
+          return this.render(...args);
+        }
+        return this.$render(...args);
+      },
+
+      /**
        * Does the initializations when the component is created.
        *
        * @method (arg1)
@@ -1977,7 +2097,7 @@ const $__ES6GLOB = {};
         this.name = 'mynameisnobody';
 
         // Call the public init:
-        this.init();
+        this._intInit();
         return this;
       },
 
@@ -2016,7 +2136,7 @@ const $__ES6GLOB = {};
           .replace(/\n<\/a>/g, '</a>')            // -
         ;
         */
-        const xml = this.render(...args);
+        const xml = this._intRender(...args);
         if (_.isString(xml)) {
           return xml.trim();
         }
@@ -2244,7 +2364,8 @@ const $__ES6GLOB = {};
        * @returns {Object}      returns this,
        * @since 0.0.0
        */
-      init() {
+      init() {},
+      $init() {
         return this;
       },
 
@@ -2258,9 +2379,7 @@ const $__ES6GLOB = {};
        * @returns {Object}      returns this,
        * @since 0.0.0
        */
-      events() {
-        return this;
-      },
+      events() {},
 
       /**
        * Listens the DOM events.
@@ -2277,7 +2396,8 @@ const $__ES6GLOB = {};
        * @returns {Object}      returns this,
        * @since 0.0.0
        */
-      listen() {
+      listen() {},
+      $listenDOM() {
         return this;
       },
 
@@ -2296,7 +2416,8 @@ const $__ES6GLOB = {};
        * @returns {Object}      returns this,
        * @since 0.0.0
        */
-      postRender() {
+      postRender() {},
+      $postRender() {
         return this;
       },
 
@@ -2315,7 +2436,8 @@ const $__ES6GLOB = {};
        * @returns {Object}      returns this,
        * @since 0.0.0
        */
-      onChange() {
+      onChange() {},
+      $onChange() {
         return this;
       },
 
@@ -2329,7 +2451,8 @@ const $__ES6GLOB = {};
        * @returns {String}      returns XMLString,
        * @since 0.0.0
        */
-      render() {
+      render() {},
+      $render() {
         return '<div></div>';
       },
     };
@@ -2812,7 +2935,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 12, path: 'src/component/animate.js', import: [5] */
+  /* index: 13, path: 'src/component/animate.js', import: [5] */
   (function() {
     /** ************************************************************************
      *
@@ -3166,7 +3289,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 13, path: 'src/component/add.js', import: [14] */
+  /* index: 14, path: 'src/component/add.js', import: [15] */
   (function() {
     /** ************************************************************************
      *
@@ -3228,9 +3351,9 @@ const $__ES6GLOB = {};
       if (co._cList) {
         const keys = Object.keys(co._cList);
         for (let i = 0; i < keys.length; i++) {
-          co._cList[keys[i]].events();
-          co._cList[keys[i]].listen();
-          co._cList[keys[i]].postRender();
+          co._cList[keys[i]]._intEvents();
+          co._cList[keys[i]]._intListen();
+          co._cList[keys[i]]._intPostRender();
           _fireChildEvents(co._cList[keys[i]]);
         }
       }
@@ -3331,9 +3454,9 @@ const $__ES6GLOB = {};
 
       // And finally, we have to run the 'events' method to attach the DOM
       // events to this child component and its own childs if any.
-      c.events();
-      c.listen();
-      c.postRender();
+      c._intEvents();
+      c._intListen();
+      c._intPostRender();
       _fireChildEvents(c);
     }
 
@@ -3380,7 +3503,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 14, path: 'src/component/render.js', import: [5, 6] */
+  /* index: 15, path: 'src/component/render.js', import: [5, 6] */
   (function() {
     /** ************************************************************************
      *
@@ -3678,7 +3801,7 @@ const $__ES6GLOB = {};
         for (let i = 0; i < childs.length; i++) {
           const child = co._cList[childs[i]];
           xml = _childRender(child, xml.replace(child._tag, _reRender(child)));
-          child.onChange();
+          child._intOnChange();
         }
       }
 
@@ -3729,7 +3852,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 15, path: 'src/component/setstate.js', import: [7, 14] */
+  /* index: 16, path: 'src/component/setstate.js', import: [7, 15] */
   (function() {
     /** ************************************************************************
      *
@@ -3829,7 +3952,7 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
-  /* index: 16, path: 'src/component/util.js', import: [5] */
+  /* index: 17, path: 'src/component/util.js', import: [5] */
   (function() {
     /** ************************************************************************
      *
@@ -4046,6 +4169,533 @@ const $__ES6GLOB = {};
     /* eslint-enable one-var, semi-style, no-underscore-dangle */
   }());
 
+
+  /* eslint-disable no-shadow */
+  function $__TREE_RUN_EMBED_LIB() {
+    /* index: 12, path: 'node_modules/@mobilabs/kzlog/_dist/lib/kzlog.js' */
+    /* export: KZlog, link: 'libin.kzlog' */
+    /*! ****************************************************************************
+     * KZlog v1.0.4
+     *
+     * A minimal lightweight logging library for JavaScript.
+     * (you can download it from npm or github repositories)
+     * Copyright (c) 2024 Mobilabs <contact@mobilabs.fr> (http://www.mobilabs.fr).
+     * Released under the MIT license. You may obtain a copy of the License
+     * at: http://www.opensource.org/licenses/mit-license.php).
+     * Built from ES6lib v2.1.1.
+     * ************************************************************************** */
+    // ESLint declarations
+    /* - */
+    /* eslint strict: ["error", "function"] */
+    (function(root, factory) {
+      /* - */
+
+      /* c8 ignore start */
+      if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define([''], factory);
+      } else if (typeof exports === 'object') {
+        // Node. Does not work with strict CommonJS, but
+        // only CommonJS-like environments that support module.exports,
+        // like Node.
+        /* eslint-disable-next-line no-param-reassign */
+        module.exports = factory(root);
+        /* eslint-disable-next-line no-param-reassign */
+        root.KZlog = factory(root);
+      } else {
+        // Browser globals.
+        /* eslint-disable-next-line no-param-reassign */
+        root.KZlog = factory(root);
+      }
+      /* c8 ignore stop */
+    }($__TREE.libin, (root) => {
+      /* - */
+
+      /** **************************************************************************
+       * _head provides the list of the constants that are defined at the global
+       * level of this module and are accessible to all. So, they are considered
+       * as reserved words for this library.
+       * ************************************************************************ */
+      /* eslint-disable one-var, no-unused-vars, semi-style */
+
+      let KZlog
+        ;
+
+      // Tree is an internal object that links all the internal modules.
+      let LG = {};
+
+      /* eslint-enable one-var, no-unused-vars, semi-style */
+
+      /** **************************************************************************
+       *
+       * A lightweight logging library for JavaScript.
+       *
+       * kzlog.js is built upon the Prototypal Instantiation pattern. It
+       * returns an object by calling its constructor. It doesn't use the new
+       * keyword.
+       *
+       * Private Functions:
+       *  . none,
+       *
+       *
+       * Constructor:
+       *  . KZlog                       creates and returns the KZlog object,
+       *
+       *
+       * Private Static Methods:
+       *  . _setTestMode                returns internal objects for testing purpose,
+       *
+       *
+       * Public Static Methods:
+       *  . noConflict                  returns a reference to this KZlog object,
+       *
+       *
+       * Public Methods:
+       *  . whoami                      returns the library name and version,
+       *  . help                        dumps, to the console, the on-line help,
+       *  . setName                     updates the name of the module/library,
+       *  . setLevel                    updates the threshold level,
+       *  . setHighlight                updates the highlight mode,
+       *  . trace                       dumps a trace message,
+       *  . debug                       dumps a debug message,
+       *  . info                        dumps a info message,
+       *  . warn                        dumps a warn message,
+       *  . error                       dumps a error message,
+       *  . fatal                       dumps a fatal message,
+       *
+       *
+       *
+       * @namespace    -
+       * @dependencies none
+       * @exports      -
+       * @author       -
+       * @since        0.0.0
+       * @version      -
+       * ************************************************************************ */
+      /* - */
+      /* eslint-disable one-var, semi-style, no-underscore-dangle */
+
+      (function() {
+        // START OF IIFE
+
+
+        // -- Module Path
+
+
+        // -- Local Modules
+
+
+        // -- Local Constants
+        // Saves the previous value of the library variable, so that it can be
+        // restored later on, if noConflict is used.
+        const previousKZlog = root.KZlog
+            ;
+
+
+        // -- Local Variables
+        let methods
+          ;
+
+
+        // -- Public ---------------------------------------------------------------
+
+        /**
+         * Returns the KZlog object.
+         * (Prototypal Instantiation Pattern)
+         *
+         * @constructor (arg1, arg2, arg3)
+         * @public
+         * @param {String}        the name of the module/library to be printed,
+         * @param {String}        the log level threshold,
+         * @param {Boolean}       the highlight mode (true: color, false: B&W),
+         * @returns {Object}      returns the KZlog object,
+         * @since 0.0.0
+         */
+        KZlog = function(name, level, highlight) {
+          const obj = Object.create(methods);
+          obj._library = {
+            name: 'KZlog',
+            version: '1.0.4',
+          };
+          obj.name = name || 'unknown!';
+          obj.level = level || 'trace';
+          obj.highlight = highlight !== false;
+          return obj;
+        };
+
+        // Attaches constants to KZlog that provide name and version of the lib.
+        KZlog.NAME = 'KZlog';
+        KZlog.VERSION = '1.0.4';
+
+
+        // -- Private Static Methods -----------------------------------------------
+
+        /**
+         * Returns the internal objects for testing purpose.
+         * (must not be deleted)
+         *
+         * @method ()
+         * @private
+         * @param {}              -,
+         * @returns {Object}      returns a list of internal objects,
+         * @since 0.0.0
+         */
+        KZlog._setTestMode = function() {
+          return [];
+        };
+
+
+        // -- Public Static Methods ------------------------------------------------
+
+        /**
+         * Returns a reference to this KZlog object.
+         * (must not be deleted)
+         *
+         * Nota:
+         * Running KZlog in noConflict mode, returns the KZlog variable to its
+         * _ previous owner.
+         *
+         * @method ()
+         * @public
+         * @param {}              -,
+         * @returns {Object}      returns the KZlog object,
+         * @since 0.0.0
+         */
+        KZlog.noConflict = function() {
+          /* eslint-disable-next-line no-param-reassign */
+          root.KZlog = previousKZlog;
+          return this;
+        };
+
+
+        // -- Public Methods -------------------------------------------------------
+
+        methods = {
+
+          /**
+           * Returns the library name and version.
+           * (must not be deleted)
+           *
+           * @method ()
+           * @public
+           * @param {}            -,
+           * @returns {Object}    returns the library name and version,
+           * @since 0.0.0
+           */
+          whoami() {
+            return this._library;
+          },
+
+          /**
+           * Dumps, to the console, the on-line help.
+           *
+           * @function ()
+           * @public
+           * @param {}            -,
+           * @returns {}          -,
+           * @since 0.0.0
+           */
+          help() {
+            const help = ['',
+              'Prints a log message formatted as: [year-month-day] [level] name message,',
+              'Methods:',
+              '  help(): print this message,',
+              '  version(): return the version number,',
+              '  setName(name): set the name',
+              '  setLevel(level): set the level',
+              '  setHighlight()highlight: set the highlight mode',
+              '  trace(msg): print the trace message,',
+              '  debug(msg): print the debug message,',
+              '  info(msg): print the info message,',
+              '  warn(msg): print the warn message,',
+              '  error(msg): print the error message,',
+              '  fatal(msg): print the fatal message,',
+              '',
+            ].join('\n');
+
+            /* eslint-disable-next-line no-console */
+            console.log(help);
+          },
+
+          /**
+           * Updates the name of the module/library.
+           *
+           * @function (arg1)
+           * @public
+           * @param {String}      the name of the library running the KZlog,
+
+           * @returns {Object}    returns this,
+           * @since 0.0.0
+           */
+          setName(name) {
+            this.name = name || 'unknown!';
+            return this;
+          },
+
+          /**
+           * Updates the the threshold level.
+           *
+           * @function (arg1)
+           * @public
+           * @param {String}      the the threshold level,
+
+           * @returns {Object}    returns this,
+           * @since 0.0.0
+           */
+          setLevel(level) {
+            this.level = level || 'trace';
+            return this;
+          },
+
+          /**
+           * Updates the the highlight mode.
+           *
+           * @function (arg1)
+           * @public
+           * @param {Boolean}     the the highlight mode,
+
+           * @returns {Object}    returns this,
+           * @since 0.0.0
+           */
+          setHighlight(highlight) {
+            this.highlight = highlight !== false;
+            return this;
+          },
+
+          /**
+           * Dumps a trace message.
+           *
+           * @function (arg1)
+           * @public
+           * @param {String}      the message,
+           * @returns {Object}    returns this,
+           * @since 0.0.0
+           */
+          trace(msg) {
+            LG.print(this, msg, 'trace');
+            return this;
+          },
+
+          /**
+           * Dumps a debug message.
+           *
+           * @function (arg1)
+           * @public
+           * @param {String}      the message,
+           * @returns {Object}    returns this,
+           * @since 0.0.0
+           */
+          debug(msg) {
+            LG.print(this, msg, 'debug');
+            return this;
+          },
+
+          /**
+           * Dumps an info message.
+           *
+           * @function (arg1)
+           * @public
+           * @param {String}      the message,
+           * @returns {Object}    returns this,
+           * @since 0.0.0
+           */
+          info(msg) {
+            LG.print(this, msg, 'info');
+            return this;
+          },
+
+          /**
+           * Dumps an warn message.
+           *
+           * @function (arg1)
+           * @public
+           * @param {String}      the message,
+           * @returns {Object}    returns this,
+           * @since 0.0.0
+           */
+          warn(msg) {
+            LG.print(this, msg, 'warn');
+            return this;
+          },
+
+          /**
+           * Dumps an error message.
+           *
+           * @function (arg1)
+           * @public
+           * @param {String}      the message,
+           * @returns {Object}    returns this,
+           * @since 0.0.0
+           */
+          error(msg) {
+            LG.print(this, msg, 'error');
+            return this;
+          },
+
+          /**
+           * Dumps a fatal message.
+           *
+           * @function (arg1)
+           * @public
+           * @param {String}      the message,
+           * @returns {Object}    returns this,
+           * @since 0.0.0
+           */
+          fatal(msg) {
+            LG.print(this, msg, 'fatal');
+            return this;
+          },
+        };
+
+        // END OF IIFE
+      }());
+      /* eslint-enable one-var, semi-style, no-underscore-dangle */
+
+      /** **************************************************************************
+       *
+       * Implements the functions used by KZlog.
+       *
+       * log.js is just a literal object that contains a set of functions. It
+       * can't be intantiated.
+       *
+       * Private Functions:
+       *  . _default                    returns the default level,
+       *  . _levels                     returns the defined levels,
+       *
+       *
+       * Public Static Methods:
+       *  . print                       dumps, to the console, the logging message,
+       *
+       *
+       *
+       * @namespace    -
+       * @dependencies none
+       * @exports      -
+       * @author       -
+       * @since        0.0.0
+       * @version      -
+       * ************************************************************************ */
+      /* - */
+      /* eslint-disable one-var, semi-style, no-underscore-dangle */
+
+      (function() {
+        // START OF IIFE
+
+
+        // -- Module Path
+
+
+        // -- Local Modules
+
+
+        // -- Local Constants
+        const DEFAULT_LEVEL = 'trace'
+            , LEVELS = ['trace', 'debug', 'info', 'warn', 'error', 'fatal', 'off']
+            ;
+
+
+        // -- Local Variables
+
+
+        // -- Private Functions ----------------------------------------------------
+
+        /**
+         * Returns the default level.
+         *
+         * @function ()
+         * @private
+         * @param {}              -,
+         * @returns {Array}       returns the default level,
+         * @since 0.0.0
+         */
+        /* istanbul ignore next */
+        function _default() {
+          return DEFAULT_LEVEL;
+        }
+
+        /**
+         * Returns the defined levels.
+         *
+         * @function ()
+         * @private
+         * @param {}              -,
+         * @returns {Array}       returns the defined levels,
+         * @since 0.0.0
+         */
+        function _levels() {
+          return LEVELS;
+        }
+
+
+        // -- Public Static Methods ------------------------------------------------
+
+        LG = {
+
+          /**
+           * Dumps, to the console, the logging message.
+           *
+           * @method (arg1, arg2)
+           * @public
+           * @param {Object}    the log object,
+           * @param {String}    the message to print,
+           * @param {String}    the level of the message,
+           * @returns {}        -,
+           * @since 0.0.0
+           */
+          /* eslint-disable no-param-reassign, no-console */
+          print(log, msg, currentlevel) {
+            const levels = _levels()
+                , colors = [32, 36, 34, 33, 35, 31, 0]
+                , date   = new Date()
+                ;
+
+            let stringDate = `[${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}  `;
+            stringDate += `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}:${date.getMilliseconds()}`;
+            stringDate += ']';
+
+            if (!log.level) {
+              /* istanbul ignore next */
+              log.level = _default();
+            }
+
+            if (log.highlight === undefined) {
+              /* istanbul ignore next */
+              log.highlight = true;
+            }
+
+            let message;
+            if (levels.indexOf(currentlevel) >= levels.indexOf(log.level)) {
+              if (log.highlight === true) {
+                const ctags = `\u001b[1;${colors[levels.indexOf(currentlevel)]}m`;
+                const ctage = '\u001b[0m';
+
+                message = `${stringDate} [${ctags}${currentlevel}${ctage}] `;
+                message += `${log.name}: ${msg}`;
+              } else {
+                /* istanbul ignore next */
+                message = `${stringDate} [${currentlevel}] ${log.name}: ${msg}`;
+              }
+              console.log(message);
+              if (typeof msg === 'object') {
+                // to visualize content of the object instead of [object Object] only.
+                /* istanbul ignore next */
+                console.log(msg);
+              }
+            }
+          },
+          /* eslint-enable no-param-reassign, no-console */
+        };
+
+
+        // END OF IIFE
+      }());
+      /* eslint-enable one-var, semi-style, no-underscore-dangle */
+
+      // Returns the library name:
+      return KZlog;
+    }));
+  }
+  /* eslint-enable no-shadow */
 
   // Returns the library name:
   return $__TREE.src.rview;

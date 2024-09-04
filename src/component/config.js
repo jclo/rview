@@ -40,6 +40,10 @@
 // -- Public ---------------------------------------------------------------
 
 const Config = {
+  // Default Logger settings.
+  logger: {
+    level: 'warn',
+  },
 
   // the length of the component id:
   idLength: 8,

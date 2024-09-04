@@ -11,17 +11,17 @@ description: '-'
 
 ```javascript
 const Hello = Component({
-  init() {
+  $init() {
     this.state.message = '-';
   },
 
-  events() {
+  $listenDOM() {
     this.$listen('at:hello:from:hi', (msg) => {
       this.$setState({ message: `I got the message: ${msg}` });
     });
   },
 
-  render(state, props) {
+  $render(state, props) {
     return `
       <h1>Hello World</h1>
       <h2>${state.message}</h2>
@@ -30,13 +30,13 @@ const Hello = Component({
 });
 
 const Hi = Component({
-  events() {
+  $postRender() {
     setTimeout(() => {
       this.$emit('at:hello:from:hi', 'Hi Hello!');
     }, 5000);
   },
 
-  render() {
+  $render() {
     return `
       <h1>Hi!</h1>
     `;

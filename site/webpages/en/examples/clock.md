@@ -8,7 +8,7 @@ description: '-'
 
 ```javascript
 const Clock = Component({
-  init() {
+  $init() {
     this.state.time = Date.now();
     // update time every second
     this.timer = setInterval(() => {
@@ -16,7 +16,7 @@ const Clock = Component({
     }, 1000);
   },
 
-  render(state, props) {
+  $render(state, props) {
     const time = new Date(state.time).toLocaleTimeString();
     return `
       <div>

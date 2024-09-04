@@ -30,12 +30,12 @@ Methods                         | Description
 ```
 ```
 Empty Methods                   |
-init()                          | executed before rendering the component in the DOM,
+$init()                         | executed before rendering the component in the DOM,
 events()                        | executed after rendering the component in the DOM (to be phased out),
-listen()                        | executed after rendering the component in the DOM,
-render()                        | returns the HTML template,
-postRender()                    | executed after rendering the component in the DOM,
-onChange                        | called after the component is updated in the DOM,
+$listenDOM()                    | executed after rendering the component in the DOM,
+$render()                       | returns the HTML template,
+$postRender()                   | executed after rendering the component in the DOM,
+$onChange                       | called after the component is updated in the DOM,
                                 |
 Generic Methods                 |
 $(sel)                          | returns an object to access to the comp. in the DOM,

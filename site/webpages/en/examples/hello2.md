@@ -8,8 +8,8 @@ description: '-'
 
 ```javascript
 const App = Component({
-  render() {
-    return h('h1', null, 'Hello World');
+  $render() {
+    return h('h1', { class: 'myclassname}', 'Hello World');
   },
 });
 

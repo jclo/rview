@@ -8,7 +8,7 @@ description: '-'
 
 ```javascript
 const App = Component({
-  render() {
+  $render() {
     return `
       <h1>Hello World</h1>
     `;

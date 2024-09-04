@@ -21,6 +21,12 @@
  *  . _mess                       the messenger object,
  *
  * Private Methods:
+ *  . _intInit                    checks if it needs to use $init or init method,
+ *  . _intEvents                  applies the deprecated events method,
+ *  . _intListen                  checks if it needs to use $listenDOM or listen method,
+ *  . _intPostRender              checks if it needs to use $postRender or postRender method,
+ *  . _intOnChange                checks if it needs to use $onChange or onChange method,
+ *  . _intRender                  checks if it needs to use $render or render method,
  *  . _init                       executes the private init when the comp. is created,
  *  . _renderer                   renders the component an its children, return XML,
  *  . _render                     returns data returned by the public method render,
@@ -50,12 +56,12 @@
  *
  *
  * Empty Public Methods:
- *  . init                        executes the public initializations,
- *  . events                      processes the DOM events,
- *  . listen                      listens the DOM events,
- *  . postRender                  executes operations after component added to DOM,
- *  . onChange                    executes operations after component updated in DOM,
- *  . render                      returns the component XML string,
+ *  . $init                       executes the public initializations,
+ *  . events                      processes the DOM events (to be phased out),
+ *  . $listenDOM                  listens the DOM events,
+ *  . $postRender                 executes operations after component added to DOM,
+ *  . $onChange                   executes operations after component updated in DOM,
+ *  . $render                     returns the component XML string,
  *
  *
  *
@@ -71,6 +77,7 @@
 
 
 // -- Vendor Modules
+import KZlog from '@mobilabs/kzlog';
 
 
 // -- Local Modules
@@ -85,6 +92,9 @@ import C from './config';
 
 
 // -- Local Constants
+const { level } = C.logger
+    , log       = KZlog('RView', level, false)
+    ;
 
 
 // -- Local Variables
@@ -113,6 +123,112 @@ const methods = {
   // -- Private Methods ----------------------------------------------------
 
   /**
+   * Checks if it needs to use $init or the deprecated init method.
+   *
+   * @method ()
+   * @private
+   * @param {}              -,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  _intInit() {
+    if (!/^init\(\)[^{]+\{\s*\}/m.test(this.init.toString())
+    ) {
+      log.warn('init method is deprecated, use $init instead!');
+      this.init();
+      return;
+    }
+    this.$init();
+  },
+
+  /**
+   * Applies the deprecated events method.
+   *
+   * @method ()
+   * @private
+   * @param {}              -,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  _intEvents() {
+    if (!/^events\(\)[^{]+\{\s*\}/m.test(this.events.toString())) {
+      log.warn('events method is deprecated, use $listenDOM or $postRender instead!');
+      this.events();
+    }
+  },
+
+  /**
+   * Checks if it needs to use $listenDOM or the deprecated listen method.
+   *
+   * @method ()
+   * @private
+   * @param {}              -,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  _intListen() {
+    if (!/^listen\(\)[^{]+\{\s*\}/m.test(this.listen.toString())) {
+      log.warn('listen method is deprecated, use $listenDOM instead!');
+      this.listen();
+      return;
+    }
+    this.$listenDOM();
+  },
+
+  /**
+   * Checks if it needs to use $postRender or the deprecated postRender method.
+   *
+   * @method ()
+   * @private
+   * @param {}              -,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  _intPostRender() {
+    if (!/^postRender\(\)[^{]+\{\s*\}/m.test(this.postRender.toString())) {
+      log.warn('postRender method is deprecated, use $postRender instead!');
+      this.postRender();
+      return;
+    }
+    this.$postRender();
+  },
+
+  /**
+   * Checks if it needs to use $onChange or the deprecated onChange method.
+   *
+   * @method ()
+   * @private
+   * @param {}              -,
+   * @returns {}            -,
+   * @since 0.0.0
+   */
+  _intOnChange() {
+    if (!/^onChange\(\)[^{]+\{\s*\}/m.test(this.onChange.toString())) {
+      log.warn('onChange method is deprecated, use $onChange instead!');
+      this.onChange();
+      return;
+    }
+    this.$onChange();
+  },
+
+  /**
+   * Checks if it needs to use $onChange or the deprecated onChange method.
+   *
+   * @method (...args)
+   * @private
+   * @param {...}           the arguments,
+   * @returns {XMLString}   returns the rendered data,
+   * @since 0.0.0
+   */
+  _intRender(...args) {
+    if (!/^render\((.*)\)[^{]+\{\s*\}/m.test(this.render.toString())) {
+      log.warn('render method is deprecated, use $render instead!');
+      return this.render(...args);
+    }
+    return this.$render(...args);
+  },
+
+  /**
    * Does the initializations when the component is created.
    *
    * @method (arg1)
@@ -139,7 +255,7 @@ const methods = {
     this.name = 'mynameisnobody';
 
     // Call the public init:
-    this.init();
+    this._intInit();
     return this;
   },
 
@@ -178,7 +294,7 @@ const methods = {
       .replace(/\n<\/a>/g, '</a>')            // -
     ;
     */
-    const xml = this.render(...args);
+    const xml = this._intRender(...args);
     if (_.isString(xml)) {
       return xml.trim();
     }
@@ -406,7 +522,8 @@ const methods = {
    * @returns {Object}      returns this,
    * @since 0.0.0
    */
-  init() {
+  init() {},
+  $init() {
     return this;
   },
 
@@ -420,9 +537,7 @@ const methods = {
    * @returns {Object}      returns this,
    * @since 0.0.0
    */
-  events() {
-    return this;
-  },
+  events() {},
 
   /**
    * Listens the DOM events.
@@ -439,7 +554,8 @@ const methods = {
    * @returns {Object}      returns this,
    * @since 0.0.0
    */
-  listen() {
+  listen() {},
+  $listenDOM() {
     return this;
   },
 
@@ -458,7 +574,8 @@ const methods = {
    * @returns {Object}      returns this,
    * @since 0.0.0
    */
-  postRender() {
+  postRender() {},
+  $postRender() {
     return this;
   },
 
@@ -477,7 +594,8 @@ const methods = {
    * @returns {Object}      returns this,
    * @since 0.0.0
    */
-  onChange() {
+  onChange() {},
+  $onChange() {
     return this;
   },
 
@@ -491,7 +609,8 @@ const methods = {
    * @returns {String}      returns XMLString,
    * @since 0.0.0
    */
-  render() {
+  render() {},
+  $render() {
     return '<div></div>';
   },
 };

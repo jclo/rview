@@ -6,7 +6,7 @@ description: '-'
 
 # Quick Startup
 
-You don't have to create a build environment for `RView`. You just need an `HTML` file with a script:
+You don't have to create a build environment for **RView**. You just need an **HTML** file with a script:
 
 ```html
 <script src='https://www.unpkg.com/@mobilabs/rview/_dist/lib/rview.min.js'></script>
@@ -36,14 +36,14 @@ Then, you can create your first component:
   import { h, Component, render } from 'https://www.unpkg.com/@mobilabs/rview?module';
 
   const C = Component({
-    render() {
+    $render() {
       return '<h1>Hi!</h1>';
     },
   });
 </script>
 ```
 
-In its minimalist form, a `rview component` requires just a `render` method that returns an XMLString.
+In its minimalist form, a **rview component** requires just a **$render** method that returns an XMLString.
 
 When your component is ready, you can insert it in the DOM:
 
@@ -52,7 +52,7 @@ When your component is ready, you can insert it in the DOM:
   import { h, Component, render } from 'https://www.unpkg.com/@mobilabs/rview?module';
 
   const C = Component({
-    render() {
+    $render() {
       return '<h1>Hi!</h1>';
     },
   });

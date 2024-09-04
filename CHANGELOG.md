@@ -1,8 +1,11 @@
 ###
 
-### 1.3.x (September 3, 2024)
+### 2.0.0 (September 4, 2024)
 
-  * Updated @mobilabs/kasar package,
+  * Updated the @mobilabs/kasar package,
+  * Prefixed the RView.Component init, postRender, onChange and render methods with $,
+  * Replaced listen with $listenDOM from RView.Component methods,
+  * Added a warning log to encourage the use of the new methods,
   * ...,
 
 

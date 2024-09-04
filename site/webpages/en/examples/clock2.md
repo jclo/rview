@@ -10,7 +10,7 @@ Now, we are going to create a **clock** that we can **drive** from outside:
 
 ```javascript
 const Clock = Component({
-  init() {
+  $init() {
     this.state.time = Date.now();
   },
 
@@ -25,7 +25,7 @@ const Clock = Component({
     clearInterval(this.timer);
   },
 
-  render(state, props) {
+  $render(state, props) {
     const time = new Date(this.state.time).toLocaleTimeString();
     return `
       <div>
@@ -53,7 +53,7 @@ setTimeout(() => {
 
 As you can see, there are two new methods: **start** and **stop**; a two custom methods.
 
-The **start** method includes the code that was previously in the **init** method to start the timer. And, the **stop** method stops the timer by stopping the Javascript function **setInterval**.
+The **start** method includes the code that was previously in the **$init** method to start the timer. And, the **stop** method stops the timer by stopping the Javascript function **setInterval**.
 
 You have propably noticed that **render** returns a variable. This variable is an object that implement some useful methods.
 

@@ -10,7 +10,7 @@ description: '-'
 
 ```javascript
 const App = Component({
-  init() {
+  $init() {
     this.state.top = 0;
     this.state.left = '100px';
     setTimeout(() => {
@@ -20,7 +20,7 @@ const App = Component({
     }, 1000);
   },
 
-  render(state) {
+  $render(state) {
     return `
       <div>
         <div class="rect" style="position: absolute; top: ${state.top}; left: ${state.left}; width: 100px; height: 100px; border: 1px solid red;"></div>

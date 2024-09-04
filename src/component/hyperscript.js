@@ -153,7 +153,7 @@ function _render(vnode, locList) {
     // hyperscript object.
     case 'function':
       obj = nodeName();
-      if (obj.render) {
+      if (obj._intRender) {
         // We do not process subcomponents otherwise they are merged with
         // the current node and we can't access them independently. Thus,
         // we create a tag ('<Cxx />') instead and this Component is processed

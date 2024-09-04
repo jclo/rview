@@ -46,14 +46,14 @@ Then, you can create your first component:
   import { h, Component, render } from 'https://www.unpkg.com/@mobilabs/rview?module';
 
   const C = Component({
-    render() {
+    $render() {
       return '<h1>Hi!</h1>';
     },
   });
 </script>
 ```
 
-In its minimalist form, a `rview component` requires just a `render` method that returns an XMLString.
+In its minimalist form, a `rview component` requires just a `$render` method that returns an XMLString.
 
 When your component is ready, you can insert it in the DOM:
 
@@ -62,7 +62,7 @@ When your component is ready, you can insert it in the DOM:
   import { h, Component, render } from 'https://www.unpkg.com/@mobilabs/rview?module';
 
   const C = Component({
-    render() {
+    $render() {
       return '<h1>Hi!</h1>';
     },
   });
@@ -108,7 +108,7 @@ But of course, you can do much more. You can encapsulate a component inside anot
 
 ```javascript
 const App = Component({
-  render() {
+  $render() {
     return `
       <h1>Hello World</h1>
     `;
@@ -129,8 +129,8 @@ This isn't really new. You already see a similar example in the previous chapter
 
 ```javascript
 const App = Component({
-  render() {
-    return h('h1', null, 'Hello World');
+  $render() {
+    return h('h1', { class: 'myclassname' }, 'Hello World');
   },
 });
 
@@ -141,7 +141,7 @@ render({
 });
 ```
 
-`RView` support the `hyperscript` language. You can use it to describe your component if you wish.
+`RView` supports the `hyperscript` language. You can use it to describe your component if you wish.
 
 
 ### A More Sophisticated Hello
@@ -150,11 +150,11 @@ This is an example that shows how to update a text based on DOM `events`:
 
 ```javascript
 const App = Component({
-  init() {
+  $init() {
     this.state.heading = 'Hello World!';
   },
 
-  events() {
+  $listenDOM() {
     this.$('form').on('submit', (e) => {
       e.preventDefault();
       const { value } = e.target[0];
@@ -162,7 +162,7 @@ const App = Component({
     });
   },
 
-  render(state, props) {
+  $render(state, props) {
     return `
       <div>
         <h1>${state.heading}</h1>
@@ -182,13 +182,13 @@ render({
 });
 ```
 
-Your component has two more methods `init` and `events`.
+Your component has two more methods `$init` and `$listenDOM`.
 
-`init` is called before your component is rendered into the DOM. You can use it to update some parameters.
+`$init` is called before your component is rendered into the DOM. You can use it to update some parameters.
 
-`events` is called after your component has been rendered into the DOM. You can use it to execute functions that listen for DOM events.
+`$listenDOM` is called after your component has been rendered into the DOM. You can use it to execute functions that listen for DOM events.
 
-Here we use `init` to add and to initialize the property `heading` of the object `state` (that is an empty object). And, we use `events` to execute a function that listens for DOM events (if you are a bit familiar with `jQuery` you can easily decrypt this function).
+Here we use `$init` to add and to initialize the property `heading` of the object `state` (that is an empty object). And, we use `$listenDOM` to execute a function that listens for DOM events (if you are a bit familiar with `jQuery` you can easily decrypt this function).
 
 `$('form')` selects the DOM child element `form` of your `RView Component` - and only your component, it can't select DOM elements outside the scope of the component you defined. `.on('click', (e) =>)` listens for a click event. And, it calls the callback function, you defined, when this event occurs.
 
@@ -199,7 +199,7 @@ This callback captures the value entered by the user and execute `$setState`. `$
 
 ```javascript
 const Clock = Component({
-  init() {
+  $init() {
     this.state.time = Date.now();
     // update time every second
     this.timer = setInterval(() => {
@@ -207,7 +207,7 @@ const Clock = Component({
     }, 1000);
   },
 
-  render(state, props) {
+  $render(state, props) {
     const time = new Date(state.time).toLocaleTimeString();
     return `
       <div>
@@ -233,7 +233,7 @@ Now, we are going to create a `clock` that we can `drive` from outside:
 
 ```javascript
 const Clock = Component({
-  init() {
+  $init() {
     this.state.time = Date.now();
   },
 
@@ -248,7 +248,7 @@ const Clock = Component({
     clearInterval(this.timer);
   },
 
-  render(state, props) {
+  $render(state, props) {
     const time = new Date(this.state.time).toLocaleTimeString();
     return `
       <div>
@@ -276,7 +276,7 @@ setTimeout(() => {
 
 As you can see, there are two new methods: `start` and `stop`; a two custom methods.
 
-The `start` method includes the code that was previously in the `init` method to start the timer. And, the `stop` method stops the timer by stopping the Javascript function `setInterval`.
+The `start` method includes the code that was previously in the `$init` method to start the timer. And, the `stop` method stops the timer by stopping the Javascript function `setInterval`.
 
 You have propably noticed that `render` returns a variable. This variable is an object that implement some useful methods.
 
@@ -293,7 +293,7 @@ That's all!
 
 ```javascript
 const App = Component({
-  init() {
+  $init() {
     this.state.top = 0;
     this.state.left = '100px';
     setTimeout(() => {
@@ -303,7 +303,7 @@ const App = Component({
     }, 1000);
   },
 
-  render(state) {
+  $render(state) {
     return `
       <div>
         <div class="rect" style="position: absolute; top: ${state.top}; left: ${state.left}; width: 100px; height: 100px; border: 1px solid red;"></div>
@@ -318,7 +318,7 @@ render({
 });
 ```
 
-Here the `init` method implements:
+Here the `$init` method implements:
 
 ```javascript
 this.$animate({ top: '500px', left: '800px' }, 1000, 'swing', () => {
@@ -338,17 +338,17 @@ And, `RView` takes care to update the style attributes `top` and `left` of the D
 
 ```javascript
 const Hello = Component({
-  init() {
+  $init() {
     this.state.message = '-';
   },
 
-  events() {
+  $postRender() {
     this.$listen('at:hello:from:hi', (msg) => {
       this.$setState({ message: `I got the message: ${msg}` });
     });
   },
 
-  render(state, props) {
+  $render(state, props) {
     return `
       <h1>Hello World</h1>
       <h2>${state.message}</h2>
@@ -357,13 +357,13 @@ const Hello = Component({
 });
 
 const Hi = Component({
-  events() {
+  $postRender() {
     setTimeout(() => {
       this.$emit('at:hello:from:hi', 'Hi Hello!');
     }, 5000);
   },
 
-  render() {
+  $render() {
     return `
       <h1>Hi!</h1>
     `;
@@ -413,12 +413,18 @@ Methods                         | Description
 ```
 ```
 Empty Methods                   |
-init()                          | executed before rendering the component in the DOM,
+init()                          | executed before rendering the component in the DOM (to be phased out),
 events()                        | executed after rendering the component in the DOM (to be phased out),
-listen()                        | executed after rendering the component in the DOM,
+listen()                        | executed after rendering the component in the DOM (to be phased out),
 render()                        | returns the HTML template,
-postRender()                    | executed after rendering the component in the DOM,
-onChange                        | called after the component is updated in the DOM,
+postRender()                    | executed after rendering the component in the DOM (to be phased out),
+onChange                        | called after the component is updated in the DOM (to be phased out),
+                                |
+$init()                         | executed before rendering the component in the DOM,
+$listenDOM()                    | executed after rendering the component in the DOM,
+$render()                       | returns the HTML template,
+$postRender()                   | executed after rendering the component in the DOM,
+$onChange                       | called after the component is updated in the DOM,
                                 |
 Generic Methods                 |
 $(sel)                          | returns an object to access to the comp. in the DOM,

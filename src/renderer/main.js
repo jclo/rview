@@ -67,9 +67,9 @@ function _fireEvents(co) {
   if (co._cList) {
     const keys = Object.keys(co._cList);
     for (let i = 0; i < keys.length; i++) {
-      co._cList[keys[i]].events();
-      co._cList[keys[i]].listen();
-      co._cList[keys[i]].postRender();
+      co._cList[keys[i]]._intEvents();
+      co._cList[keys[i]]._intListen();
+      co._cList[keys[i]]._intPostRender();
       _fireEvents(co._cList[keys[i]]);
     }
   }
@@ -266,12 +266,12 @@ function _componenterize(options, opt) {
   // node in the DOM.
   // Extend the components methods with the passed-in methods, if any.
   const Comp = V.Component(_.extend(methods, {
-    init() {
+    $init() {
       this.state.class = classList || '';
       this.state.style = style || '';
       this.state.inside = '';
     },
-    render(state) {
+    $render(state) {
       return `
         <div class="${state.class}" style="${state.style}">${state.inside}</div>
       `;
@@ -328,7 +328,7 @@ function _render(options) {
 
   // Ok. Create the root component and attach it to the DOM:
   const RootComp = V.Component({
-    render() {
+    $render() {
       this.name = 'firstparent';
       this.children = opt.children;
       return opt.template;
