@@ -1,6 +1,6 @@
 {
   "name": "@mobilabs/rview",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0",
   "description": "A companion Reactive View library for building web applications",
   "main": "_dist/lib/rview.js",
   "minified": "_dist/lib/rview.min.js",

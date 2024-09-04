@@ -6,7 +6,7 @@
   * Prefixed the RView.Component init, postRender, onChange and render methods with $,
   * Replaced listen with $listenDOM from RView.Component methods,
   * Added a warning log to encourage the use of the new methods,
-  * ...,
+  * Release.
 
 
 ### 1.3.0 (July 24, 2024)

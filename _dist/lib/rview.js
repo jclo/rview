@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v2.0.0-beta.1
+ * RView v2.0.0
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -122,7 +122,7 @@
 
       // Useful to retrieve the library name and version when it is
       // embedded in another library as an object:
-      _library: { name: 'RView', version: '2.0.0-beta.1' },
+      _library: { name: 'RView', version: '2.0.0' },
 
 
       // -- Private Static Methods ---------------------------------------------
@@ -289,7 +289,7 @@
 
     // Attaches constants to RView that provide name and version of the lib.
     RView.NAME = 'RView';
-    RView.VERSION = '2.0.0-beta.1';
+    RView.VERSION = '2.0.0';
 
 
     // -- Export
