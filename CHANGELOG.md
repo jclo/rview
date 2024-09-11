@@ -1,5 +1,11 @@
 ###
 
+### 2.0.0 (September 11, 2024)
+
+  * Fixed a few typos,
+  * ...,
+
+
 ### 2.0.0 (September 4, 2024)
 
   * Updated the @mobilabs/kasar package,

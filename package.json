@@ -42,7 +42,7 @@
     "deployment": " --- DEPLOYING --- ",
     "dep:prod": "rm -rf _dist-$npm_package_version && npm run build:prod && cp -r _dist _dist-$npm_package_version",
 
-    "documenting": " --- DOCUMENTING --- ",
+    "doc:kasar": " --- DOCUMENTING --- ",
     "doc:create": "",
     "doc:build": "kasar build",
     "doc:watch": "kasar watch",

@@ -58,9 +58,9 @@
  * Empty Public Methods:
  *  . $init                       executes the public initializations,
  *  . events                      processes the DOM events (to be phased out),
- *  . $listenDOM                  listens the DOM events,
- *  . $postRender                 executes operations after component added to DOM,
- *  . $onChange                   executes operations after component updated in DOM,
+ *  . $listenDOM                  listens for DOM events,
+ *  . $postRender                 performs operations after component added to DOM,
+ *  . $onChange                   performs operations after component updated in DOM,
  *  . $render                     returns the component XML string,
  *
  *
@@ -540,7 +540,7 @@ const methods = {
   events() {},
 
   /**
-   * Listens the DOM events.
+   * Listens for DOM events.
    * (could be overwritten)
    *
    * Nota:
@@ -560,7 +560,7 @@ const methods = {
   },
 
   /**
-   * Executes operations after component added to DOM.
+   * Performs operations after the component is added to the DOM.
    * (could be overwritten)
    *
    * Nota:
@@ -580,7 +580,7 @@ const methods = {
   },
 
   /**
-   * Executes operations after component updated in DOM.
+   * Performs operations after the component in the DOM has been updated.
    * (could be overwritten)
    *
    * Nota:
