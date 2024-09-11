@@ -1899,9 +1899,9 @@
      * Empty Public Methods:
      *  . $init                       executes the public initializations,
      *  . events                      processes the DOM events (to be phased out),
-     *  . $listenDOM                  listens the DOM events,
-     *  . $postRender                 executes operations after component added to DOM,
-     *  . $onChange                   executes operations after component updated in DOM,
+     *  . $listenDOM                  listens for DOM events,
+     *  . $postRender                 performs operations after component added to DOM,
+     *  . $onChange                   performs operations after component updated in DOM,
      *  . $render                     returns the component XML string,
      *
      *
@@ -1973,8 +1973,7 @@
        * @since 0.0.0
        */
       _intInit() {
-        if (!/^init\(\)[^{]+\{\s*\}/m.test(this.init.toString())
-        ) {
+        if (!/^init\(\)\s*\{\}/.test(this.init.toString())) {
           log.warn('init method is deprecated, use $init instead!');
           this.init();
           return;
@@ -1992,7 +1991,7 @@
        * @since 0.0.0
        */
       _intEvents() {
-        if (!/^events\(\)[^{]+\{\s*\}/m.test(this.events.toString())) {
+        if (!/^events\(\)\s*\{\}/.test(this.events.toString())) {
           log.warn('events method is deprecated, use $listenDOM or $postRender instead!');
           this.events();
         }
@@ -2008,7 +2007,7 @@
        * @since 0.0.0
        */
       _intListen() {
-        if (!/^listen\(\)[^{]+\{\s*\}/m.test(this.listen.toString())) {
+        if (!/^listen\(\)\s*\{\}/.test(this.listen.toString())) {
           log.warn('listen method is deprecated, use $listenDOM instead!');
           this.listen();
           return;
@@ -2026,7 +2025,7 @@
        * @since 0.0.0
        */
       _intPostRender() {
-        if (!/^postRender\(\)[^{]+\{\s*\}/m.test(this.postRender.toString())) {
+        if (!/^postRender\(\)\s*\{\}/.test(this.postRender.toString())) {
           log.warn('postRender method is deprecated, use $postRender instead!');
           this.postRender();
           return;
@@ -2044,7 +2043,7 @@
        * @since 0.0.0
        */
       _intOnChange() {
-        if (!/^onChange\(\)[^{]+\{\s*\}/m.test(this.onChange.toString())) {
+        if (!/^onChange\(\)\s*\{\}/.test(this.onChange.toString())) {
           log.warn('onChange method is deprecated, use $onChange instead!');
           this.onChange();
           return;
@@ -2062,7 +2061,7 @@
        * @since 0.0.0
        */
       _intRender(...args) {
-        if (!/^render\((.*)\)[^{]+\{\s*\}/m.test(this.render.toString())) {
+        if (!/^render\(\)\s*\{\}/.test(this.render.toString())) {
           log.warn('render method is deprecated, use $render instead!');
           return this.render(...args);
         }
@@ -2381,7 +2380,7 @@
       events() {},
 
       /**
-       * Listens the DOM events.
+       * Listens for DOM events.
        * (could be overwritten)
        *
        * Nota:
@@ -2401,7 +2400,7 @@
       },
 
       /**
-       * Executes operations after component added to DOM.
+       * Performs operations after the component is added to the DOM.
        * (could be overwritten)
        *
        * Nota:
@@ -2421,7 +2420,7 @@
       },
 
       /**
-       * Executes operations after component updated in DOM.
+       * Performs operations after the component in the DOM has been updated.
        * (could be overwritten)
        *
        * Nota:

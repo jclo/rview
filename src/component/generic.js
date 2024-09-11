@@ -132,8 +132,7 @@ const methods = {
    * @since 0.0.0
    */
   _intInit() {
-    if (!/^init\(\)[^{]+\{\s*\}/m.test(this.init.toString())
-    ) {
+    if (!/^init\(\)\s*\{\}/.test(this.init.toString())) {
       log.warn('init method is deprecated, use $init instead!');
       this.init();
       return;
@@ -151,7 +150,7 @@ const methods = {
    * @since 0.0.0
    */
   _intEvents() {
-    if (!/^events\(\)[^{]+\{\s*\}/m.test(this.events.toString())) {
+    if (!/^events\(\)\s*\{\}/.test(this.events.toString())) {
       log.warn('events method is deprecated, use $listenDOM or $postRender instead!');
       this.events();
     }
@@ -167,7 +166,7 @@ const methods = {
    * @since 0.0.0
    */
   _intListen() {
-    if (!/^listen\(\)[^{]+\{\s*\}/m.test(this.listen.toString())) {
+    if (!/^listen\(\)\s*\{\}/.test(this.listen.toString())) {
       log.warn('listen method is deprecated, use $listenDOM instead!');
       this.listen();
       return;
@@ -185,7 +184,7 @@ const methods = {
    * @since 0.0.0
    */
   _intPostRender() {
-    if (!/^postRender\(\)[^{]+\{\s*\}/m.test(this.postRender.toString())) {
+    if (!/^postRender\(\)\s*\{\}/.test(this.postRender.toString())) {
       log.warn('postRender method is deprecated, use $postRender instead!');
       this.postRender();
       return;
@@ -203,7 +202,7 @@ const methods = {
    * @since 0.0.0
    */
   _intOnChange() {
-    if (!/^onChange\(\)[^{]+\{\s*\}/m.test(this.onChange.toString())) {
+    if (!/^onChange\(\)\s*\{\}/.test(this.onChange.toString())) {
       log.warn('onChange method is deprecated, use $onChange instead!');
       this.onChange();
       return;
@@ -221,7 +220,7 @@ const methods = {
    * @since 0.0.0
    */
   _intRender(...args) {
-    if (!/^render\((.*)\)[^{]+\{\s*\}/m.test(this.render.toString())) {
+    if (!/^render\(\)\s*\{\}/.test(this.render.toString())) {
       log.warn('render method is deprecated, use $render instead!');
       return this.render(...args);
     }

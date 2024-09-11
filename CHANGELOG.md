@@ -1,8 +1,9 @@
 ###
 
-### 2.0.0 (September 11, 2024)
+### 2.0.x (September 11, 2024)
 
   * Fixed a few typos,
+  * Fixed regex on $init, $listenDOM, etc. that failed on minified library,
   * ...,
 
 
