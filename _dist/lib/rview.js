@@ -1,5 +1,5 @@
 /*! ****************************************************************************
- * RView v3.0.0-alpha.0.0
+ * RView v3.0.0-beta.1.0
  *
  * A companion Reactive View library for building web applications.
  * (you can download it from npm or github repositories)
@@ -118,7 +118,7 @@
 
       // Useful to retrieve the library name and version when it is
       // embedded in another library as an object:
-      _library: { name: 'RView', version: '3.0.0-alpha.0.0' },
+      _library: { name: 'RView', version: '3.0.0-beta.1.0' },
 
 
       // -- Private Static Methods ---------------------------------------------
@@ -284,7 +284,7 @@
 
     // Attaches constants to RView that provide name and version of the lib.
     RView.NAME = 'RView';
-    RView.VERSION = '3.0.0-alpha.0.0';
+    RView.VERSION = '3.0.0-beta.1.0';
 
     // Saves the previous value of the library variable, so that it can be
     // restored later on, if noConflict is used.

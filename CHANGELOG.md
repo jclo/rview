@@ -4,6 +4,7 @@
 
   * Updated the project with @mobilabs/es6kadoo ESM v3,
   * Updated prepare4test.sh to run on both MacOS and Linux,
+  * Released 3.0.0-beta.1.0,
   * ...,
 
 
