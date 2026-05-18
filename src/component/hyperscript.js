@@ -24,15 +24,15 @@
  * @since        0.0.0
  * @version      -
  * ********************************************************************** */
-/* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* global XMLSerializer, document */
+/* - */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import _ from '../lib/_';
+import _ from '../lib/_.js';
 
 
 // -- Local Constants
@@ -59,7 +59,6 @@ import _ from '../lib/_';
  * @returns {String}        returns the reformatted serialized node,
  * @since 0.0.0
  */
-/* eslint-disable no-param-reassign */
 function _reshuffle(node, cList, locList) {
   const keys = Object.keys(locList)
       ;
@@ -73,7 +72,6 @@ function _reshuffle(node, cList, locList) {
   }
   return node;
 }
-/* eslint-enable no-param-reassign */
 
 /**
  * Returns the attribute value converted to a string.
@@ -163,7 +161,6 @@ function _render(vnode, locList) {
         id = attributes && attributes.name
           ? attributes.name
           : `C${Math.random().toString(36).substr(2, 7)}`;
-        /* eslint-disable-next-line no-param-reassign */
         locList[id] = {
           fn: nodeName,
           state: attributes.state ? attributes.state : null,
@@ -234,4 +231,4 @@ const Hyperscript = {
 // -- Export
 export default Hyperscript;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* - */

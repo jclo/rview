@@ -1,5 +1,11 @@
 ###
 
+### 3.0.0 (May 17, 2026)
+
+  * Updated the project with @mobilabs/es6kadoo ESM v3,
+  * ...,
+
+
 ### 2.0.1 (September 11, 2024)
 
   * Fixed a few typos,

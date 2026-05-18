@@ -33,16 +33,16 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* - */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import _ from '../lib/_';
-import Generic from './generic';
-import Dollar from './$';
+import _ from '../lib/_.js';
+import Generic from './generic.js';
+import Dollar from './$.js';
 
 
 // -- Local Constants
@@ -66,7 +66,6 @@ import Dollar from './$';
  * @returns {Function}      returns the child constructor,
  * @since 0.0.0
  */
-/* eslint-disable prefer-rest-params */
 function Component(methods) {
   let args;
   const Child = function() {
@@ -88,10 +87,9 @@ function Component(methods) {
   Child.prototype.constructor = Child;
   return Child;
 }
-/* eslint-enable prefer-rest-params */
 
 
 // -- Export
 export default { Component };
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* - */

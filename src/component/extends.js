@@ -22,7 +22,7 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* - */
 
 
 // -- Vendor Modules
@@ -49,7 +49,6 @@
  * @returns {Function}    returns the new component,
  * @since 0.0.0
  */
-/* eslint-disable prefer-rest-params */
 function _extends(parent, methods) {
   if (typeof parent !== 'function' || typeof parent.prototype.$hyperscript !== 'function') {
     return {
@@ -85,7 +84,6 @@ function _extends(parent, methods) {
 
   return Component();
 }
-/* eslint-enable prefer-rest-params */
 
 
 // -- Public Static Methods ------------------------------------------------
@@ -111,4 +109,4 @@ const Ex = {
 // -- Export
 export default Ex;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* - */

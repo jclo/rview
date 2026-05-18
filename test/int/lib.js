@@ -1,11 +1,10 @@
 // ESLint declarations:
 /* global describe, it */
-/* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0 */
+/* - */
 
 
 // -- Vendor Modules
-const { expect } = require('chai')
-    ;
+import { expect } from 'chai';
 
 
 // -- Local Modules
@@ -22,7 +21,7 @@ const OWNPROPS = 8
 
 
 // -- Main
-module.exports = function(RView, libname, version) {
+export default function(RView, libname, version) {
   describe('RView introspection:', () => {
     describe('Test the nature of RView:', () => {
       it('Expects RView to be an object.', () => {
@@ -141,3 +140,6 @@ module.exports = function(RView, libname, version) {
     });
   });
 };
+
+
+// - oOo --

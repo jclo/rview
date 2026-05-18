@@ -1,12 +1,11 @@
 // ESLint declarations:
 /* global describe, it */
-/* eslint  one-var: 0, semi-style: 0, no-underscore-dangle: 0,
-  no-unused-expressions: 0 */
+/* - */
 
 
 // -- Vendor Modules
-const { expect } = require('chai')
-    ;
+import { expect } from 'chai';
+
 
 // -- Local Modules
 
@@ -18,7 +17,7 @@ const { expect } = require('chai')
 
 
 // -- Main
-module.exports = function(RView) {
+export default function(RView) {
   const [_] = RView._setTestMode();
   // Test the lib:
 
@@ -127,3 +126,6 @@ module.exports = function(RView) {
     });
   });
 };
+
+
+// - oOo --

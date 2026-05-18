@@ -31,8 +31,8 @@
  * @since        0.0.0
  * @version      -
  * ********************************************************************** */
-/* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* global document */
+/* eslint-disable curly */
 
 
 // -- Vendor Modules
@@ -40,9 +40,9 @@
 
 
 // -- Local Modules
-import V from '../component/main';
-import _ from '../lib/_';
-import P from '../plugin/main';
+import V from '../component/main.js';
+import _ from '../lib/_.js';
+import P from '../plugin/main.js';
 
 
 // -- Local Constants
@@ -91,7 +91,6 @@ function _attachMessenger(co, mess) {
   if (co._cList) {
     const keys = Object.keys(co._cList);
     for (let i = 0; i < keys.length; i++) {
-      /* eslint-disable-next-line no-param-reassign */
       co._cList[keys[i]]._mess = mess;
       _attachMessenger(co._cList[keys[i]], mess);
     }
@@ -207,14 +206,12 @@ function _attachTemplateDOM(opt) {
  * @returns {Boolean}       returns true if it succeeds,
  * @since 0.0.0
  */
-/* eslint-disable no-param-reassign, no-proto */
 function _remove(view) {
   view.$().remove();
   Object.keys(view).forEach((key) => { delete view[key]; });
   view.__proto__ = {};
   return true;
 }
-/* eslint-enable no-param-reassign, no-proto */
 
 /**
  * Restores the View Component to its initial state.
@@ -399,4 +396,4 @@ const Renderer = {
 // -- Export
 export default Renderer;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* eslint-enable curly */

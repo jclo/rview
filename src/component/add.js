@@ -26,14 +26,14 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* eslint-disable curly */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import R from './render';
+import R from './render.js';
 
 
 // -- Local Constants
@@ -76,7 +76,6 @@ function _fireChildEvents(co) {
  * @returns {}              -,
  * @since 0.0.0
  */
-/* eslint-disable no-param-reassign */
 function _attachMess(co, mess) {
   if (mess) {
     co._mess = mess;
@@ -90,7 +89,6 @@ function _attachMess(co, mess) {
     }
   }
 }
-/* eslint-enable no-param-reassign */
 
 /**
  * Attaches a child to the passed-in component.
@@ -106,7 +104,6 @@ function _attachMess(co, mess) {
  * @returns {}              -,
  * @since 0.0.0
  */
-/* eslint-disable no-param-reassign */
 function _attachChild(co, prepend, tag, child, state, props) {
   const c = child(state, props);
   c._tag = tag;
@@ -123,7 +120,6 @@ function _attachChild(co, prepend, tag, child, state, props) {
     co._append.push(tag);
   }
 }
-/* eslint-enable no-param-reassign */
 
 /**
  * Inserts a child component.
@@ -207,4 +203,4 @@ const Add = {
 // -- Export
 export default Add;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* eslint-enable curly */

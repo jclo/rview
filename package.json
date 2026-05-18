@@ -1,12 +1,13 @@
 {
   "name": "@mobilabs/rview",
-  "version": "2.0.1",
+  "version": "3.0.0-alpha.0.0",
   "description": "A companion Reactive View library for building web applications",
   "main": "_dist/lib/rview.js",
   "minified": "_dist/lib/rview.min.js",
   "unpkg": "_dist/lib/rview.mjs",
   "module": "_dist/lib/rview.min.mjs",
   "bin": {},
+  "type": "module",
   "scripts": {
     "general": " --- GENERAL ---",
 
@@ -15,6 +16,7 @@
     "build:js:prod": "node scripts/build.js.prod.js $1",
 
     "build:css": " --- BUILDING CSS --- ",
+
     "build:generic": " --- BUILDING (GENERIC) --- ",
 
     "build:development": " --- BUILDING (DEVELOPMENT) --- ",
@@ -26,9 +28,11 @@
     "build:prod": "npm run build:js:prod",
 
     "testing": " --- TESTING --- ",
-    "test": "cross-env NODE_ENV=test c8 --reporter=lcov mocha --require esm ./test/main.js",
+    "pretest": "sh test/prepare4test.sh to-mjs",
+    "test": "cross-env NODE_ENV=test c8 --reporter=lcov mocha ./test/main.js",
+    "posttest": "sh test/prepare4test.sh back-to-js",
     "display:coverage": "open -a safari ./coverage/lcov-report/index.html",
-    "check:coverage": "c8 check-coverage --statements 50 --branches 90 --functions 10 --lines 50",
+    "check:coverage": "c8 check-coverage --statements 60 --branches 90 --functions 10 --lines 60",
     "report": "c8 report",
 
     "serving": " --- SERVING --- ",
@@ -72,29 +76,29 @@
   },
   "homepage": "https://github.com/jclo/rview",
   "dependencies": {
-    "@mobilabs/kzlog": "^1.0.4"
+    "@mobilabs/kzlog": "^2.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@mobilabs/kasar": "^2.5.2",
-    "c8": "^10.1.2",
-    "chai": "^4.4.1",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.57.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1",
-    "esm": "^3.2.25",
+    "c8": "^11.0.0",
+    "chai": "^6.2.2",
+    "cross-env": "^10.1.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-import": "^2.32.0",
     "http-server": "^14.1.1",
-    "husky": "^9.1.1",
-    "jsdom": "^25.0.0",
+    "husky": "^9.1.7",
+    "jsdom": "^29.1.1",
     "kadoo": "^1.3.0",
-    "mocha": "^8.4.0",
-    "nodemon": "^3.1.4",
-    "terser": "^5.31.3",
+    "mocha": "^11.7.5",
+    "nodemon": "^3.1.14",
+    "terser": "^5.47.1",
     "xmldom": "^0.6.0",
-    "@mobilabs/es6kadoo": "2.2.1"
+    "@mobilabs/es6kadoo": "3.0.0-beta.1.3"
   },
   "c8": {
     "include": [
+      "index.js",
       "src/**/*.js"
     ],
     "exclude": [],

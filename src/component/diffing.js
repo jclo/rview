@@ -32,15 +32,15 @@
  * @since        0.0.0
  * @version      -
  * ********************************************************************** */
-/* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* global DOMParser, document */
+/* eslint-disable curly */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import C from './config';
+import C from './config.js';
 
 
 // -- Local Constants
@@ -153,7 +153,6 @@ function _diff(source, target) {
   if (count > 0) {
     // console.log('remove extra nodes!');
     for (; count > 0; count--) {
-      /* eslint-disable-next-line max-len */
       domNodes[domNodes.length - count].parentNode.removeChild(domNodes[domNodes.length - count]);
     }
   }
@@ -266,4 +265,4 @@ const Differ = {
 // -- Export
 export default Differ;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* eslint-enable curly */

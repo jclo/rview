@@ -7,8 +7,8 @@
  * a method 'noconflict' to return the View variable to a previous owner if
  * any.
  *
- * rview.js is just a literal object that contains a set of functions. It
- * can't be intantiated.
+ * rview.js is just a literal object that contains a set of functions.
+ * It can't be instantiated.
  *
  * Private Functions:
  *  . none,
@@ -40,27 +40,23 @@
  * @version      -
  * ********************************************************************** */
 /* global root */
-/* eslint-disable no-underscore-dangle */
-
+/* - */
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import C from './component/main';
-import CE from './component/extends';
-import R from './renderer/main';
-import _ from './lib/_';
-import Hyperscript from './component/hyperscript';
-import Differ from './component/diffing';
-import P from './plugin/main';
-import Config from './component/config';
+import C from './component/main.js';
+import CE from './component/extends.js';
+import R from './renderer/main.js';
+import _ from './lib/_.js';
+import Hyperscript from './component/hyperscript.js';
+import Differ from './component/diffing.js';
+import P from './plugin/main.js';
+import Config from './component/config.js';
 
 
 // -- Local Constants
-// Saves the previous value of the library variable, so that it can be
-// restored later on, if noConflict is used.
-const previousRView = root.RView;
 
 
 // -- Local Variables
@@ -109,7 +105,6 @@ const RView = {
    * @since 0.0.0
    */
   noConflict() {
-    /* eslint-disable-next-line no-param-reassign */
     root.RView = previousRView;
     return this;
   },
@@ -241,8 +236,12 @@ const RView = {
 RView.NAME = '{{lib:name}}';
 RView.VERSION = '{{lib:version}}';
 
+// Saves the previous value of the library variable, so that it can be
+// restored later on, if noConflict is used.
+const previousRView = root.RView;
+
 
 // -- Export
 export default RView;
 
-/* eslint-enable no-underscore-dangle */
+/* - */

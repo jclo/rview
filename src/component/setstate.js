@@ -22,15 +22,15 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* - */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import D from './diffing';
-import R from './render';
+import D from './diffing.js';
+import R from './render.js';
 
 
 // -- Local Constants
@@ -93,4 +93,4 @@ const State = {
 // -- Export
 export default State;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* - */

@@ -1,0 +1,41 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>View RView</title>
+    <link rel="stylesheet" href="">
+    <meta name="description" content="">
+    <meta name="theme-color" content="#fafafa">
+
+    <style>
+      /* - */
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        /* global ... */
+        'use strict';
+        //
+      });
+    </script>
+  </head>
+
+  <body>
+    <!-- Warning message if Javascript isn't enabled -->
+    <noscript><p style="text-align:center;padding-top:3em;">We are sorry, but this website doesn't work properly without JavaScript enabled!</p></noscript>
+
+    <!-- Add your site or application content here -->
+    <div id="app"></div>
+
+    <!-- Add your scripts here -->
+    <script type="module">
+      import RView from '../lib/RView.mjs';
+
+      console.log(RView.VERSION);
+      console.log(Object.keys(RView));
+
+      const el = document.getElementById('app');
+      el.append(`RView v${RView.VERSION}`);
+    </script>
+  </body>
+</html>

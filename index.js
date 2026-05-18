@@ -1,1 +1,2 @@
-module.exports = require('./lib/rview');
+import RView from './lib/rview.mjs';
+export default RView;

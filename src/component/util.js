@@ -26,14 +26,14 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* eslint-disable curly */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import _ from '../lib/_';
+import _ from '../lib/_.js';
 
 
 // -- Local Constants
@@ -124,7 +124,6 @@ function _search(co, ident) {
  * @returns {Boolean}       returns true or false,
  * @since 0.0.0
  */
-/* eslint-disable no-proto */
 function _remove(co, ident) {
   const r = _search(co, ident);
   if (!r.child) return false;
@@ -157,7 +156,6 @@ function _remove(co, ident) {
 
   return true;
 }
-/* eslint-enable no-proto */
 
 
 // -- Public Static Methods ------------------------------------------------
@@ -210,4 +208,4 @@ const Util = {
 // -- Export
 export default Util;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* eslint-enable curly */

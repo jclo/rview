@@ -22,11 +22,11 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* - */
 
 
 // -- Vendor Modules
-import _ from '../lib/_';
+import _ from '../lib/_.js';
 
 
 // -- Local Modules
@@ -53,7 +53,6 @@ import _ from '../lib/_';
 function _plugin(db, plug) {
   if (_.isLiteralObject(plug)
     && plug.messenger && plug.messenger.NAME === 'Messenger') {
-    /* eslint-disable-next-line no-param-reassign */
     db.messenger = plug.messenger;
     return true;
   }
@@ -103,4 +102,4 @@ const Plugin = {
 // -- Export
 export default Plugin;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* - */

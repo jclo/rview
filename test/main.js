@@ -1,27 +1,25 @@
 // ESLint declarations:
 /* global describe */
-/* eslint one-var: 0, semi-style: 0, no-underscore-dangle: 0 */
+/* eslint no-unused-vars: 0 */
 
 
 // -- Vendor Modules
-const { JSDOM }         = require('jsdom')
-    , { XMLSerializer } = require('xmldom')
-    ;
+import { JSDOM } from 'jsdom';
+import { XMLSerializer } from 'xmldom';
 
 
 // -- Local Modules
-const pack    = require('../package.json')
-    , testlib = require('./int/lib')
-    , test_   = require('./int/lib/_')
+import pack from '../package.json' with { type: 'json' };
+import testlib from './int/lib.js';
+import test_ from './int/lib/_.js';
 
-    // , hello = require('./stress/hello')
-    // , clock = require('./stress/clock')
-    // , iclock = require('./stress/iclock')
-    // , ssclock = require('./stress/startstopclock')
-    // , hhello = require('./stress/hhello')
-    // , mhello = require('./stress/mhello')
-    // , anim = require('./stress/anim')
-    ;
+// import hello from './stress/hello.js';
+// import clock from './stress/clock.js';
+// import iclock from './stress/iclock.js';
+// import ssclock from './stress/startstopclock.js';
+// import hhello from './stress/hhello.js';
+// import mhello from './stress/mhello.js';
+// import anim from './stress/anim.js';
 
 
 // -- Local Constants
@@ -60,23 +58,23 @@ const dom = new JSDOM(HTML);
 global.window = dom.window;
 global.root = dom.window;
 global.document = dom.window.document;
-global.navigator = { userAgent: 'node.js' };
+// global.navigator = { userAgent: 'node.js' };
 global.XMLSerializer = XMLSerializer;
 global.DOMParser = dom.window.DOMParser;
 
 // Nota:
 // If you want that 'display-coverage' shows the coverage files by files,
 // you should set 'RView' and 'testlib' like this:
-//  . const RView = require('../src/<file>').default;
+//  . const RView (await import('../src/prototypal.js').default;
 //  . testlib(RView, '{{lib:name}}', '{{lib:version}}', 'without new');
 //
 // But, if you want that 'display-coverage' shows the coverage in one file,
 // you should set 'RView' and 'testlib' like this:
-//  . const RView = require('../index');
+//  . import RView from '../index.js';
 //  . testlib(RView, libname, pack.version, 'without new');
 
-const RView = require('../src/rview').default;
-// const RView = require('../index');
+const RView = (await import('../src/rview.js')).default;
+// const RView (await import('../index.js')).default;
 
 describe('Test RView:', () => {
   testlib(RView, '{{lib:name}}', '{{lib:version}}', 'without new');
@@ -92,3 +90,6 @@ describe('Test RView:', () => {
   // mhello(RView, 'stress6');
   // anim(RView, 'stress7');
 });
+
+
+// - oOo --

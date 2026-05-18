@@ -31,7 +31,7 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* - */
 
 
 // -- Vendor Modules
@@ -66,7 +66,6 @@ const _ = {
     const keys = Object.keys(methods);
 
     for (let i = 0; i < keys.length; i++) {
-      /* eslint-disable-next-line no-param-reassign */
       object[keys[i]] = methods[keys[i]];
     }
     return object;
@@ -91,7 +90,6 @@ const _ = {
    * @returns {Object}      returns the reassigned object,
    * @since 0.0.0
    */
-  /* eslint-disable no-param-reassign, no-loop-func, prefer-rest-params */
   assign() {
     const target = arguments[0];
     let source
@@ -109,7 +107,6 @@ const _ = {
     Object.defineProperties(target, descriptors);
     return target;
   },
-  /* eslint-enable no-param-reassign, no-loop-func, prefer-rest-params */
 
 
   // -- Subset of Overslash ------------------------------------------------
@@ -223,4 +220,4 @@ const _ = {
 // -- Export
 export default _;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* - */

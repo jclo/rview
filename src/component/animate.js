@@ -27,14 +27,14 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* eslint-disable curly */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import _ from '../lib/_';
+import _ from '../lib/_.js';
 
 
 // -- Local Constants
@@ -57,10 +57,9 @@ import _ from '../lib/_';
  * @returns {Number}        returns the value of the CSS property at the current
  * @since 0.0.0             lapse time,
  */
-/* eslint-disable no-mixed-operators */
 function _swing(t, b, c, d) {
   return c * (0.5 - Math.cos(t / d * Math.PI) / 2) + b;
-} /* eslint-enable no-mixed-operators */
+}
 
 /**
  * Checks if the passed-in argument is an Easing function.
@@ -347,4 +346,4 @@ const Anim = {
 // -- Export
 export default Anim;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* eslint-enable curly */

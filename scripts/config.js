@@ -11,14 +11,14 @@
  * @since        0.0.0
  * @version      -
  * ********************************************************************** */
-/* eslint one-var: 0, semi-style: 0 */
+/* - */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-const pack = require('../package.json');
+import pack from '../package.json' with { type: 'json' };
 
 
 // -- Local Constants
@@ -33,7 +33,7 @@ const libname = 'RView'
 
 // -- Main
 
-module.exports = {
+export default {
   ES6GLOB: '$__ES6GLOB',
   root: '.',
   dist: './_dist',
@@ -64,7 +64,7 @@ module.exports = {
       ` * Copyright (c) ${(new Date()).getFullYear()} ${pack.author.name} <${pack.author.email}> (${pack.author.url}).`,
       ' * Released under the MIT license. You may obtain a copy of the License',
       ' * at: http://www.opensource.org/licenses/mit-license.php).',
-      ' * Built from ES6Kadoo v2.2.1.',
+      ' * Built from ES6Kadoo v3.0.0-beta.1.3.',
       ' * ************************************************************************** */',
       ''].join('\n');
   },

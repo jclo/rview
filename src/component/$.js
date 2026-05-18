@@ -60,8 +60,8 @@
  * @since        0.0.0
  * @version      -
  * ********************************************************************** */
-/* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* global MouseEvent, window, document */
+/* - */
 
 
 // -- Vendor Modules
@@ -464,4 +464,4 @@ function $(selector) {
 // -- Export
 export default { $ };
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* - */

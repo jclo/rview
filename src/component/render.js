@@ -28,16 +28,16 @@
  * @since        0.0.0
  * @version      -
  * ********************************************************************** */
-/* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* global document */
+/* - */
 
 
 // -- Vendor Modules
 
 
 // -- Local Modules
-import _ from '../lib/_';
-import Hyper from './hyperscript';
+import _ from '../lib/_.js';
+import Hyper from './hyperscript.js';
 
 
 // -- Local Constants
@@ -152,7 +152,6 @@ function _formatTemplate(xml, id) {
  * @returns {XMLString}     returns the XMLString representation,
  * @since 0.0.0
  */
-/* eslint-disable no-param-reassign */
 function _render(co) {
   let xml
     , t
@@ -204,7 +203,6 @@ function _render(co) {
   // Returns the XMLString representation.
   return t;
 }
-/* eslint-enable no-param-reassign */
 
 /**
  * Adds the child tag to the component as the first child.
@@ -216,14 +214,12 @@ function _render(co) {
  * @returns {XMLString}     returns the XMLString including the child tag,
  * @since 0.0.0
  */
-/* eslint-disable no-param-reassign */
 function _prepend(xml, tag) {
   xml = xml.trim();
   const head = xml.slice(0, xml.indexOf('>') + 1);
   const trail = xml.slice(xml.indexOf('>') + 1);
   return `${head}${tag}${trail}`;
 }
-/* eslint-enable no-param-reassign */
 
 /**
  * Adds the child tag to the component as the last child.
@@ -235,14 +231,12 @@ function _prepend(xml, tag) {
  * @returns {XMLString}     returns the XMLString including the child tag,
  * @since 0.0.0
  */
-/* eslint-disable no-param-reassign */
 function _append(xml, tag) {
   xml = xml.trim();
   const head = xml.slice(0, xml.lastIndexOf('</'));
   const trail = xml.slice(xml.lastIndexOf('</'));
   return `${head}${tag}${trail}`;
 }
-/* eslint-enable no-param-reassign */
 
 /**
  * Renders again the passed-in component.
@@ -287,7 +281,6 @@ function _reRender(co) {
  * @returns {XMLString}     returns the XMLString representation,
  * @since 0.0.0
  */
-/* eslint-disable no-param-reassign */
 function _childRender(co, xml) {
   if (co._cList) {
     const childs = Object.keys(co._cList);
@@ -300,7 +293,6 @@ function _childRender(co, xml) {
 
   return xml;
 }
-/* eslint-enable no-param-reassign */
 
 
 // -- Public Static Methods ------------------------------------------------
@@ -342,4 +334,4 @@ const Render = {
 // -- Export
 export default Render;
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* - */

@@ -73,7 +73,7 @@
  * @version      -
  * ********************************************************************** */
 /* global */
-/* eslint-disable one-var, semi-style, no-underscore-dangle */
+/* - */
 
 
 // -- Vendor Modules
@@ -81,14 +81,14 @@ import KZlog from '@mobilabs/kzlog';
 
 
 // -- Local Modules
-import _ from '../lib/_';
-import A from './animate';
-import AD from './add';
-import R from './render';
-import H from './hyperscript';
-import S from './setstate';
-import Util from './util';
-import C from './config';
+import _ from '../lib/_.js';
+import A from './animate.js';
+import AD from './add.js';
+import R from './render.js';
+import H from './hyperscript.js';
+import S from './setstate.js';
+import Util from './util.js';
+import C from './config.js';
 
 
 // -- Local Constants
@@ -112,7 +112,6 @@ const { level } = C.logger
  * @since 0.0.0
  */
 function Construct() {
-  /* eslint-disable-next-line prefer-spread, prefer-rest-params */
   this._init.apply(this, arguments);
 }
 
@@ -618,4 +617,4 @@ const methods = {
 // -- Export
 export default { Construct, methods };
 
-/* eslint-enable one-var, semi-style, no-underscore-dangle */
+/* - */

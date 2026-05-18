@@ -13,3 +13,4 @@ site/*
 !site/styles
 !site/webpages
 !site/config.js
+.npmrc
