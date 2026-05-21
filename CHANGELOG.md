@@ -6,6 +6,7 @@
   * Updated prepare4test.sh to run on both MacOS and Linux,
   * Released 3.0.0-beta.1.0,
   * Added publishing and documenting scripts to package.json,
+  * Released 3.0.0-beta.2.0,
   * ...,
 
 
