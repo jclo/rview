@@ -14,3 +14,4 @@ site/*
 !site/webpages
 !site/config.js
 .npmrc
+package.publish.json

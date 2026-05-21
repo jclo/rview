@@ -1,10 +1,11 @@
 ###
 
-### 3.0.0 (May 17, 2026)
+### 3.0.0 (May 21, 2026)
 
   * Updated the project with @mobilabs/es6kadoo ESM v3,
   * Updated prepare4test.sh to run on both MacOS and Linux,
   * Released 3.0.0-beta.1.0,
+  * Added publishing and documenting scripts to package.json,
   * ...,
 
 

@@ -25,12 +25,10 @@
     "build:production": " --- BUILDING (PRODUCTION) --- ",
     "build:skeleton:prod": "node scripts/build.skeleton.prod.js $1",
     "prebuild:prod": "npm run build:dev && npm run build:skeleton:prod",
-    "build:prod": "npm run build:js:prod",
+    "build:prod": "npm run build:js:prod && npm run npm:make:package:json",
 
     "testing": " --- TESTING --- ",
-    "pretest": "sh test/prepare4test.sh to-mjs",
     "test": "cross-env NODE_ENV=test c8 --reporter=lcov mocha ./test/main.js",
-    "posttest": "sh test/prepare4test.sh back-to-js",
     "display:coverage": "open -a safari ./coverage/lcov-report/index.html",
     "check:coverage": "c8 check-coverage --statements 60 --branches 90 --functions 10 --lines 60",
     "report": "c8 report",
@@ -46,18 +44,23 @@
     "deployment": " --- DEPLOYING --- ",
     "dep:prod": "rm -rf _dist-$npm_package_version && npm run build:prod && cp -r _dist _dist-$npm_package_version",
 
-    "doc:kasar": " --- DOCUMENTING --- ",
-    "doc:create": "",
-    "doc:build": "kasar build",
-    "doc:watch": "kasar watch",
-    "doc:run": "kasar serve --port $1",
+    "npm:publishing": " --- PUBLISHING --- ",
+    "npm:make:package:json": "node scripts/make:package:publish:json.js $1",
+    "prepack": "if [[ ! -f package.publish.json ]]; then npm run npm:make:package:json ; fi && mv package.json package.dev.json && cp package.publish.json package.json",
+    "postpack": "mv package.dev.json package.json",
+
+    "doc:site:web": " --- DOCUMENTING --- ",
+    "doc:site:init": "kasar xxx orion run once only",
+    "doc:site:build": "kasar build",
+    "doc:site:watch": "kasar watch",
+    "doc:site:start": "kasar serve --port $1",
 
     "others": " --- OTHERS ---",
     "prepare": "husky"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jclo/rview.git"
+    "url": "git+https://github.com/jclo/rview.git"
   },
   "keywords": [
     "es6",
@@ -76,7 +79,7 @@
   },
   "homepage": "https://github.com/jclo/rview",
   "dependencies": {
-    "@mobilabs/kzlog": "^2.0.0"
+    "@mobilabs/kzlog": "^2.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
@@ -94,7 +97,7 @@
     "nodemon": "^3.1.14",
     "terser": "^5.47.1",
     "xmldom": "^0.6.0",
-    "@mobilabs/es6kadoo": "3.0.0-beta.1.3"
+    "@mobilabs/es6kadoo": "3.0.0-beta.1.4"
   },
   "c8": {
     "include": [
